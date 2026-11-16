@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Ewha Market</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <a href="index.html" class="brand-logo">🌸 Ewha<br>Market</a>
+            <nav class="side-nav" aria-label="Main navigation">
+                <a href="index.html" class="side-link">🏠 Home</a>
+                <a href="categories.html" class="side-link">🗂️ Categories</a>
+                <a href="messages.html" class="side-link">💬 Chat</a>
+                <a href="profile.html" class="side-link active">👤 My Profile</a>
+            </nav>
+            <div class="sidebar-banner">
+                <div class="banner-emoji">🎓</div>
+                <p><strong>Ewha Campus Hub</strong></p>
+                <small>Verified students only<br>(@ewha.ac.kr / @ewhain.net)</small>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="topbar">
+                <form action="search.html" method="GET" class="search-bar">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" name="q" placeholder="Enter item title, course code, or keyword..." aria-label="Enter item title">
+                    <a href="search.html" class="filter-btn" title="Filters">🎛️</a>
+                </form>
+                <div class="topbar-actions">
+                    <button id="langToggle" class="lang-btn" type="button">🌐 EN ▾</button>
+                    <a href="messages.html" class="icon-btn" title="Chat">💬</a>
+                    <a href="login.html" class="login-pill" title="Profile / Log In">👤 Log In</a>
+                </div>
+            </header>
+
+            <main class="page-content">
+                <div class="page-header">
+                    <h1>👤 Student Profile</h1>
+                    <p class="text-muted">View your verified student badge, active listings, and saved favorites</p>
+                </div>
+
+                <!-- Sara: Add a profile card, a link to my-listings.html, and favorites here -->
+                <section class="content-card">
+                    <p>Profile info and active listings go here...</p>
+                </section>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
