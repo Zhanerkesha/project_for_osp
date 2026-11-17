@@ -1,54 +1,1076 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search & Filters - Ewha Market</title>
+
+    <!-- Shared stylesheet from the team -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Search page-specific CSS -->
+    <style>
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            margin-top: 18px;
+        }
+
+        .filter-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .results-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .results-heading h2 {
+            font-size: 1.2rem;
+        }
+
+        .result-card-link {
+            display: block;
+            color: inherit;
+            text-decoration: none;
+            height: 100%;
+        }
+
+        .item-card {
+            height: 100%;
+        }
+
+        .item-img-wrap {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .item-img-wrap img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .item-description {
+            color: var(--text-muted, #777);
+            font-size: 0.82rem;
+            margin-bottom: 10px;
+        }
+
+        .item-course {
+            color: #00462a;
+            font-size: 0.78rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            background: white;
+            border: 1px solid var(--border, #ddd);
+            border-radius: 16px;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 8px;
+        }
+
+        .empty-state p,
+        .demo-note {
+            color: var(--text-muted, #777);
+        }
+
+        .demo-note {
+            font-size: 0.8rem;
+            margin-bottom: 14px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 900px) {
+            .filter-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .items-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 650px) {
+            .filter-grid,
+            .items-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .results-heading {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <div class="app-layout">
-        <aside class="sidebar">
-            <a href="index.html" class="brand-logo">🌸 Ewha<br>Market</a>
-            <nav class="side-nav" aria-label="Main navigation">
-                <a href="index.html" class="side-link">🏠 Home</a>
-                <a href="categories.html" class="side-link active">🗂️ Categories</a>
-                <a href="messages.html" class="side-link">💬 Chat</a>
-                <a href="profile.html" class="side-link">👤 My Profile</a>
-            </nav>
-            <div class="sidebar-banner">
-                <div class="banner-emoji">🎓</div>
-                <p><strong>Ewha Campus Hub</strong></p>
-                <small>Verified students only<br>(@ewha.ac.kr / @ewhain.net)</small>
-            </div>
-        </aside>
+<div class="app-layout">
 
-        <div class="main-wrapper">
-            <header class="topbar">
-                <form action="search.html" method="GET" class="search-bar">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" name="q" placeholder="Enter item title, course code, or keyword..." aria-label="Enter item title">
-                    <a href="search.html" class="filter-btn" title="Filters">🎛️</a>
-                </form>
-                <div class="topbar-actions">
-                    <button id="langToggle" class="lang-btn" type="button">🌐 EN ▾</button>
-                    <a href="messages.html" class="icon-btn" title="Chat">💬</a>
-                    <a href="login.html" class="login-pill" title="Profile / Log In">👤 Log In</a>
-                </div>
-            </header>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
 
-            <main class="page-content">
-                <div class="page-header">
-                    <h1>🔍 Search & Filter Results</h1>
-                    <p class="text-muted">Filter by Buy / Rent / Services, price range, condition, or course code</p>
-                </div>
+        <a href="index.html" class="brand-logo">
+            🌸 Ewha<br>Market
+        </a>
 
-                <!-- Adriana: Add a filter bar and search results here -->
-                <section class="content-card">
-                    <p>Search results and filters go here...</p>
-                </section>
-            </main>
+        <nav class="side-nav" aria-label="Main navigation">
+            <a href="index.html" class="side-link">
+                🏠 Home
+            </a>
+
+            <a href="categories.html" class="side-link active">
+                🗂️ Categories
+            </a>
+
+            <a href="messages.html" class="side-link">
+                💬 Chat
+            </a>
+
+            <a href="profile.html" class="side-link">
+                👤 My Profile
+            </a>
+        </nav>
+
+        <div class="sidebar-banner">
+            <div class="banner-emoji">🎓</div>
+
+            <p><strong>Ewha Campus Hub</strong></p>
+
+            <small>
+                Verified students only<br>
+                (@ewha.ac.kr / @ewhain.net)
+            </small>
         </div>
+
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <form
+                id="searchForm"
+                action="search.html"
+                method="GET"
+                class="search-bar"
+            >
+                <span class="search-icon">🔍</span>
+
+                <input
+                    type="search"
+                    id="searchInput"
+                    name="q"
+                    placeholder="Search items, services, or course codes..."
+                    aria-label="Search listings"
+                >
+
+                <a
+                    href="#filters"
+                    class="filter-btn"
+                    title="Filters"
+                    aria-label="Go to filters"
+                >
+                    🎛️
+                </a>
+            </form>
+
+            <div class="topbar-actions">
+
+                <button
+                    id="langToggle"
+                    class="lang-btn"
+                    type="button"
+                >
+                    🌐 EN ▾
+                </button>
+
+                <a
+                    href="messages.html"
+                    class="icon-btn"
+                    title="Chat"
+                >
+                    💬
+                </a>
+
+                <a
+                    href="login.html"
+                    class="login-pill"
+                    title="Log In"
+                >
+                    👤 Log In
+                </a>
+
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT -->
+        <main class="page-content">
+
+            <div class="page-header">
+                <h1>🔍 Search & Filter Results</h1>
+
+                <p class="text-muted">
+                    Find secondhand items, rentals,
+                    student services, and study materials
+                    within the Ewha community.
+                </p>
+            </div>
+
+            <!-- FILTER SECTION -->
+            <section class="content-card" id="filters">
+
+                <h2>🎛️ Filter Listings</h2>
+
+                <p class="text-muted">
+                    Search by listing type, category,
+                    price, condition, or course.
+                </p>
+
+                <div class="filter-grid">
+
+                    <!-- LISTING TYPE -->
+                    <div class="form-group">
+                        <label class="form-label" for="listingType">
+                            Listing Type
+                        </label>
+
+                        <select id="listingType" class="form-control">
+                            <option value="all">All Types</option>
+                            <option value="buy">Buy</option>
+                            <option value="rent">Rent</option>
+                            <option value="services">Services</option>
+                            <option value="notes">Study Materials</option>
+                        </select>
+                    </div>
+
+                    <!-- CATEGORY -->
+                    <div class="form-group">
+                        <label class="form-label" for="categoryFilter">
+                            Category
+                        </label>
+
+                        <select id="categoryFilter" class="form-control">
+                            <option value="all">All Categories</option>
+                            <option value="books">Books</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="fashion">Fashion</option>
+                            <option value="furniture">Furniture</option>
+                            <option value="study">Study Supplies</option>
+                            <option value="tutoring">Tutoring</option>
+                            <option value="language">Language Exchange</option>
+                            <option value="career">Career & Portfolio</option>
+                            <option value="translation">Translation Help</option>
+                        </select>
+                    </div>
+
+                    <!-- CONDITION -->
+                    <div class="form-group">
+                        <label class="form-label" for="conditionFilter">
+                            Condition
+                        </label>
+
+                        <select id="conditionFilter" class="form-control">
+                            <option value="all">All Conditions</option>
+                            <option value="new">New</option>
+                            <option value="like-new">Like New</option>
+                            <option value="good">Good</option>
+                            <option value="used">Used</option>
+                        </select>
+                    </div>
+
+                    <!-- MINIMUM PRICE -->
+                    <div class="form-group">
+                        <label class="form-label" for="minPrice">
+                            Minimum Price (₩)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="minPrice"
+                            class="form-control"
+                            placeholder="0"
+                            min="0"
+                        >
+                    </div>
+
+                    <!-- MAXIMUM PRICE -->
+                    <div class="form-group">
+                        <label class="form-label" for="maxPrice">
+                            Maximum Price (₩)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="maxPrice"
+                            class="form-control"
+                            placeholder="e.g. 50000"
+                            min="0"
+                        >
+                    </div>
+
+                    <!-- COURSE SEARCH -->
+                    <div class="form-group">
+                        <label class="form-label" for="courseSearch">
+                            Course Name / Code
+                        </label>
+
+                        <input
+                            type="text"
+                            id="courseSearch"
+                            class="form-control"
+                            placeholder="e.g. Python, 38403"
+                        >
+                    </div>
+
+                    <!-- SERVICE PAYMENT -->
+                    <div class="form-group">
+                        <label class="form-label" for="paymentFilter">
+                            Service Payment
+                        </label>
+
+                        <select id="paymentFilter" class="form-control">
+                            <option value="all">All Services</option>
+                            <option value="free">Free Services</option>
+                            <option value="paid">Paid Services</option>
+                        </select>
+                    </div>
+
+                    <!-- SORT -->
+                    <div class="form-group">
+                        <label class="form-label" for="sortFilter">
+                            Sort By
+                        </label>
+
+                        <select id="sortFilter" class="form-control">
+                            <option value="newest">Newest First</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="name">Name: A to Z</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <!-- BUTTONS -->
+                <div class="filter-actions">
+                    <button
+                        type="button"
+                        id="applyFilters"
+                        class="btn-ewha"
+                    >
+                        🔍 Apply Filters
+                    </button>
+
+                    <button
+                        type="button"
+                        id="resetFilters"
+                        class="btn-outline-ewha"
+                    >
+                        Reset Filters
+                    </button>
+                </div>
+
+            </section>
+
+            <!-- RESULTS -->
+            <section class="section-block">
+
+                <div class="results-heading">
+                    <div>
+                        <h2>Available Listings</h2>
+
+                        <p
+                            id="resultCount"
+                            class="text-muted"
+                            aria-live="polite"
+                        >
+                            Loading listings...
+                        </p>
+                    </div>
+                </div>
+
+                <p class="demo-note">
+                    Demo listings for development and testing.
+                    These are not real student offers.
+                </p>
+
+                <div id="searchResults" class="items-grid">
+                    <!-- Cards generated by JavaScript -->
+                </div>
+
+                <div id="emptyState" class="empty-state hidden">
+                    <h3>🔍 No results found</h3>
+                    <p>
+                        Try changing your keyword
+                        or adjusting your filters.
+                    </p>
+                </div>
+
+            </section>
+
+        </main>
     </div>
+</div>
+
+<script>
+    /*
+     * EWHA MARKET - SEARCH & DISCOVERY
+     * 17 fictional demo listings
+     */
+
+    const listings = [
+
+        // ==========================
+        // BUY - 4 LISTINGS
+        // ==========================
+
+        {
+            id: "demo-1",
+            title: "Used Desk Lamp",
+            type: "buy",
+            category: "furniture",
+            condition: "used",
+            price: 8000,
+            priceUnit: "",
+            courseName: "",
+            courseCode: "",
+            subject: "",
+            description: "Desk lamp in good working condition.",
+            image: "images/desk-lamp.jpeg",
+            date: "2026-11-13"
+        },
+
+        {
+            id: "demo-2",
+            title: "Wireless Headphones",
+            type: "buy",
+            category: "electronics",
+            condition: "good",
+            price: 15000,
+            priceUnit: "",
+            courseName: "",
+            courseCode: "",
+            subject: "",
+            description: "Comfortable wireless headphones.",
+            image: "images/headphones.jpeg",
+            date: "2026-11-15"
+        },
+
+        {
+            id: "demo-3",
+            title: "Ewha University Hoodie",
+            type: "buy",
+            category: "fashion",
+            condition: "like-new",
+            price: 12000,
+            priceUnit: "",
+            courseName: "",
+            courseCode: "",
+            subject: "",
+            description: "Ewha hoodie in excellent condition.",
+            image: "images/hoodie.jpeg",
+            date: "2026-11-16"
+        },
+
+        {
+            id: "demo-4",
+            title: "Mini Desk Fan",
+            type: "buy",
+            category: "electronics",
+            condition: "good",
+            price: 8000,
+            priceUnit: "",
+            courseName: "",
+            courseCode: "",
+            subject: "",
+            description: "Compact USB fan for a study desk.",
+            image: "images/desk-fan.jpeg",
+            date: "2026-11-17"
+        },
+
+        // ==========================
+        // RENT - 4 LISTINGS
+        // ==========================
+
+        {
+            id: "demo-5",
+            title: "Scientific Calculator",
+            type: "rent",
+            category: "electronics",
+            condition: "good",
+            price: 2000,
+            priceUnit: "/ day",
+            courseName: "",
+            courseCode: "",
+            subject: "Mathematics",
+            description: "Calculator for short-term rental.",
+            image: "images/calculator.jpeg",
+            date: "2026-11-16"
+        },
+
+        {
+            id: "demo-6",
+            title: "Portable Projector",
+            type: "rent",
+            category: "electronics",
+            condition: "like-new",
+            price: 5000,
+            priceUnit: "/ day",
+            courseName: "",
+            courseCode: "",
+            subject: "",
+            description: "Projector for presentations or events.",
+            image: "images/projector.jpeg",
+            date: "2026-11-15"
+        },
+
+        {
+            id: "demo-7",
+            title: "Digital Camera",
+            type: "rent",
+            category: "electronics",
+            condition: "good",
+            price: 8000,
+            priceUnit: "/ day",
+            courseName: "",
+            courseCode: "",
+            subject: "Photography",
+            description: "Digital camera for campus photography.",
+            image: "images/camera.jpeg",
+            date: "2026-11-14"
+        },
+
+        {
+            id: "demo-8",
+            title: "Engineering Calculator",
+            type: "rent",
+            category: "electronics",
+            condition: "like-new",
+            price: 2000,
+            priceUnit: "/ day",
+            courseName: "",
+            courseCode: "",
+            subject: "Engineering",
+            description: "Engineering calculator available for rent.",
+            image: "images/engineering-calculator.jpeg",
+            date: "2026-11-17"
+        },
+
+        // ==========================
+        // SERVICES - 5 LISTINGS
+        // ==========================
+
+        {
+            id: "demo-9",
+            title: "Python Tutoring",
+            type: "services",
+            category: "tutoring",
+            condition: "",
+            price: 15000,
+            priceUnit: "/ hour",
+            courseName: "Python Programming",
+            courseCode: "38403",
+            subject: "Programming",
+            description: "Beginner-friendly Python tutoring.",
+            image: "images/python-tutoring.jpeg",
+            date: "2026-11-14"
+        },
+
+        {
+            id: "demo-10",
+            title: "English-Korean Language Exchange",
+            type: "services",
+            category: "language",
+            condition: "",
+            price: 0,
+            priceUnit: "",
+            courseName: "",
+            courseCode: "",
+            subject: "Languages",
+            description: "Free language practice with students.",
+            image: "images/language-exchange.jpeg",
+            date: "2026-11-11"
+        },
+
+        {
+            id: "demo-11",
+            title: "Java Programming Tutoring",
+            type: "services",
+            category: "tutoring",
+            condition: "",
+            price: 15000,
+            priceUnit: "/ hour",
+            courseName: "Java Programming",
+            courseCode: "",
+            subject: "Computer Science",
+            description: "One-on-one Java tutoring for beginners.",
+            image: "images/cat-services.jpg",
+            date: "2026-11-17"
+        },
+
+        {
+            id: "demo-12",
+            title: "Resume and Portfolio Review",
+            type: "services",
+            category: "career",
+            condition: "",
+            price: 5000,
+            priceUnit: "/ session",
+            courseName: "",
+            courseCode: "",
+            subject: "Career Development",
+            description: "Feedback on resumes and portfolios.",
+            image: "images/resume-portfolio.jpeg",
+            date: "2026-11-17"
+        },
+
+        {
+            id: "demo-13",
+            title: "Korean-English Translation Help",
+            type: "services",
+            category: "translation",
+            condition: "",
+            price: 5000,
+            priceUnit: "/ session",
+            courseName: "",
+            courseCode: "",
+            subject: "Languages",
+            description: "Help with everyday Korean documents.",
+            image: "images/cat-services.jpg",
+            date: "2026-11-17"
+        },
+
+        // ==========================
+        // STUDY MATERIALS - 4
+        // ==========================
+
+        {
+            id: "demo-14",
+            title: "Data Structures Notes",
+            type: "notes",
+            category: "study",
+            condition: "good",
+            price: 5000,
+            priceUnit: "",
+            courseName: "Data Structures",
+            courseCode: "CSE",
+            subject: "Computer Science",
+            description: "Study notes for Data Structures.",
+            image: "images/cat-notes.jpg",
+            date: "2026-11-15"
+        },
+
+        {
+            id: "demo-15",
+            title: "Linear Algebra Notebook",
+            type: "notes",
+            category: "study",
+            condition: "like-new",
+            price: 4000,
+            priceUnit: "",
+            courseName: "Linear Algebra",
+            courseCode: "",
+            subject: "Mathematics",
+            description: "Handwritten Linear Algebra notes.",
+            image: "images/cat-notes.jpg",
+            date: "2026-11-12"
+        },
+
+        {
+            id: "demo-16",
+            title: "Computer Architecture Notes",
+            type: "notes",
+            category: "study",
+            condition: "good",
+            price: 5000,
+            priceUnit: "",
+            courseName: "Computer Architecture",
+            courseCode: "",
+            subject: "Computer Science",
+            description: "Organized Computer Architecture notes.",
+            image: "images/cat-notes.jpg",
+            date: "2026-11-16"
+        },
+
+        {
+            id: "demo-17",
+            title: "Python Programming Textbook",
+            type: "notes",
+            category: "books",
+            condition: "good",
+            price: 7000,
+            priceUnit: "",
+            courseName: "Python Programming",
+            courseCode: "38403",
+            subject: "Programming",
+            description: "Python textbook for beginner courses.",
+            image: "images/cat-books.jpg",
+            date: "2026-11-17"
+        }
+    ];
+
+    // ==========================
+    // HTML ELEMENTS
+    // ==========================
+
+    const searchForm = document.querySelector("#searchForm");
+    const searchInput = document.querySelector("#searchInput");
+    const listingType = document.querySelector("#listingType");
+    const categoryFilter = document.querySelector("#categoryFilter");
+    const conditionFilter = document.querySelector("#conditionFilter");
+    const minPrice = document.querySelector("#minPrice");
+    const maxPrice = document.querySelector("#maxPrice");
+    const courseSearch = document.querySelector("#courseSearch");
+    const paymentFilter = document.querySelector("#paymentFilter");
+    const sortFilter = document.querySelector("#sortFilter");
+    const searchResults = document.querySelector("#searchResults");
+    const resultCount = document.querySelector("#resultCount");
+    const emptyState = document.querySelector("#emptyState");
+
+    // ==========================
+    // URL PARAMETERS
+    // ==========================
+
+    const urlParams = new URLSearchParams(window.location.search);
+
+    searchInput.value = urlParams.get("q") || "";
+
+    const initialType = urlParams.get("type");
+
+    if (["buy", "rent", "services", "notes"].includes(initialType)) {
+        listingType.value = initialType;
+    }
+
+    const initialCategory = urlParams.get("category");
+
+    if (
+        initialCategory &&
+        [...categoryFilter.options].some(
+            option => option.value === initialCategory
+        )
+    ) {
+        categoryFilter.value = initialCategory;
+    }
+
+    // ==========================
+    // PRICE FORMATTING
+    // ==========================
+
+    function formatPrice(item) {
+        const price = item.price === 0
+            ? "Free"
+            : "₩" + item.price.toLocaleString("en-US");
+
+        return price + (item.priceUnit || "");
+    }
+
+    // ==========================
+    // FILTER FUNCTION
+    // ==========================
+
+    function filterListings() {
+
+        const keyword = searchInput.value.trim().toLowerCase();
+        const type = listingType.value;
+        const category = categoryFilter.value;
+        const condition = conditionFilter.value;
+        const course = courseSearch.value.trim().toLowerCase();
+        const payment = paymentFilter.value;
+
+        const minimum = minPrice.value === ""
+            ? 0
+            : Number(minPrice.value);
+
+        const maximum = maxPrice.value === ""
+            ? Infinity
+            : Number(maxPrice.value);
+
+        const filtered = listings.filter(function(item) {
+
+            const searchableText = [
+                item.title,
+                item.description,
+                item.courseName,
+                item.courseCode,
+                item.subject,
+                item.category
+            ].join(" ").toLowerCase();
+
+            const courseText = [
+                item.courseName,
+                item.courseCode,
+                item.subject
+            ].join(" ").toLowerCase();
+
+            const matchesKeyword =
+                searchableText.includes(keyword);
+
+            const matchesType =
+                type === "all" || item.type === type;
+
+            const matchesCategory =
+                category === "all" || item.category === category;
+
+            const matchesCondition =
+                condition === "all" || item.condition === condition;
+
+            const matchesPrice =
+                item.price >= minimum && item.price <= maximum;
+
+            const matchesCourse =
+                courseText.includes(course);
+
+            const matchesPayment =
+                payment === "all" ||
+                (
+                    item.type === "services" &&
+                    (
+                        (payment === "free" && item.price === 0) ||
+                        (payment === "paid" && item.price > 0)
+                    )
+                );
+
+            return (
+                matchesKeyword &&
+                matchesType &&
+                matchesCategory &&
+                matchesCondition &&
+                matchesPrice &&
+                matchesCourse &&
+                matchesPayment
+            );
+        });
+
+        // SORTING
+        const sorting = sortFilter.value;
+
+        filtered.sort(function(a, b) {
+
+            if (sorting === "price-low") {
+                return a.price - b.price;
+            }
+
+            if (sorting === "price-high") {
+                return b.price - a.price;
+            }
+
+            if (sorting === "name") {
+                return a.title.localeCompare(b.title);
+            }
+
+            return new Date(b.date) - new Date(a.date);
+        });
+
+        renderListings(filtered);
+    }
+
+    // ==========================
+    // RENDER RESULTS
+    // ==========================
+
+    function renderListings(items) {
+
+        searchResults.replaceChildren();
+
+        resultCount.textContent =
+            items.length + " listing(s) found";
+
+        emptyState.classList.toggle(
+            "hidden",
+            items.length !== 0
+        );
+
+        const badgeClasses = {
+            buy: "badge-buy",
+            rent: "badge-rent",
+            notes: "badge-notes",
+            services: "badge-service"
+        };
+
+        const badgeLabels = {
+            buy: "Buy",
+            rent: "Rent",
+            notes: "Study Materials",
+            services: "Services"
+        };
+
+        items.forEach(function(item) {
+
+            const card = document.createElement("article");
+            card.className = "item-card";
+
+            const link = document.createElement("a");
+            link.className = "result-card-link";
+
+            link.href = "item-detail.html?id=" +
+                encodeURIComponent(item.id);
+
+            // IMAGE
+            const imageWrap = document.createElement("div");
+            imageWrap.className = "item-img-wrap";
+
+            const image = document.createElement("img");
+            image.src = item.image;
+            image.alt = item.title;
+            image.loading = "lazy";
+
+            // If a photo is missing, show a category placeholder.
+            image.onerror = function() {
+                image.onerror = null;
+                image.src = "images/cat-books.jpg";
+            };
+
+            const badge = document.createElement("span");
+            badge.className = "item-badge";
+            badge.classList.add(badgeClasses[item.type]);
+            badge.textContent = badgeLabels[item.type];
+
+            imageWrap.append(image, badge);
+
+            // INFORMATION
+            const info = document.createElement("div");
+            info.className = "item-info";
+
+            const price = document.createElement("p");
+            price.className = "item-price";
+            price.textContent = formatPrice(item);
+
+            const title = document.createElement("h3");
+            title.className = "item-title";
+            title.textContent = item.title;
+
+            const description = document.createElement("p");
+            description.className = "item-description";
+            description.textContent = item.description;
+
+            info.append(price, title, description);
+
+            // COURSE INFO
+            if (item.courseName) {
+
+                const courseInfo = document.createElement("p");
+                courseInfo.className = "item-course";
+
+                courseInfo.textContent =
+                    "📚 " + item.courseName +
+                    (
+                        item.courseCode
+                            ? " (" + item.courseCode + ")"
+                            : ""
+                    );
+
+                info.append(courseInfo);
+            }
+
+            // CATEGORY AND CONDITION
+            const meta = document.createElement("div");
+            meta.className = "item-meta";
+
+            const categoryText = document.createElement("span");
+            categoryText.textContent = item.category;
+
+            const conditionText = document.createElement("span");
+            conditionText.textContent =
+                item.condition || "Service";
+
+            meta.append(categoryText, conditionText);
+
+            info.append(meta);
+            link.append(imageWrap, info);
+            card.append(link);
+
+            searchResults.append(card);
+        });
+    }
+
+    // ==========================
+    // SEARCH BAR
+    // ==========================
+
+    searchForm.addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const params = new URLSearchParams(window.location.search);
+
+        if (searchInput.value.trim()) {
+            params.set("q", searchInput.value.trim());
+        } else {
+            params.delete("q");
+        }
+
+        const query = params.toString();
+
+        window.history.replaceState(
+            {},
+            "",
+            window.location.pathname +
+            (query ? "?" + query : "")
+        );
+
+        filterListings();
+    });
+
+    // ==========================
+    // APPLY FILTERS
+    // ==========================
+
+    document.querySelector("#applyFilters")
+        .addEventListener("click", filterListings);
+
+    // ==========================
+    // RESET FILTERS
+    // ==========================
+
+    document.querySelector("#resetFilters")
+        .addEventListener("click", function() {
+
+            searchInput.value = "";
+            listingType.value = "all";
+            categoryFilter.value = "all";
+            conditionFilter.value = "all";
+            minPrice.value = "";
+            maxPrice.value = "";
+            courseSearch.value = "";
+            paymentFilter.value = "all";
+            sortFilter.value = "newest";
+
+            window.history.replaceState(
+                {},
+                "",
+                window.location.pathname
+            );
+
+            filterListings();
+        });
+
+    // INITIAL DISPLAY
+    filterListings();
+
+</script>
+
 </body>
 </html>
+
