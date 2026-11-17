@@ -1,52 +1,913 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Categories - Ewha Market</title>
+
+    <!-- Shared stylesheet from the team -->
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ========================================
+           CATEGORIES PAGE - CUSTOM STYLING
+           ======================================== */
+
+        .category-section {
+            margin-bottom: 28px;
+        }
+
+        .category-section-title {
+            margin-bottom: 20px;
+        }
+
+        .category-section-title h2 {
+            font-size: 22px;
+            margin: 0 0 6px;
+        }
+
+        .category-section-title p {
+            margin: 0;
+            color: var(--text-muted, #777);
+            font-size: 14px;
+        }
+
+        /* Main categories */
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .category-card {
+            display: block;
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid var(--border, #e7e7e7);
+            border-radius: 16px;
+            color: inherit;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.09);
+        }
+
+        .category-image {
+            width: 100%;
+            height: 155px;
+            object-fit: cover;
+            display: block;
+            background: #f8edf4;
+        }
+
+        .category-details {
+            padding: 16px;
+        }
+
+        .category-details h3 {
+            font-size: 18px;
+            margin: 0 0 8px;
+        }
+
+        .category-details p {
+            font-size: 13px;
+            color: var(--text-muted, #777);
+            line-height: 1.5;
+            margin: 0 0 12px;
+            min-height: 60px;
+        }
+
+        .category-count {
+            font-size: 12px;
+            font-weight: 700;
+            color: #943d73;
+        }
+
+        /* Subcategories */
+
+        .subcategory-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .subcategory-card {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 17px;
+            background: #fff;
+            border: 1px solid var(--border, #e7e7e7);
+            border-radius: 12px;
+            text-decoration: none;
+            color: inherit;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .subcategory-card:hover {
+            background: #fcf2f8;
+            transform: translateY(-2px);
+        }
+
+        .subcategory-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 44px;
+            height: 44px;
+            flex-shrink: 0;
+            border-radius: 12px;
+            background: #f8eaf3;
+            font-size: 24px;
+        }
+
+        .subcategory-text h3 {
+            margin: 0 0 5px;
+            font-size: 14px;
+        }
+
+        .subcategory-text p {
+            margin: 0;
+            font-size: 12px;
+            color: var(--text-muted, #777);
+            line-height: 1.4;
+        }
+
+        /* Featured listings */
+
+        .featured-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .featured-header .category-section-title {
+            margin-bottom: 0;
+        }
+
+        .view-all {
+            color: #943d73;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .view-all:hover {
+            text-decoration: underline;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .featured-card {
+            display: block;
+            background: #fff;
+            border: 1px solid var(--border, #e7e7e7);
+            border-radius: 14px;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .featured-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .featured-image-wrap {
+            position: relative;
+            height: 170px;
+            background: #f8edf4;
+            overflow: hidden;
+        }
+
+        .featured-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 11px;
+            left: 11px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .badge-buy {
+            background: #fce7f3;
+            color: #9d174d;
+        }
+
+        .badge-rent {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .badge-services {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-notes {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .featured-info {
+            padding: 14px;
+        }
+
+        .featured-price {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .featured-info h3 {
+            font-size: 14px;
+            line-height: 1.4;
+            margin: 0 0 8px;
+        }
+
+        .featured-meta {
+            font-size: 12px;
+            color: var(--text-muted, #777);
+        }
+
+        .demo-note {
+            margin-top: 18px;
+            font-size: 12px;
+            color: var(--text-muted, #777);
+        }
+
+        /* Keyboard accessibility */
+
+        .category-card:focus-visible,
+        .subcategory-card:focus-visible,
+        .featured-card:focus-visible,
+        .view-all:focus-visible {
+            outline: 3px solid #943d73;
+            outline-offset: 3px;
+        }
+
+        /* Responsive layout */
+
+        @media (max-width: 1150px) {
+            .category-grid,
+            .featured-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 850px) {
+            .subcategory-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 600px) {
+            .category-grid,
+            .subcategory-grid,
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .category-details p {
+                min-height: 0;
+            }
+
+            .category-image {
+                height: 185px;
+            }
+        }
+    </style>
 </head>
+
 <body>
     <div class="app-layout">
+
+        <!-- SIDEBAR -->
         <aside class="sidebar">
-            <a href="index.html" class="brand-logo">🌸 Ewha<br>Market</a>
+
+            <a href="index.html" class="brand-logo">
+                🌸 Ewha<br>Market
+            </a>
+
             <nav class="side-nav" aria-label="Main navigation">
-                <a href="index.html" class="side-link">🏠 Home</a>
-                <a href="categories.html" class="side-link active">🗂️ Categories</a>
-                <a href="messages.html" class="side-link">💬 Chat</a>
-                <a href="profile.html" class="side-link">👤 My Profile</a>
+
+                <a href="index.html" class="side-link">
+                    🏠 Home
+                </a>
+
+                <a href="categories.html"
+                   class="side-link active"
+                   aria-current="page">
+                    🗂️ Categories
+                </a>
+
+                <a href="messages.html" class="side-link">
+                    💬 Chat
+                </a>
+
+                <a href="profile.html" class="side-link">
+                    👤 My Profile
+                </a>
+
             </nav>
+
             <div class="sidebar-banner">
                 <div class="banner-emoji">🎓</div>
+
                 <p><strong>Ewha Campus Hub</strong></p>
-                <small>Verified students only<br>(@ewha.ac.kr / @ewhain.net)</small>
+
+                <small>
+                    Verified students only<br>
+                    (@ewha.ac.kr / @ewhain.net)
+                </small>
             </div>
+
         </aside>
 
+        <!-- MAIN CONTENT -->
         <div class="main-wrapper">
+
+            <!-- TOPBAR -->
             <header class="topbar">
-                <form action="search.html" method="GET" class="search-bar">
+
+                <form action="search.html"
+                      method="GET"
+                      class="search-bar">
+
                     <span class="search-icon">🔍</span>
-                    <input type="text" name="q" placeholder="Enter item title, course code, or keyword..." aria-label="Enter item title">
-                    <a href="search.html" class="filter-btn" title="Filters">🎛️</a>
+
+                    <input
+                        type="text"
+                        name="q"
+                        placeholder="Enter item title, course code, or keyword..."
+                        aria-label="Search listings"
+                    >
+
+                    <a href="search.html#filters"
+                       class="filter-btn"
+                       title="Search filters"
+                       aria-label="Open search filters">
+                        🎛️
+                    </a>
+
                 </form>
+
                 <div class="topbar-actions">
-                    <button id="langToggle" class="lang-btn" type="button">🌐 EN ▾</button>
-                    <a href="messages.html" class="icon-btn" title="Chat">💬</a>
-                    <a href="login.html" class="login-pill" title="Profile / Log In">👤 Log In</a>
+
+                    <button
+                        id="langToggle"
+                        class="lang-btn"
+                        type="button"
+                        title="Language support coming soon">
+                        🌐 EN ▾
+                    </button>
+
+                    <a href="messages.html"
+                       class="icon-btn"
+                       title="Chat"
+                       aria-label="Chat">
+                        💬
+                    </a>
+
+                    <a href="login.html"
+                       class="login-pill"
+                       title="Profile / Log In">
+                        👤 Log In
+                    </a>
+
                 </div>
             </header>
 
             <main class="page-content">
+
+                <!-- PAGE HEADER -->
                 <div class="page-header">
+
                     <h1>🗂️ Browse by Category</h1>
-                    <p class="text-muted">Explore Textbooks, Electronics, Rentals, Study Notes, and Student Services</p>
+
+                    <p class="text-muted">
+                        Explore secondhand items,
+                        rentals, study materials,
+                        and student services at Ewha.
+                    </p>
+
                 </div>
 
-                <!-- Adriana: Add category cards and a product grid here -->
-                <section class="content-card">
-                    <p>Categories content goes here...</p>
+                <!-- ===================================
+                     1. MAIN CATEGORIES
+                     =================================== -->
+
+                <section class="content-card category-section">
+
+                    <div class="category-section-title">
+                        <h2>Explore Categories</h2>
+
+                        <p>
+                            Choose a category to discover
+                            available listings.
+                        </p>
+                    </div>
+
+                    <div class="category-grid">
+
+                        <!-- BUY -->
+                        <a href="search.html?type=buy"
+                           class="category-card">
+
+                            <img
+                                src="images/cat-electronics.jpg"
+                                alt="Secondhand items"
+                                class="category-image"
+                                loading="lazy"
+                            >
+
+                            <div class="category-details">
+                                <h3>🛍️ Buy</h3>
+
+                                <p>
+                                    Shop affordable clothes,
+                                    electronics, and
+                                    everyday essentials.
+                                </p>
+
+                                <span class="category-count">
+                                    8 sample listings →
+                                </span>
+                            </div>
+                        </a>
+
+                        <!-- RENT -->
+                        <a href="search.html?type=rent"
+                           class="category-card">
+
+                            <img
+                                src="images/cat-rent.jpg"
+                                alt="Items available for rent"
+                                class="category-image"
+                                loading="lazy"
+                            >
+
+                            <div class="category-details">
+                                <h3>📦 Rent</h3>
+
+                                <p>
+                                    Rent calculators,
+                                    cameras, projectors,
+                                    and other equipment.
+                                </p>
+
+                                <span class="category-count">
+                                    4 sample listings →
+                                </span>
+                            </div>
+                        </a>
+
+                        <!-- SERVICES -->
+                        <a href="search.html?type=services"
+                           class="category-card">
+
+                            <img
+                                src="images/cat-services.jpg"
+                                alt="Student services"
+                                class="category-image"
+                                loading="lazy"
+                            >
+
+                            <div class="category-details">
+                                <h3>🤝 Services</h3>
+
+                                <p>
+                                    Explore tutoring,
+                                    language exchange,
+                                    translation, and
+                                    career support.
+                                </p>
+
+                                <span class="category-count">
+                                    5 sample listings →
+                                </span>
+                            </div>
+                        </a>
+
+                        <!-- STUDY MATERIALS -->
+                        <a href="search.html?type=notes"
+                           class="category-card">
+
+                            <img
+                                src="images/cat-notes.jpg"
+                                alt="Study notes and textbooks"
+                                class="category-image"
+                                loading="lazy"
+                            >
+
+                            <div class="category-details">
+                                <h3>📚 Study Materials</h3>
+
+                                <p>
+                                    Find textbooks,
+                                    class notes, notebooks,
+                                    and study resources.
+                                </p>
+
+                                <span class="category-count">
+                                    4 sample listings →
+                                </span>
+                            </div>
+                        </a>
+
+                    </div>
                 </section>
+
+                <!-- ===================================
+                     2. POPULAR SUBCATEGORIES
+                     =================================== -->
+
+                <section class="content-card category-section">
+
+                    <div class="category-section-title">
+                        <h2>Popular Subcategories</h2>
+
+                        <p>
+                            Browse by the type of item
+                            or service you need.
+                        </p>
+                    </div>
+
+                    <div class="subcategory-grid">
+
+                        <a href="search.html?category=electronics"
+                           class="subcategory-card">
+                            <span class="subcategory-icon">💻</span>
+
+                            <div class="subcategory-text">
+                                <h3>Electronics</h3>
+                                <p>Headphones, cameras, calculators</p>
+                            </div>
+                        </a>
+
+                        <a href="search.html?category=fashion"
+                           class="subcategory-card">
+                            <span class="subcategory-icon">👗</span>
+
+                            <div class="subcategory-text">
+                                <h3>Fashion</h3>
+                                <p>Hoodies, cardigans, jackets, skirts</p>
+                            </div>
+                        </a>
+
+                        <a href="search.html?category=furniture"
+                           class="subcategory-card">
+                            <span class="subcategory-icon">🪑</span>
+
+                            <div class="subcategory-text">
+                                <h3>Furniture</h3>
+                                <p>Desk lamps and room essentials</p>
+                            </div>
+                        </a>
+
+                        <a href="search.html?category=books"
+                           class="subcategory-card">
+                            <span class="subcategory-icon">📖</span>
+
+                            <div class="subcategory-text">
+                                <h3>Books</h3>
+                                <p>Textbooks and references</p>
+                            </div>
+                        </a>
+
+                        <a href="search.html?category=study"
+                           class="subcategory-card">
+                            <span class="subcategory-icon">📝</span>
+
+                            <div class="subcategory-text">
+                                <h3>Study Notes</h3>
+                                <p>Lecture notes and notebooks</p>
+                            </div>
+                        </a>
+
+                        <a href="search.html?category=tutoring"
+                           class="subcategory-card">
+                            <span class="subcategory-icon">👩‍🏫</span>
+
+                            <div class="subcategory-text">
+                                <h3>Tutoring</h3>
+                                <p>Python and Java programming</p>
+                            </div>
+                        </a>
+
+                        <a href="search.html?category=language"
+                           class="subcategory-card">
+                            <span class="subcategory-icon">🌏</span>
+
+                            <div class="subcategory-text">
+                                <h3>Language Exchange</h3>
+                                <p>Practice Korean and English</p>
+                            </div>
+                        </a>
+
+                        <a href="search.html?category=career"
+                           class="subcategory-card">
+                            <span class="subcategory-icon">💼</span>
+
+                            <div class="subcategory-text">
+                                <h3>Career Services</h3>
+                                <p>Resume and portfolio reviews</p>
+                            </div>
+                        </a>
+
+                        <a href="search.html?category=translation"
+                           class="subcategory-card">
+                            <span class="subcategory-icon">🌐</span>
+
+                            <div class="subcategory-text">
+                                <h3>Translation</h3>
+                                <p>Korean-English translation</p>
+                            </div>
+                        </a>
+
+                    </div>
+                </section>
+
+                <!-- ===================================
+                     3. FEATURED LISTINGS
+                     =================================== -->
+
+                <section class="content-card category-section">
+
+                    <div class="featured-header">
+
+                        <div class="category-section-title">
+                            <h2>Featured Listings</h2>
+
+                            <p>
+                                Two selected listings
+                                from each main category.
+                            </p>
+                        </div>
+
+                        <a href="search.html" class="view-all">
+                            View All Listings →
+                        </a>
+
+                    </div>
+
+                    <div class="featured-grid">
+
+                        <!-- BUY 1: EWHA HOODIE -->
+                        <a href="search.html?q=Ewha%20University%20Hoodie"
+                           class="featured-card">
+
+                            <div class="featured-image-wrap">
+                                <img
+                                    src="images/hoodie.jpeg"
+                                    alt="Ewha University Hoodie"
+                                    class="featured-image"
+                                    loading="lazy"
+                                >
+
+                                <span class="featured-badge badge-buy">
+                                    BUY
+                                </span>
+                            </div>
+
+                            <div class="featured-info">
+                                <div class="featured-price">₩12,000</div>
+
+                                <h3>Ewha University Hoodie</h3>
+
+                                <div class="featured-meta">
+                                    Fashion · Like New
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- BUY 2: HEADPHONES -->
+                        <a href="search.html?q=Wireless%20Headphones"
+                           class="featured-card">
+
+                            <div class="featured-image-wrap">
+                                <img
+                                    src="images/headphones.jpeg"
+                                    alt="Wireless Headphones"
+                                    class="featured-image"
+                                    loading="lazy"
+                                >
+
+                                <span class="featured-badge badge-buy">
+                                    BUY
+                                </span>
+                            </div>
+
+                            <div class="featured-info">
+                                <div class="featured-price">₩15,000</div>
+
+                                <h3>Wireless Headphones</h3>
+
+                                <div class="featured-meta">
+                                    Electronics · Good
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- RENT 1: CALCULATOR -->
+                        <a href="search.html?q=Engineering%20Calculator"
+                           class="featured-card">
+
+                            <div class="featured-image-wrap">
+                                <img
+                                    src="images/engineering-calculator.jpeg"
+                                    alt="Engineering Calculator"
+                                    class="featured-image"
+                                    loading="lazy"
+                                >
+
+                                <span class="featured-badge badge-rent">
+                                    RENT
+                                </span>
+                            </div>
+
+                            <div class="featured-info">
+                                <div class="featured-price">₩2,000/day</div>
+
+                                <h3>Engineering Calculator</h3>
+
+                                <div class="featured-meta">
+                                    Electronics · Like New
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- RENT 2: CAMERA -->
+                        <a href="search.html?q=Digital%20Camera"
+                           class="featured-card">
+
+                            <div class="featured-image-wrap">
+                                <img
+                                    src="images/camera.jpeg"
+                                    alt="Digital Camera"
+                                    class="featured-image"
+                                    loading="lazy"
+                                >
+
+                                <span class="featured-badge badge-rent">
+                                    RENT
+                                </span>
+                            </div>
+
+                            <div class="featured-info">
+                                <div class="featured-price">₩8,000/day</div>
+
+                                <h3>Digital Camera</h3>
+
+                                <div class="featured-meta">
+                                    Electronics · Good
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- SERVICE 1: PYTHON TUTORING -->
+                        <a href="search.html?q=Python%20Tutoring"
+                           class="featured-card">
+
+                            <div class="featured-image-wrap">
+                                <img
+                                    src="images/python-tutoring.jpeg"
+                                    alt="Python Tutoring"
+                                    class="featured-image"
+                                    loading="lazy"
+                                >
+
+                                <span class="featured-badge badge-services">
+                                    SERVICE
+                                </span>
+                            </div>
+
+                            <div class="featured-info">
+                                <div class="featured-price">₩15,000/hour</div>
+
+                                <h3>Python Tutoring</h3>
+
+                                <div class="featured-meta">
+                                    Tutoring · Programming
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- SERVICE 2: JAVA TUTORING -->
+                        <a href="search.html?q=Java%20Programming%20Tutoring"
+                           class="featured-card">
+
+                            <div class="featured-image-wrap">
+                                <img
+                                    src="images/java-tutoring.jpg"
+                                    alt="Java Programming Tutoring"
+                                    class="featured-image"
+                                    loading="lazy"
+                                >
+
+                                <span class="featured-badge badge-services">
+                                    SERVICE
+                                </span>
+                            </div>
+
+                            <div class="featured-info">
+                                <div class="featured-price">₩15,000/hour</div>
+
+                                <h3>Java Programming Tutoring</h3>
+
+                                <div class="featured-meta">
+                                    Tutoring · Computer Science
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- NOTES 1: DATA STRUCTURES -->
+                        <a href="search.html?q=Data%20Structures%20Notes"
+                           class="featured-card">
+
+                            <div class="featured-image-wrap">
+                                <img
+                                    src="images/data-structure.jpeg"
+                                    alt="Data Structures Notes"
+                                    class="featured-image"
+                                    loading="lazy"
+                                >
+
+                                <span class="featured-badge badge-notes">
+                                    STUDY MATERIALS
+                                </span>
+                            </div>
+
+                            <div class="featured-info">
+                                <div class="featured-price">₩5,000</div>
+
+                                <h3>Data Structures Notes</h3>
+
+                                <div class="featured-meta">
+                                    Study Notes · Computer Science
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- NOTES 2: COMPUTER ARCHITECTURE -->
+                        <a href="search.html?q=Computer%20Architecture%20Notes"
+                           class="featured-card">
+
+                            <div class="featured-image-wrap">
+                                <img
+                                    src="images/comp-architecture.jpeg"
+                                    alt="Computer Architecture Notes"
+                                    class="featured-image"
+                                    loading="lazy"
+                                >
+
+                                <span class="featured-badge badge-notes">
+                                    STUDY MATERIALS
+                                </span>
+                            </div>
+
+                            <div class="featured-info">
+                                <div class="featured-price">₩5,000</div>
+
+                                <h3>Computer Architecture Notes</h3>
+
+                                <div class="featured-meta">
+                                    Study Notes · Computer Science
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+
+                    <p class="demo-note">
+                        These are sample listings for the Ewha Market
+                        prototype. Real student listings will be
+                        connected through Firebase later.
+                    </p>
+
+                </section>
+
             </main>
         </div>
     </div>
