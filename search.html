@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* Search page specific styling */
+        /* SEARCH PAGE */
         .filter-grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -36,17 +35,17 @@
             margin: 0;
         }
 
-        .result-card-link {
-            display: block;
-            text-decoration: none;
-            color: inherit;
-            height: 100%;
-        }
-
         #searchResults {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 18px;
+        }
+
+        .result-card-link {
+            display: block;
+            height: 100%;
+            text-decoration: none;
+            color: inherit;
         }
 
         #searchResults .item-card {
@@ -89,28 +88,26 @@
             border-radius: 20px;
             font-size: 11px;
             font-weight: 700;
-            background: #f8e5f1;
-            color: #823461;
         }
 
-        #searchResults .badge-buy {
+        .badge-buy {
             background: #fce7f3;
             color: #9d174d;
         }
 
-        #searchResults .badge-rent {
-            background: #dbeafe;
-            color: #1d4ed8;
+        .badge-rent {
+            background: #d9ebd3;
+            color: #376c41;
         }
 
-        #searchResults .badge-service {
-            background: #dcfce7;
-            color: #166534;
+        .badge-service {
+            background: #e8ddf5;
+            color: #68438d;
         }
 
-        #searchResults .badge-notes {
-            background: #fef3c7;
-            color: #92400e;
+        .badge-notes {
+            background: #fff3dc;
+            color: #95601c;
         }
 
         #searchResults .item-info {
@@ -173,10 +170,7 @@
         }
 
         @media (max-width: 900px) {
-            .filter-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
+            .filter-grid,
             #searchResults {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
@@ -237,6 +231,7 @@
 
             <!-- TOPBAR -->
             <header class="topbar">
+
                 <form
                     id="searchForm"
                     action="search.html"
@@ -264,6 +259,7 @@
                 </form>
 
                 <div class="topbar-actions">
+
                     <button
                         id="langToggle"
                         class="lang-btn"
@@ -289,6 +285,7 @@
                     >
                         👤 Log In
                     </a>
+
                 </div>
             </header>
 
@@ -310,63 +307,77 @@
 
                     <div class="filter-grid">
 
+                        <!-- LISTING TYPE -->
                         <div class="form-group">
-                            <label
-                                for="listingType"
-                                class="form-label"
-                            >
+                            <label for="listingType" class="form-label">
                                 Listing Type
                             </label>
 
-                            <select
-                                id="listingType"
-                                class="form-control"
-                            >
+                            <select id="listingType" class="form-control">
                                 <option value="all">All Types</option>
-                                <option value="buy">Buy</option>
-                                <option value="rent">Rent</option>
-                                <option value="services">Services</option>
+                                <option value="buy">Buy & Sell</option>
+                                <option value="rent">Rent & Lend</option>
+                                <option value="services">Student Services</option>
                                 <option value="notes">Study Materials</option>
                             </select>
                         </div>
 
+                        <!-- CATEGORY -->
                         <div class="form-group">
-                            <label
-                                for="categoryFilter"
-                                class="form-label"
-                            >
+                            <label for="categoryFilter" class="form-label">
                                 Category
                             </label>
 
-                            <select
-                                id="categoryFilter"
-                                class="form-control"
-                            >
+                            <select id="categoryFilter" class="form-control">
+
                                 <option value="all">All Categories</option>
-                                <option value="books">Books</option>
-                                <option value="electronics">Electronics</option>
-                                <option value="fashion">Fashion</option>
-                                <option value="furniture">Furniture</option>
-                                <option value="study">Study Notes</option>
-                                <option value="tutoring">Tutoring</option>
-                                <option value="language">Language Exchange</option>
-                                <option value="career">Career Services</option>
-                                <option value="translation">Translation</option>
+
+                                <optgroup label="Buy & Sell">
+                                    <option value="fashion">Clothes</option>
+                                    <option value="shoes">Shoes</option>
+                                    <option value="accessories">Bags & Accessories</option>
+                                    <option value="beauty">Beauty & Makeup</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="furniture">Home & Living</option>
+                                    <option value="books">Books</option>
+                                    <option value="hobbies">Toys & Hobbies</option>
+                                    <option value="sports">Sports & Fitness</option>
+                                    <option value="stationery">Stationery</option>
+                                    <option value="free-items">Free Items</option>
+                                    <option value="other">Other</option>
+                                </optgroup>
+
+                                <optgroup label="Rent & Lend">
+                                    <option value="calculators">Calculators</option>
+                                    <option value="cameras">Cameras & Electronics</option>
+                                    <option value="event-equipment">Event Equipment</option>
+                                </optgroup>
+
+                                <optgroup label="Student Services">
+                                    <option value="tutoring">Tutoring</option>
+                                    <option value="language">Language Exchange</option>
+                                    <option value="translation">Translation</option>
+                                    <option value="career">Career & Portfolio Help</option>
+                                    <option value="study-groups">Study Groups</option>
+                                </optgroup>
+
+                                <optgroup label="Study Materials">
+                                    <option value="study">Lecture Notes</option>
+                                    <option value="past-papers">Past Papers / Jokbo</option>
+                                    <option value="study-guides">Study Guides</option>
+                                    <option value="lab-supplies">Lab & Engineering Supplies</option>
+                                </optgroup>
+
                             </select>
                         </div>
 
+                        <!-- CONDITION -->
                         <div class="form-group">
-                            <label
-                                for="conditionFilter"
-                                class="form-label"
-                            >
+                            <label for="conditionFilter" class="form-label">
                                 Condition
                             </label>
 
-                            <select
-                                id="conditionFilter"
-                                class="form-control"
-                            >
+                            <select id="conditionFilter" class="form-control">
                                 <option value="all">Any Condition</option>
                                 <option value="new">New</option>
                                 <option value="like-new">Like New</option>
@@ -375,11 +386,9 @@
                             </select>
                         </div>
 
+                        <!-- MIN PRICE -->
                         <div class="form-group">
-                            <label
-                                for="minPrice"
-                                class="form-label"
-                            >
+                            <label for="minPrice" class="form-label">
                                 Minimum Price (₩)
                             </label>
 
@@ -392,11 +401,9 @@
                             >
                         </div>
 
+                        <!-- MAX PRICE -->
                         <div class="form-group">
-                            <label
-                                for="maxPrice"
-                                class="form-label"
-                            >
+                            <label for="maxPrice" class="form-label">
                                 Maximum Price (₩)
                             </label>
 
@@ -409,11 +416,9 @@
                             >
                         </div>
 
+                        <!-- COURSE SEARCH -->
                         <div class="form-group">
-                            <label
-                                for="courseSearch"
-                                class="form-label"
-                            >
+                            <label for="courseSearch" class="form-label">
                                 Course Name / Code
                             </label>
 
@@ -425,36 +430,26 @@
                             >
                         </div>
 
+                        <!-- PAYMENT -->
                         <div class="form-group">
-                            <label
-                                for="paymentFilter"
-                                class="form-label"
-                            >
+                            <label for="paymentFilter" class="form-label">
                                 Service Payment
                             </label>
 
-                            <select
-                                id="paymentFilter"
-                                class="form-control"
-                            >
+                            <select id="paymentFilter" class="form-control">
                                 <option value="all">All Services</option>
                                 <option value="free">Free Services</option>
                                 <option value="paid">Paid Services</option>
                             </select>
                         </div>
 
+                        <!-- SORT -->
                         <div class="form-group">
-                            <label
-                                for="sortFilter"
-                                class="form-label"
-                            >
+                            <label for="sortFilter" class="form-label">
                                 Sort By
                             </label>
 
-                            <select
-                                id="sortFilter"
-                                class="form-control"
-                            >
+                            <select id="sortFilter" class="form-control">
                                 <option value="newest">Newest First</option>
                                 <option value="price-low">Price: Low to High</option>
                                 <option value="price-high">Price: High to Low</option>
@@ -488,6 +483,7 @@
 
                     <div class="results-heading">
                         <h2>Available Listings</h2>
+
                         <span id="resultCount" aria-live="polite">
                             0 listings found
                         </span>
@@ -504,16 +500,14 @@
                     >
                         <h3>🔍 No listings found</h3>
                         <p>
-                            Try another keyword or
-                            change your filters.
+                            Try another keyword or change your filters.
                         </p>
                     </div>
 
                     <p class="demo-note">
-                        Note: These are sample listings
-                        for the Ewha Market prototype.
-                        Real listings will be connected
-                        through Firebase later.
+                        Note: These are sample listings for the
+                        Ewha Market prototype. Real listings will
+                        be connected through Firebase later.
                     </p>
                 </section>
 
@@ -522,376 +516,382 @@
     </div>
 
     <script>
-        /*
-         * DEMONSTRATION LISTINGS
-         *
-         * 8 Buy
-         * 4 Rent
-         * 5 Services
-         * 4 Study Materials
-         *
-         * Total: 21 listings
-         */
+        // =========================================
+        // SAMPLE LISTINGS
+        // 37 DEMONSTRATION LISTINGS
+        // =========================================
+
+        // Helper for creating sample listings.
+        // Each listing uses the same data structure.
+        function createListing(
+            id, title, type, category, condition,
+            price, priceUnit, description, image,
+            courseName = "", courseCode = "",
+            subject = "", date = "2026-11-17"
+        ) {
+            return {
+                id,
+                title,
+                type,
+                category,
+                condition,
+                price,
+                priceUnit,
+                courseName,
+                courseCode,
+                subject,
+                description,
+                image,
+                date
+            };
+        }
 
         const listings = [
 
-            // ======================
-            // BUY - 8 LISTINGS
-            // ======================
+            // =====================================
+            // BUY & SELL
+            // =====================================
 
-            {
-                id: "demo-1",
-                title: "Used Desk Lamp",
-                type: "buy",
-                category: "furniture",
-                condition: "used",
-                price: 8000,
-                priceUnit: "",
-                courseName: "",
-                courseCode: "",
-                subject: "",
-                description: "Affordable desk lamp for studying.",
-                image: "images/desk-lamp.jpeg",
-                date: "2026-11-13"
-            },
+            createListing(
+                "demo-1", "Used Desk Lamp",
+                "buy", "furniture", "used",
+                8000, "",
+                "Affordable desk lamp for studying.",
+                "images/desk-lamp.jpeg",
+                "", "", "", "2026-11-13"
+            ),
 
-            {
-                id: "demo-2",
-                title: "Wireless Headphones",
-                type: "buy",
-                category: "electronics",
-                condition: "good",
-                price: 15000,
-                priceUnit: "",
-                courseName: "",
-                courseCode: "",
-                subject: "",
-                description: "Wireless headphones in good condition.",
-                image: "images/headphones.jpeg",
-                date: "2026-11-15"
-            },
+            createListing(
+                "demo-2", "Wireless Headphones",
+                "buy", "electronics", "good",
+                15000, "",
+                "Wireless headphones in good condition.",
+                "images/headphones.jpeg",
+                "", "", "", "2026-11-15"
+            ),
 
-            {
-                id: "demo-3",
-                title: "Ewha University Hoodie",
-                type: "buy",
-                category: "fashion",
-                condition: "like-new",
-                price: 12000,
-                priceUnit: "",
-                courseName: "",
-                courseCode: "",
-                subject: "",
-                description: "Comfortable Ewha hoodie, barely worn.",
-                image: "images/hoodie.jpeg",
-                date: "2026-11-16"
-            },
+            createListing(
+                "demo-3", "Ewha University Hoodie",
+                "buy", "fashion", "like-new",
+                12000, "",
+                "Comfortable Ewha hoodie, barely worn.",
+                "images/hoodie.jpeg"
+            ),
 
-            {
-                id: "demo-4",
-                title: "Mini Desk Fan",
-                type: "buy",
-                category: "electronics",
-                condition: "good",
-                price: 8000,
-                priceUnit: "",
-                courseName: "",
-                courseCode: "",
-                subject: "",
-                description: "Compact desk fan for dorm or study room.",
-                image: "images/desk-fan.jpeg",
-                date: "2026-11-17"
-            },
+            createListing(
+                "demo-4", "Mini Desk Fan",
+                "buy", "electronics", "good",
+                8000, "",
+                "Compact desk fan for dorm or study room.",
+                "images/desk-fan.jpeg"
+            ),
 
-            {
-                id: "demo-18",
-                title: "Cream Knit Cardigan",
-                type: "buy",
-                category: "fashion",
-                condition: "like-new",
-                price: 12000,
-                priceUnit: "",
-                courseName: "",
-                courseCode: "",
-                subject: "",
-                description: "Soft cream cardigan, perfect for autumn.",
-                image: "images/cream-cardigan.jpeg",
-                date: "2026-11-17"
-            },
+            createListing(
+                "demo-18", "Cream Knit Cardigan",
+                "buy", "fashion", "like-new",
+                12000, "",
+                "Soft cream cardigan, perfect for autumn.",
+                "images/cream-cardigan.jpeg"
+            ),
 
-            {
-                id: "demo-19",
-                title: "Oversized Denim Jacket",
-                type: "buy",
-                category: "fashion",
-                condition: "good",
-                price: 18000,
-                priceUnit: "",
-                courseName: "",
-                courseCode: "",
-                subject: "",
-                description: "Casual oversized denim jacket in good condition.",
-                image: "images/denim-jacket.jpeg",
-                date: "2026-11-17"
-            },
+            createListing(
+                "demo-19", "Oversized Denim Jacket",
+                "buy", "fashion", "good",
+                18000, "",
+                "Casual oversized denim jacket.",
+                "images/denim-jacket.jpeg"
+            ),
 
-            {
-                id: "demo-20",
-                title: "Black Pleated Skirt",
-                type: "buy",
-                category: "fashion",
-                condition: "like-new",
-                price: 9000,
-                priceUnit: "",
-                courseName: "",
-                courseCode: "",
-                subject: "",
-                description: "Black pleated skirt, barely worn.",
-                image: "images/skirt-pleated.jpeg",
-                date: "2026-11-17"
-            },
+            createListing(
+                "demo-20", "Black Pleated Skirt",
+                "buy", "fashion", "like-new",
+                9000, "",
+                "Black pleated skirt, barely worn.",
+                "images/skirt-pleated.jpeg"
+            ),
 
-            {
-                id: "demo-21",
-                title: "Grey Zip-Up Hoodie",
-                type: "buy",
-                category: "fashion",
-                condition: "good",
-                price: 10000,
-                priceUnit: "",
-                courseName: "",
-                courseCode: "",
-                subject: "",
-                description: "Comfortable grey zip-up hoodie for everyday wear.",
-                image: "images/grey-hoodie.jpg",
-                date: "2026-11-17"
-            },
+            createListing(
+                "demo-21", "Grey Zip-Up Hoodie",
+                "buy", "fashion", "good",
+                10000, "",
+                "Comfortable grey zip-up hoodie.",
+                "images/grey-hoodie.jpg"
+            ),
 
-            // ======================
-            // RENT - 4 LISTINGS
-            // ======================
+            createListing(
+                "demo-22", "White Sneakers",
+                "buy", "shoes", "good",
+                12000, "",
+                "Comfortable white sneakers for campus.",
+                "images/white-sneakers.jpeg"
+            ),
 
-            {
-                id: "demo-5",
-                title: "Scientific Calculator",
-                type: "rent",
-                category: "electronics",
-                condition: "good",
-                price: 2000,
-                priceUnit: "day",
-                courseName: "",
-                courseCode: "",
-                subject: "Mathematics",
-                description: "Rent a scientific calculator for exams.",
-                image: "images/calculator.jpeg",
-                date: "2026-11-16"
-            },
+            createListing(
+                "demo-23", "Canvas Tote Bag",
+                "buy", "accessories", "like-new",
+                6000, "",
+                "Reusable canvas tote bag for daily use.",
+                "images/canvas-tote.jpeg"
+            ),
 
-            {
-                id: "demo-6",
-                title: "Portable Projector",
-                type: "rent",
-                category: "electronics",
-                condition: "like-new",
-                price: 5000,
-                priceUnit: "day",
-                courseName: "",
-                courseCode: "",
-                subject: "",
-                description: "Portable projector for presentations.",
-                image: "images/projector.jpeg",
-                date: "2026-11-15"
-            },
+            createListing(
+                "demo-24", "Makeup Organizer",
+                "buy", "beauty", "new",
+                4500, "",
+                "Organizer for cosmetics and makeup.",
+                "images/makeup-organizer.jpeg"
+            ),
 
-            {
-                id: "demo-7",
-                title: "Digital Camera",
-                type: "rent",
-                category: "electronics",
-                condition: "good",
-                price: 8000,
-                priceUnit: "day",
-                courseName: "",
-                courseCode: "",
-                subject: "Photography",
-                description: "Rent a digital camera for projects and events.",
-                image: "images/camera.jpeg",
-                date: "2026-11-14"
-            },
+            createListing(
+                "demo-25", "English Novel",
+                "buy", "books", "good",
+                3500, "",
+                "Secondhand English novel.",
+                "images/english-novel.jpeg"
+            ),
 
-            {
-                id: "demo-8",
-                title: "Engineering Calculator",
-                type: "rent",
-                category: "electronics",
-                condition: "like-new",
-                price: 2000,
-                priceUnit: "day",
-                courseName: "",
-                courseCode: "",
-                subject: "Engineering",
-                description: "Engineering calculator available for rent.",
-                image: "images/engineering-calculator.jpeg",
-                date: "2026-11-17"
-            },
+            createListing(
+                "demo-26", "Puzzle Set",
+                "buy", "hobbies", "good",
+                4000, "",
+                "Complete puzzle set for students.",
+                "images/puzzle-set.jpeg"
+            ),
 
-            // ======================
-            // SERVICES - 5 LISTINGS
-            // ======================
+            createListing(
+                "demo-27", "Yoga Mat",
+                "buy", "sports", "good",
+                7000, "",
+                "Exercise and stretching mat.",
+                "images/yoga-mat.jpeg"
+            ),
 
-            {
-                id: "demo-9",
-                title: "Python Tutoring",
-                type: "services",
-                category: "tutoring",
-                condition: "",
-                price: 15000,
-                priceUnit: "hour",
-                courseName: "Python Programming",
-                courseCode: "38403",
-                subject: "Programming",
-                description: "One-to-one Python tutoring for beginners.",
-                image: "images/python-tutoring.jpeg",
-                date: "2026-11-14"
-            },
+            createListing(
+                "demo-28", "Notebook and Pen Set",
+                "buy", "stationery", "new",
+                3000, "",
+                "Stationery for the new semester.",
+                "images/stationary-set.jpeg"
+            ),
 
-            {
-                id: "demo-10",
-                title: "English-Korean Language Exchange",
-                type: "services",
-                category: "language",
-                condition: "",
-                price: 0,
-                priceUnit: "",
-                courseName: "",
-                courseCode: "",
-                subject: "Languages",
-                description: "Free language exchange between Ewha students.",
-                image: "images/language-exchange.jpeg",
-                date: "2026-11-11"
-            },
+            createListing(
+                "demo-29", "Free Folder Set",
+                "buy", "free-items", "good",
+                0, "",
+                "Free folders for Ewha students.",
+                "images/folder-set.jpeg"
+            ),
 
-            {
-                id: "demo-11",
-                title: "Java Programming Tutoring",
-                type: "services",
-                category: "tutoring",
-                condition: "",
-                price: 15000,
-                priceUnit: "hour",
-                courseName: "Java Programming",
-                courseCode: "",
-                subject: "Computer Science",
-                description: "Java tutoring for programming assignments.",
-                image: "images/java-tutoring.jpg",
-                date: "2026-11-17"
-            },
+            createListing(
+                "demo-30", "Compact Umbrella",
+                "buy", "other", "good",
+                4000, "",
+                "Foldable umbrella in good condition.",
+                "images/umbrella.jpeg"
+            ),
 
-            {
-                id: "demo-12",
-                title: "Resume and Portfolio Review",
-                type: "services",
-                category: "career",
-                condition: "",
-                price: 5000,
-                priceUnit: "session",
-                courseName: "",
-                courseCode: "",
-                subject: "Career Development",
-                description: "Student resume and portfolio feedback.",
-                image: "images/resume-portfolio.jpeg",
-                date: "2026-11-17"
-            },
+            // =====================================
+            // RENT & LEND
+            // =====================================
 
-            {
-                id: "demo-13",
-                title: "Korean-English Translation Help",
-                type: "services",
-                category: "translation",
-                condition: "",
-                price: 5000,
-                priceUnit: "session",
-                courseName: "",
-                courseCode: "",
-                subject: "Languages",
-                description: "Translation support for Korean and English.",
-                image: "images/cat-services.jpg",
-                date: "2026-11-17"
-            },
+            createListing(
+                "demo-5", "Scientific Calculator",
+                "rent", "calculators", "good",
+                2000, "day",
+                "Rent a scientific calculator for exams.",
+                "images/calculator.jpeg",
+                "", "", "Mathematics", "2026-11-16"
+            ),
 
-            // ======================
-            // STUDY MATERIALS - 4
-            // ======================
+            createListing(
+                "demo-6", "Portable Projector",
+                "rent", "cameras", "like-new",
+                5000, "day",
+                "Portable projector for presentations.",
+                "images/projector.jpeg",
+                "", "", "", "2026-11-15"
+            ),
 
-            {
-                id: "demo-14",
-                title: "Data Structures Notes",
-                type: "notes",
-                category: "study",
-                condition: "good",
-                price: 5000,
-                priceUnit: "",
-                courseName: "Data Structures",
-                courseCode: "CSE",
-                subject: "Computer Science",
-                description: "Organized notes for Data Structures.",
-                image: "images/data-structure.jpeg",
-                date: "2026-11-15"
-            },
+            createListing(
+                "demo-7", "Digital Camera",
+                "rent", "cameras", "good",
+                8000, "day",
+                "Rent a digital camera for projects and events.",
+                "images/camera.jpeg",
+                "", "", "Photography", "2026-11-14"
+            ),
 
-            {
-                id: "demo-15",
-                title: "Linear Algebra Notebook",
-                type: "notes",
-                category: "study",
-                condition: "like-new",
-                price: 4000,
-                priceUnit: "",
-                courseName: "Linear Algebra",
-                courseCode: "",
-                subject: "Mathematics",
-                description: "Handwritten Linear Algebra notebook.",
-                image: "images/linear-algebra.jpg",
-                date: "2026-11-12"
-            },
+            createListing(
+                "demo-8", "Engineering Calculator",
+                "rent", "calculators", "like-new",
+                2000, "day",
+                "Engineering calculator available for rent.",
+                "images/engineering-calculator.jpeg",
+                "", "", "Engineering"
+            ),
 
-            {
-                id: "demo-16",
-                title: "Computer Architecture Notes",
-                type: "notes",
-                category: "study",
-                condition: "good",
-                price: 5000,
-                priceUnit: "",
-                courseName: "Computer Architecture",
-                courseCode: "",
-                subject: "Computer Science",
-                description: "Computer Architecture study notes.",
-                image: "images/comp-architecture.jpeg",
-                date: "2026-11-16"
-            },
+            createListing(
+                "demo-31", "Calculus Textbook Rental",
+                "rent", "books", "good",
+                1500, "day",
+                "Rent a calculus textbook.",
+                "images/calculus-book.jpeg",
+                "Calculus", "", "Mathematics"
+            ),
 
-            {
-                id: "demo-17",
-                title: "Python Programming Textbook",
-                type: "notes",
-                category: "books",
-                condition: "good",
-                price: 7000,
-                priceUnit: "",
-                courseName: "Python Programming",
-                courseCode: "38403",
-                subject: "Programming",
-                description: "Python Programming textbook for beginners.",
-                image: "images/cat-books.jpg",
-                date: "2026-11-17"
-            }
+            createListing(
+                "demo-32", "Tripod Rental",
+                "rent", "event-equipment", "good",
+                3000, "day",
+                "Tripod for campus events.",
+                "images/tripod.jpeg"
+            ),
+
+            createListing(
+                "demo-33", "Board Game Rental",
+                "rent", "other", "good",
+                2000, "day",
+                "Borrow a board game for a day.",
+                "images/board-game.jpeg"
+            ),
+
+            // =====================================
+            // STUDENT SERVICES
+            // =====================================
+
+            createListing(
+                "demo-9", "Python Tutoring",
+                "services", "tutoring", "",
+                15000, "hour",
+                "One-to-one Python tutoring for beginners.",
+                "images/python-tutoring.jpeg",
+                "Python Programming", "38403",
+                "Programming", "2026-11-14"
+            ),
+
+            createListing(
+                "demo-10", "English-Korean Language Exchange",
+                "services", "language", "",
+                0, "",
+                "Free language exchange between Ewha students.",
+                "images/language-exchange.jpeg",
+                "", "", "Languages", "2026-11-11"
+            ),
+
+            createListing(
+                "demo-11", "Java Programming Tutoring",
+                "services", "tutoring", "",
+                15000, "hour",
+                "Java tutoring for programming assignments.",
+                "images/java-tutoring.jpg",
+                "Java Programming", "",
+                "Computer Science"
+            ),
+
+            createListing(
+                "demo-12", "Resume and Portfolio Review",
+                "services", "career", "",
+                5000, "session",
+                "Student resume and portfolio feedback.",
+                "images/resume-portfolio.jpeg",
+                "", "", "Career Development"
+            ),
+
+            createListing(
+                "demo-13", "Korean-English Translation Help",
+                "services", "translation", "",
+                5000, "session",
+                "Translation support for Korean and English.",
+                "images/cat-services.jpg",
+                "", "", "Languages"
+            ),
+
+            createListing(
+                "demo-34", "Data Structures Study Group",
+                "services", "study-groups", "",
+                0, "",
+                "Free peer study group for Data Structures.",
+                "images/data-structure.jpeg",
+                "Data Structures", "",
+                "Computer Science"
+            ),
+
+            // =====================================
+            // STUDY MATERIALS
+            // =====================================
+
+            createListing(
+                "demo-14", "Data Structures Notes",
+                "notes", "study", "good",
+                5000, "",
+                "Organized notes for Data Structures.",
+                "images/data-structure.jpeg",
+                "Data Structures", "CSE",
+                "Computer Science", "2026-11-15"
+            ),
+
+            createListing(
+                "demo-15", "Linear Algebra Notebook",
+                "notes", "study", "like-new",
+                4000, "",
+                "Handwritten Linear Algebra notebook.",
+                "images/linear-algebra.jpg",
+                "Linear Algebra", "",
+                "Mathematics", "2026-11-12"
+            ),
+
+            createListing(
+                "demo-16", "Computer Architecture Notes",
+                "notes", "study", "good",
+                5000, "",
+                "Computer Architecture study notes.",
+                "images/comp-architecture.jpeg",
+                "Computer Architecture", "",
+                "Computer Science", "2026-11-16"
+            ),
+
+            createListing(
+                "demo-17", "Python Programming Textbook",
+                "notes", "books", "good",
+                7000, "",
+                "Python Programming textbook for beginners.",
+                "images/revision-guide.jpeg",
+                "Python Programming", "38403",
+                "Programming"
+            ),
+
+            createListing(
+                "demo-35", "Student-Created Practice Questions",
+                "notes", "past-papers", "good",
+                0, "",
+                "Original student-written practice questions.",
+                "images/practice-question.jpeg"
+            ),
+
+            createListing(
+                "demo-36", "Linear Algebra Revision Guide",
+                "notes", "study-guides", "good",
+                3500, "",
+                "Student-written revision guide.",
+                "images/linear.jpeg",
+                "Linear Algebra", "",
+                "Mathematics"
+            ),
+
+            createListing(
+                "demo-37", "Breadboard and Jumper Wires",
+                "notes", "lab-supplies", "good",
+                6000, "",
+                "Reusable lab and engineering supplies.",
+                "images/breadboard.jpeg",
+                "", "", "Engineering"
+            )
 
         ];
 
-        // ======================
+        // =========================================
         // GET HTML ELEMENTS
-        // ======================
+        // =========================================
 
         const searchForm = document.getElementById("searchForm");
         const searchInput = document.getElementById("searchInput");
@@ -914,9 +914,9 @@
         const resultCount = document.getElementById("resultCount");
         const emptyState = document.getElementById("emptyState");
 
-        // ======================
+        // =========================================
         // URL PARAMETERS
-        // ======================
+        // =========================================
 
         const params = new URLSearchParams(window.location.search);
 
@@ -944,16 +944,52 @@
             categoryFilter.value = urlCategory;
         }
 
-        // ======================
+        // =========================================
+        // CATEGORY LABELS
+        // =========================================
+
+        function formatCategory(category) {
+            const labels = {
+                fashion: "Clothes",
+                shoes: "Shoes",
+                accessories: "Bags & Accessories",
+                beauty: "Beauty & Makeup",
+                electronics: "Electronics",
+                furniture: "Home & Living",
+                books: "Books & Textbooks",
+                hobbies: "Toys & Hobbies",
+                sports: "Sports & Fitness",
+                stationery: "Stationery",
+                "free-items": "Free Items",
+                other: "Other",
+                calculators: "Calculators",
+                cameras: "Cameras & Electronics",
+                "event-equipment": "Event Equipment",
+                tutoring: "Tutoring",
+                language: "Language Exchange",
+                translation: "Translation",
+                career: "Career & Portfolio Help",
+                "study-groups": "Study Groups",
+                study: "Lecture Notes",
+                "past-papers": "Practice Questions / Jokbo",
+                "study-guides": "Study Guides",
+                "lab-supplies": "Lab & Engineering Supplies"
+            };
+
+            return labels[category] || category;
+        }
+
+        // =========================================
         // FORMAT PRICE
-        // ======================
+        // =========================================
 
         function formatPrice(item) {
             if (item.price === 0) {
                 return "Free";
             }
 
-            const priceText = "₩" + item.price.toLocaleString("ko-KR");
+            const priceText =
+                "₩" + item.price.toLocaleString("ko-KR");
 
             if (item.priceUnit) {
                 return priceText + "/" + item.priceUnit;
@@ -962,36 +998,19 @@
             return priceText;
         }
 
-        // ======================
-        // FORMAT CATEGORY
-        // ======================
-
-        function formatCategory(category) {
-            const labels = {
-                books: "Books",
-                electronics: "Electronics",
-                fashion: "Fashion",
-                furniture: "Furniture",
-                study: "Study Notes",
-                tutoring: "Tutoring",
-                language: "Language Exchange",
-                career: "Career Services",
-                translation: "Translation"
-            };
-
-            return labels[category] || category;
-        }
-
-        // ======================
+        // =========================================
         // RENDER LISTINGS
-        // ======================
+        // =========================================
 
         function renderListings(items) {
+
             searchResults.innerHTML = "";
 
             resultCount.textContent =
                 items.length +
-                (items.length === 1 ? " listing found" : " listings found");
+                (items.length === 1
+                    ? " listing found"
+                    : " listings found");
 
             if (items.length === 0) {
                 emptyState.classList.remove("hidden");
@@ -1003,11 +1022,15 @@
             items.forEach(item => {
 
                 const card = document.createElement("a");
-                card.className = "item-card result-card-link";
+
+                card.className =
+                    "item-card result-card-link";
+
                 card.href =
                     "item-detail.html?id=" +
                     encodeURIComponent(item.id);
 
+                // IMAGE
                 const imageWrap = document.createElement("div");
                 imageWrap.className = "item-img-wrap";
 
@@ -1021,8 +1044,8 @@
                     this.src = "images/cat-books.jpg";
                 };
 
+                // TYPE BADGE
                 const badge = document.createElement("span");
-
                 badge.className = "item-badge";
 
                 const badgeLabels = {
@@ -1040,12 +1063,12 @@
                 };
 
                 badge.textContent = badgeLabels[item.type];
-
                 badge.classList.add(badgeClasses[item.type]);
 
                 imageWrap.appendChild(image);
                 imageWrap.appendChild(badge);
 
+                // ITEM INFO
                 const info = document.createElement("div");
                 info.className = "item-info";
 
@@ -1065,6 +1088,7 @@
                 info.appendChild(title);
                 info.appendChild(description);
 
+                // COURSE INFORMATION
                 if (item.courseName) {
                     const course = document.createElement("div");
                     course.className = "item-course";
@@ -1079,6 +1103,7 @@
                     info.appendChild(course);
                 }
 
+                // CATEGORY AND CONDITION
                 const meta = document.createElement("div");
                 meta.className = "item-meta";
 
@@ -1097,13 +1122,14 @@
             });
         }
 
-        // ======================
+        // =========================================
         // FILTER LISTINGS
-        // ======================
+        // =========================================
 
         function filterListings() {
 
-            const keyword = searchInput.value.trim().toLowerCase();
+            const keyword =
+                searchInput.value.trim().toLowerCase();
 
             const selectedType = listingType.value;
             const selectedCategory = categoryFilter.value;
@@ -1133,7 +1159,8 @@
                     item.courseName,
                     item.courseCode,
                     item.subject,
-                    item.category
+                    item.category,
+                    formatCategory(item.category)
                 ].join(" ").toLowerCase();
 
                 const matchesKeyword =
@@ -1150,7 +1177,11 @@
 
                 const matchesCondition =
                     selectedCondition === "all" ||
-                    item.condition === selectedCondition;
+                    item.condition === selectedCondition ||
+                    (
+                        item.type === "services" &&
+                        item.condition === ""
+                    );
 
                 const matchesMinimum =
                     minimum === null ||
@@ -1218,12 +1249,11 @@
             renderListings(filtered);
         }
 
-        // ======================
-        // SEARCH FORM
-        // ======================
+        // =========================================
+        // UPDATE URL WHEN FILTERS ARE APPLIED
+        // =========================================
 
-        searchForm.addEventListener("submit", function (event) {
-            event.preventDefault();
+        function updateSearchURL() {
 
             const url = new URL(window.location.href);
             const keyword = searchInput.value.trim();
@@ -1234,22 +1264,46 @@
                 url.searchParams.delete("q");
             }
 
-            window.history.replaceState({}, "", url);
+            if (listingType.value !== "all") {
+                url.searchParams.set("type", listingType.value);
+            } else {
+                url.searchParams.delete("type");
+            }
 
+            if (categoryFilter.value !== "all") {
+                url.searchParams.set(
+                    "category",
+                    categoryFilter.value
+                );
+            } else {
+                url.searchParams.delete("category");
+            }
+
+            window.history.replaceState({}, "", url);
+        }
+
+        // =========================================
+        // SEARCH FORM
+        // =========================================
+
+        searchForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            updateSearchURL();
             filterListings();
         });
 
-        // ======================
+        // =========================================
         // APPLY FILTERS
-        // ======================
+        // =========================================
 
         applyFilters.addEventListener("click", function () {
+            updateSearchURL();
             filterListings();
         });
 
-        // ======================
+        // =========================================
         // RESET FILTERS
-        // ======================
+        // =========================================
 
         resetFilters.addEventListener("click", function () {
 
@@ -1265,19 +1319,13 @@
             paymentFilter.value = "all";
             sortFilter.value = "newest";
 
-            const url = new URL(window.location.href);
-            url.searchParams.delete("q");
-            url.searchParams.delete("type");
-            url.searchParams.delete("category");
-
-            window.history.replaceState({}, "", url);
-
+            updateSearchURL();
             filterListings();
         });
 
-        // ======================
+        // =========================================
         // INITIAL DISPLAY
-        // ======================
+        // =========================================
 
         filterListings();
 
