@@ -1,0 +1,191 @@
+/* Login page — owner: Safiyya */
+
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 140px);
+  padding: 10px 20px;
+}
+
+.login-panel {
+  width: 100%;
+  max-width: 440px;
+  text-align: center;
+}
+
+/* Headings */
+.login-brand {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--ewha-green);
+  margin-bottom: 6px;
+}
+
+.login-tagline {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 26px;
+}
+
+.login-heading {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--text-main);
+  margin-bottom: 20px;
+}
+
+/* Inputs */
+.login-field {
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.login-field .form-control {
+  height: 48px;
+  padding: 0 18px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background-color: var(--card-bg);
+  font-size: 0.9rem;
+}
+
+.login-field .form-control:focus {
+  border-color: var(--ewha-green);
+  box-shadow: 0 0 0 3px var(--ewha-green-light);
+}
+
+.login-hint {
+  display: block;
+  margin: 6px 0 0 18px;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+/* Password show/hide */
+.login-password {
+  position: relative;
+}
+
+.login-password .form-control {
+  padding-right: 72px;
+}
+
+.login-toggle {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: 0;
+  color: var(--ewha-green);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Forgot password */
+.login-links {
+  text-align: right;
+  margin: 0 6px 6px;
+  font-size: 0.82rem;
+}
+
+.login-links a {
+  color: var(--ewha-green);
+  text-decoration: none;
+}
+
+.login-links a:hover {
+  text-decoration: underline;
+}
+
+/* Feedback message (filled by JS) */
+.login-message {
+  min-height: 1.2em;
+  margin: 4px 0 8px;
+  font-size: 0.85rem;
+}
+
+.login-message.error {
+  color: #b42318;
+}
+
+.login-message.success {
+  color: var(--ewha-green);
+}
+
+/* Resend verification (shown only for unverified accounts) */
+.login-resend {
+  display: block;
+  margin: 0 auto 10px;
+  background: none;
+  border: 0;
+  color: var(--ewha-green);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.login-resend[hidden] {
+  display: none;
+}
+
+/* Submit button */
+.login-submit {
+  width: 100%;
+  height: 46px;
+  margin-top: 6px;
+  border: none;
+  border-radius: 999px;
+  background-color: var(--ewha-green);
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.login-submit:hover:not(:disabled) {
+  background-color: var(--ewha-green-hover);
+}
+
+.login-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Register link */
+.login-register {
+  margin-top: 18px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.login-register a {
+  color: var(--ewha-green);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* Accessible hidden labels (Bootstrap isn't loaded on this page) */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Small screens */
+@media (max-width: 480px) {
+  .login-brand {
+    font-size: 1.7rem;
+  }
+}
