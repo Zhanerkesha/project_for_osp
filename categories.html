@@ -33,7 +33,9 @@
             font-size: 14px;
         }
 
-        /* Main categories */
+        /* ========================================
+           MAIN CATEGORIES
+           ======================================== */
 
         .category-grid {
             display: grid;
@@ -85,10 +87,38 @@
         .category-count {
             font-size: 12px;
             font-weight: 700;
-            color: #943d73;
+            color: #357a59;
         }
 
-        /* Subcategories */
+        /* ========================================
+           SUBCATEGORIES
+           ======================================== */
+
+        .subcategory-group {
+            margin-bottom: 32px;
+        }
+
+        .subcategory-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .subcategory-group-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .subcategory-group-title h3 {
+            font-size: 18px;
+            margin: 0;
+            color: #285b43;
+        }
+
+        .group-label {
+            font-size: 12px;
+            color: #718078;
+        }
 
         .subcategory-grid {
             display: grid;
@@ -106,12 +136,16 @@
             border-radius: 12px;
             text-decoration: none;
             color: inherit;
-            transition: background 0.2s, transform 0.2s;
+            transition:
+                background 0.2s,
+                transform 0.2s,
+                box-shadow 0.2s;
         }
 
         .subcategory-card:hover {
-            background: #fcf2f8;
-            transform: translateY(-2px);
+            background: #f2f8f4;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
         }
 
         .subcategory-icon {
@@ -122,7 +156,6 @@
             height: 44px;
             flex-shrink: 0;
             border-radius: 12px;
-            background: #f8eaf3;
             font-size: 24px;
         }
 
@@ -138,7 +171,27 @@
             line-height: 1.4;
         }
 
-        /* Featured listings */
+        /* Pastel colors for each group */
+
+        .buy-group .subcategory-icon {
+            background: #ffe4ed;
+        }
+
+        .rent-group .subcategory-icon {
+            background: #d9ebd3;
+        }
+
+        .services-group .subcategory-icon {
+            background: #e8ddf5;
+        }
+
+        .notes-group .subcategory-icon {
+            background: #fff3dc;
+        }
+
+        /* ========================================
+           FEATURED LISTINGS
+           ======================================== */
 
         .featured-header {
             display: flex;
@@ -154,7 +207,7 @@
         }
 
         .view-all {
-            color: #943d73;
+            color: #357a59;
             text-decoration: none;
             font-size: 14px;
             font-weight: 700;
@@ -211,22 +264,22 @@
         }
 
         .badge-buy {
-            background: #fce7f3;
+            background: #ffe4ed;
             color: #9d174d;
         }
 
         .badge-rent {
-            background: #dbeafe;
-            color: #1d4ed8;
+            background: #d9ebd3;
+            color: #285b43;
         }
 
         .badge-services {
-            background: #dcfce7;
-            color: #166534;
+            background: #e8ddf5;
+            color: #654784;
         }
 
         .badge-notes {
-            background: #fef3c7;
+            background: #fff3dc;
             color: #92400e;
         }
 
@@ -238,6 +291,7 @@
             font-size: 17px;
             font-weight: 700;
             margin-bottom: 8px;
+            color: #357a59;
         }
 
         .featured-info h3 {
@@ -263,11 +317,13 @@
         .subcategory-card:focus-visible,
         .featured-card:focus-visible,
         .view-all:focus-visible {
-            outline: 3px solid #943d73;
+            outline: 3px solid #357a59;
             outline-offset: 3px;
         }
 
-        /* Responsive layout */
+        /* ========================================
+           RESPONSIVE LAYOUT
+           ======================================== */
 
         @media (max-width: 1150px) {
             .category-grid,
@@ -296,6 +352,10 @@
             .category-image {
                 height: 185px;
             }
+
+            .subcategory-group-title {
+                flex-wrap: wrap;
+            }
         }
     </style>
 </head>
@@ -303,7 +363,10 @@
 <body>
     <div class="app-layout">
 
-        <!-- SIDEBAR -->
+        <!-- ===================================
+             SIDEBAR
+             =================================== -->
+
         <aside class="sidebar">
 
             <a href="index.html" class="brand-logo">
@@ -345,10 +408,14 @@
 
         </aside>
 
-        <!-- MAIN CONTENT -->
+        <!-- ===================================
+             MAIN CONTENT
+             =================================== -->
+
         <div class="main-wrapper">
 
             <!-- TOPBAR -->
+
             <header class="topbar">
 
                 <form action="search.html"
@@ -397,21 +464,23 @@
                     </a>
 
                 </div>
+
             </header>
+
+            <!-- PAGE CONTENT -->
 
             <main class="page-content">
 
                 <!-- PAGE HEADER -->
-                <div class="page-header">
 
+                <div class="page-header">
                     <h1>🗂️ Browse by Category</h1>
 
                     <p class="text-muted">
-                        Explore secondhand items,
-                        rentals, study materials,
-                        and student services at Ewha.
+                        Explore secondhand items, rentals,
+                        study materials, and student services
+                        at Ewha.
                     </p>
-
                 </div>
 
                 <!-- ===================================
@@ -432,6 +501,7 @@
                     <div class="category-grid">
 
                         <!-- BUY -->
+
                         <a href="search.html?type=buy"
                            class="category-card">
 
@@ -447,8 +517,8 @@
 
                                 <p>
                                     Shop affordable clothes,
-                                    electronics, and
-                                    everyday essentials.
+                                    electronics, and everyday
+                                    essentials.
                                 </p>
 
                                 <span class="category-count">
@@ -458,6 +528,7 @@
                         </a>
 
                         <!-- RENT -->
+
                         <a href="search.html?type=rent"
                            class="category-card">
 
@@ -472,9 +543,9 @@
                                 <h3>📦 Rent</h3>
 
                                 <p>
-                                    Rent calculators,
-                                    cameras, projectors,
-                                    and other equipment.
+                                    Rent calculators, cameras,
+                                    projectors, and other
+                                    equipment.
                                 </p>
 
                                 <span class="category-count">
@@ -484,6 +555,7 @@
                         </a>
 
                         <!-- SERVICES -->
+
                         <a href="search.html?type=services"
                            class="category-card">
 
@@ -498,10 +570,9 @@
                                 <h3>🤝 Services</h3>
 
                                 <p>
-                                    Explore tutoring,
-                                    language exchange,
-                                    translation, and
-                                    career support.
+                                    Explore tutoring, language
+                                    exchange, translation,
+                                    and career support.
                                 </p>
 
                                 <span class="category-count">
@@ -511,6 +582,7 @@
                         </a>
 
                         <!-- STUDY MATERIALS -->
+
                         <a href="search.html?type=notes"
                            class="category-card">
 
@@ -525,9 +597,8 @@
                                 <h3>📚 Study Materials</h3>
 
                                 <p>
-                                    Find textbooks,
-                                    class notes, notebooks,
-                                    and study resources.
+                                    Find textbooks, class notes,
+                                    notebooks, and study resources.
                                 </p>
 
                                 <span class="category-count">
@@ -554,99 +625,313 @@
                         </p>
                     </div>
 
-                    <div class="subcategory-grid">
+                    <!-- BUY & SELL -->
 
-                        <a href="search.html?category=electronics"
-                           class="subcategory-card">
-                            <span class="subcategory-icon">💻</span>
+                    <div class="subcategory-group buy-group">
 
-                            <div class="subcategory-text">
-                                <h3>Electronics</h3>
-                                <p>Headphones, cameras, calculators</p>
-                            </div>
-                        </a>
+                        <div class="subcategory-group-title">
+                            <h3>🛍️ Buy & Sell</h3>
+                            <span class="group-label">
+                                12 categories
+                            </span>
+                        </div>
 
-                        <a href="search.html?category=fashion"
-                           class="subcategory-card">
-                            <span class="subcategory-icon">👗</span>
+                        <div class="subcategory-grid">
 
-                            <div class="subcategory-text">
-                                <h3>Fashion</h3>
-                                <p>Hoodies, cardigans, jackets, skirts</p>
-                            </div>
-                        </a>
+                            <a href="search.html?type=buy&category=fashion"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">👗</span>
+                                <div class="subcategory-text">
+                                    <h3>Clothes</h3>
+                                    <p>Hoodies, jackets, skirts, cardigans</p>
+                                </div>
+                            </a>
 
-                        <a href="search.html?category=furniture"
-                           class="subcategory-card">
-                            <span class="subcategory-icon">🪑</span>
+                            <a href="search.html?type=buy&category=shoes"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">👟</span>
+                                <div class="subcategory-text">
+                                    <h3>Shoes</h3>
+                                    <p>Sneakers, boots and flats</p>
+                                </div>
+                            </a>
 
-                            <div class="subcategory-text">
-                                <h3>Furniture</h3>
-                                <p>Desk lamps and room essentials</p>
-                            </div>
-                        </a>
+                            <a href="search.html?type=buy&category=accessories"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">👜</span>
+                                <div class="subcategory-text">
+                                    <h3>Bags & Accessories</h3>
+                                    <p>Bags, jewelry and hair accessories</p>
+                                </div>
+                            </a>
 
-                        <a href="search.html?category=books"
-                           class="subcategory-card">
-                            <span class="subcategory-icon">📖</span>
+                            <a href="search.html?type=buy&category=beauty"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">💄</span>
+                                <div class="subcategory-text">
+                                    <h3>Beauty & Makeup</h3>
+                                    <p>Unused cosmetics and beauty tools</p>
+                                </div>
+                            </a>
 
-                            <div class="subcategory-text">
-                                <h3>Books</h3>
-                                <p>Textbooks and references</p>
-                            </div>
-                        </a>
+                            <a href="search.html?type=buy&category=electronics"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">💻</span>
+                                <div class="subcategory-text">
+                                    <h3>Electronics</h3>
+                                    <p>Headphones, laptops and gadgets</p>
+                                </div>
+                            </a>
 
-                        <a href="search.html?category=study"
-                           class="subcategory-card">
-                            <span class="subcategory-icon">📝</span>
+                            <a href="search.html?type=buy&category=furniture"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">🏠</span>
+                                <div class="subcategory-text">
+                                    <h3>Home & Living</h3>
+                                    <p>Desk lamps, storage and room essentials</p>
+                                </div>
+                            </a>
 
-                            <div class="subcategory-text">
-                                <h3>Study Notes</h3>
-                                <p>Lecture notes and notebooks</p>
-                            </div>
-                        </a>
+                            <a href="search.html?type=buy&category=books"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">📖</span>
+                                <div class="subcategory-text">
+                                    <h3>Books</h3>
+                                    <p>Novels, magazines and general books</p>
+                                </div>
+                            </a>
 
-                        <a href="search.html?category=tutoring"
-                           class="subcategory-card">
-                            <span class="subcategory-icon">👩‍🏫</span>
+                            <a href="search.html?type=buy&category=hobbies"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">🧸</span>
+                                <div class="subcategory-text">
+                                    <h3>Toys & Hobbies</h3>
+                                    <p>Collectibles, crafts and board games</p>
+                                </div>
+                            </a>
 
-                            <div class="subcategory-text">
-                                <h3>Tutoring</h3>
-                                <p>Python and Java programming</p>
-                            </div>
-                        </a>
+                            <a href="search.html?type=buy&category=sports"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">🏸</span>
+                                <div class="subcategory-text">
+                                    <h3>Sports & Fitness</h3>
+                                    <p>Sports equipment and accessories</p>
+                                </div>
+                            </a>
 
-                        <a href="search.html?category=language"
-                           class="subcategory-card">
-                            <span class="subcategory-icon">🌏</span>
+                            <a href="search.html?type=buy&category=stationery"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">✏️</span>
+                                <div class="subcategory-text">
+                                    <h3>Stationery</h3>
+                                    <p>Pens, planners and notebooks</p>
+                                </div>
+                            </a>
 
-                            <div class="subcategory-text">
-                                <h3>Language Exchange</h3>
-                                <p>Practice Korean and English</p>
-                            </div>
-                        </a>
+                            <a href="search.html?type=buy&category=free-items"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">🎁</span>
+                                <div class="subcategory-text">
+                                    <h3>Free Items</h3>
+                                    <p>Free giveaways from students</p>
+                                </div>
+                            </a>
 
-                        <a href="search.html?category=career"
-                           class="subcategory-card">
-                            <span class="subcategory-icon">💼</span>
+                            <a href="search.html?type=buy&category=other"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">📦</span>
+                                <div class="subcategory-text">
+                                    <h3>Other</h3>
+                                    <p>Other secondhand items</p>
+                                </div>
+                            </a>
 
-                            <div class="subcategory-text">
-                                <h3>Career Services</h3>
-                                <p>Resume and portfolio reviews</p>
-                            </div>
-                        </a>
-
-                        <a href="search.html?category=translation"
-                           class="subcategory-card">
-                            <span class="subcategory-icon">🌐</span>
-
-                            <div class="subcategory-text">
-                                <h3>Translation</h3>
-                                <p>Korean-English translation</p>
-                            </div>
-                        </a>
-
+                        </div>
                     </div>
+
+                    <!-- RENT & LEND -->
+
+                    <div class="subcategory-group rent-group">
+
+                        <div class="subcategory-group-title">
+                            <h3>🔄 Rent & Lend</h3>
+                            <span class="group-label">
+                                5 categories
+                            </span>
+                        </div>
+
+                        <div class="subcategory-grid">
+
+                            <a href="search.html?type=rent&category=electronics"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">🧮</span>
+                                <div class="subcategory-text">
+                                    <h3>Calculators</h3>
+                                    <p>Scientific and engineering calculators</p>
+                                </div>
+                            </a>
+
+                            <a href="search.html?type=rent&category=electronics"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">📷</span>
+                                <div class="subcategory-text">
+                                    <h3>Cameras & Electronics</h3>
+                                    <p>Cameras, projectors and devices</p>
+                                </div>
+                            </a>
+
+                            <a href="search.html?type=rent&category=books"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">📚</span>
+                                <div class="subcategory-text">
+                                    <h3>Books & Textbooks</h3>
+                                    <p>Borrow books for short periods</p>
+                                </div>
+                            </a>
+
+                            <a href="search.html?type=rent&category=event-equipment"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">🎤</span>
+                                <div class="subcategory-text">
+                                    <h3>Event Equipment</h3>
+                                    <p>Presentation and event supplies</p>
+                                </div>
+                            </a>
+
+                            <a href="search.html?type=rent&category=other"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">📦</span>
+                                <div class="subcategory-text">
+                                    <h3>Other Rentals</h3>
+                                    <p>Other items available to rent</p>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+
+                    <!-- STUDENT SERVICES -->
+
+                    <div class="subcategory-group services-group">
+
+                        <div class="subcategory-group-title">
+                            <h3>🤝 Student Services</h3>
+                            <span class="group-label">
+                                5 categories
+                            </span>
+                        </div>
+
+                        <div class="subcategory-grid">
+
+                            <a href="search.html?type=services&category=tutoring"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">👩‍🏫</span>
+                                <div class="subcategory-text">
+                                    <h3>Tutoring</h3>
+                                    <p>Python, Java, mathematics and more</p>
+                                </div>
+                            </a>
+
+                            <a href="search.html?type=services&category=language"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">🌏</span>
+                                <div class="subcategory-text">
+                                    <h3>Language Exchange</h3>
+                                    <p>Practice Korean, English and more</p>
+                                </div>
+                            </a>
+
+                            <a href="search.html?type=services&category=translation"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">🗣️</span>
+                                <div class="subcategory-text">
+                                    <h3>Translation</h3>
+                                    <p>Language and translation assistance</p>
+                                </div>
+                            </a>
+
+                            <a href="search.html?type=services&category=career"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">💼</span>
+                                <div class="subcategory-text">
+                                    <h3>Career & Portfolio Help</h3>
+                                    <p>Resume and portfolio reviews</p>
+                                </div>
+                            </a>
+
+                            <a href="search.html?type=services&category=study-groups"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">👥</span>
+                                <div class="subcategory-text">
+                                    <h3>Study Groups</h3>
+                                    <p>Find students to study together</p>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+
+                    <!-- STUDY MATERIALS -->
+
+                    <div class="subcategory-group notes-group">
+
+                        <div class="subcategory-group-title">
+                            <h3>📚 Study Materials</h3>
+                            <span class="group-label">
+                                5 categories
+                            </span>
+                        </div>
+
+                        <div class="subcategory-grid">
+
+                            <a href="search.html?type=notes&category=study"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">📝</span>
+                                <div class="subcategory-text">
+                                    <h3>Lecture Notes</h3>
+                                    <p>Class notes and notebooks</p>
+                                </div>
+                            </a>
+
+                            <a href="search.html?type=notes&category=books"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">📕</span>
+                                <div class="subcategory-text">
+                                    <h3>Course Textbooks</h3>
+                                    <p>University textbooks and references</p>
+                                </div>
+                            </a>
+
+                            <a href="search.html?type=notes&category=past-papers"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">📑</span>
+                                <div class="subcategory-text">
+                                    <h3>Past Papers / Jokbo</h3>
+                                    <p>Materials authorized for sharing</p>
+                                </div>
+                            </a>
+
+                            <a href="search.html?type=notes&category=study-guides"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">📋</span>
+                                <div class="subcategory-text">
+                                    <h3>Study Guides</h3>
+                                    <p>Summaries and revision resources</p>
+                                </div>
+                            </a>
+
+                            <a href="search.html?type=notes&category=lab-supplies"
+                               class="subcategory-card">
+                                <span class="subcategory-icon">🔬</span>
+                                <div class="subcategory-text">
+                                    <h3>Lab & Engineering Supplies</h3>
+                                    <p>Course-related practical equipment</p>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+
                 </section>
 
                 <!-- ===================================
@@ -675,6 +960,7 @@
                     <div class="featured-grid">
 
                         <!-- BUY 1: EWHA HOODIE -->
+
                         <a href="search.html?q=Ewha%20University%20Hoodie"
                            class="featured-card">
 
@@ -693,9 +979,7 @@
 
                             <div class="featured-info">
                                 <div class="featured-price">₩12,000</div>
-
                                 <h3>Ewha University Hoodie</h3>
-
                                 <div class="featured-meta">
                                     Fashion · Like New
                                 </div>
@@ -703,6 +987,7 @@
                         </a>
 
                         <!-- BUY 2: HEADPHONES -->
+
                         <a href="search.html?q=Wireless%20Headphones"
                            class="featured-card">
 
@@ -721,9 +1006,7 @@
 
                             <div class="featured-info">
                                 <div class="featured-price">₩15,000</div>
-
                                 <h3>Wireless Headphones</h3>
-
                                 <div class="featured-meta">
                                     Electronics · Good
                                 </div>
@@ -731,6 +1014,7 @@
                         </a>
 
                         <!-- RENT 1: CALCULATOR -->
+
                         <a href="search.html?q=Engineering%20Calculator"
                            class="featured-card">
 
@@ -749,9 +1033,7 @@
 
                             <div class="featured-info">
                                 <div class="featured-price">₩2,000/day</div>
-
                                 <h3>Engineering Calculator</h3>
-
                                 <div class="featured-meta">
                                     Electronics · Like New
                                 </div>
@@ -759,6 +1041,7 @@
                         </a>
 
                         <!-- RENT 2: CAMERA -->
+
                         <a href="search.html?q=Digital%20Camera"
                            class="featured-card">
 
@@ -777,9 +1060,7 @@
 
                             <div class="featured-info">
                                 <div class="featured-price">₩8,000/day</div>
-
                                 <h3>Digital Camera</h3>
-
                                 <div class="featured-meta">
                                     Electronics · Good
                                 </div>
@@ -787,6 +1068,7 @@
                         </a>
 
                         <!-- SERVICE 1: PYTHON TUTORING -->
+
                         <a href="search.html?q=Python%20Tutoring"
                            class="featured-card">
 
@@ -805,9 +1087,7 @@
 
                             <div class="featured-info">
                                 <div class="featured-price">₩15,000/hour</div>
-
                                 <h3>Python Tutoring</h3>
-
                                 <div class="featured-meta">
                                     Tutoring · Programming
                                 </div>
@@ -815,6 +1095,7 @@
                         </a>
 
                         <!-- SERVICE 2: JAVA TUTORING -->
+
                         <a href="search.html?q=Java%20Programming%20Tutoring"
                            class="featured-card">
 
@@ -833,9 +1114,7 @@
 
                             <div class="featured-info">
                                 <div class="featured-price">₩15,000/hour</div>
-
                                 <h3>Java Programming Tutoring</h3>
-
                                 <div class="featured-meta">
                                     Tutoring · Computer Science
                                 </div>
@@ -843,6 +1122,7 @@
                         </a>
 
                         <!-- NOTES 1: DATA STRUCTURES -->
+
                         <a href="search.html?q=Data%20Structures%20Notes"
                            class="featured-card">
 
@@ -861,9 +1141,7 @@
 
                             <div class="featured-info">
                                 <div class="featured-price">₩5,000</div>
-
                                 <h3>Data Structures Notes</h3>
-
                                 <div class="featured-meta">
                                     Study Notes · Computer Science
                                 </div>
@@ -871,6 +1149,7 @@
                         </a>
 
                         <!-- NOTES 2: COMPUTER ARCHITECTURE -->
+
                         <a href="search.html?q=Computer%20Architecture%20Notes"
                            class="featured-card">
 
@@ -889,9 +1168,7 @@
 
                             <div class="featured-info">
                                 <div class="featured-price">₩5,000</div>
-
                                 <h3>Computer Architecture Notes</h3>
-
                                 <div class="featured-meta">
                                     Study Notes · Computer Science
                                 </div>
@@ -911,5 +1188,6 @@
             </main>
         </div>
     </div>
+
 </body>
 </html>
