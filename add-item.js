@@ -1,62 +1,24 @@
-// Ewha Market - add-item.html
+// Ewha Market - add-item.html (create + edit listing)
 // Owner: Zhanerke
-// Stage 1 (Nov 22): show/hide fields depending on the listing type + basic validation.
-// Stage 2 (Nov 26): save the listing to Firestore and upload the photo (see TODO in handleSubmit).
+//
+//   add-item.html           -> create a new listing
+//   add-item.html?id=<id>   -> edit an existing listing (form is pre-filled)
+//
+// All reading/saving goes through EwhaListings.store (listings-data.js),
+// so connecting Firebase later does not change this file.
 
 (function () {
     'use strict';
 
-    // Category options per listing type.
-    // "value" is what gets saved in Firestore (unified schema), "label" is what the user sees.
-    const CATEGORIES = {
-        buy: [
-            { value: 'textbooks', label: '📚 Textbooks & reference books' },
-            { value: 'study_notes', label: '📝 Student notes & study materials' },
-            { value: 'electronics', label: '💻 Electronics & calculators' },
-            { value: 'clothing', label: '👕 Clothing & accessories' },
-            { value: 'dorm', label: '🛏️ Dorm & household essentials' },
-            { value: 'stationery', label: '✏️ Stationery & school supplies' },
-            { value: 'other', label: '📦 Other' }
-        ],
-        rent: [
-            { value: 'calculators', label: '🧮 Calculators' },
-            { value: 'textbooks', label: '📚 Textbooks (e.g. open-book exams)' },
-            { value: 'cameras', label: '📷 Cameras & photography' },
-            { value: 'study_equipment', label: '🎧 Study equipment' },
-            { value: 'other', label: '📦 Other' }
-        ],
-        service: [
-            { value: 'language_exchange', label: '🗣️ Language exchange' },
-            { value: 'tutoring', label: '👩‍🏫 Peer tutoring' },
-            { value: 'study_partner', label: '🤝 Study partner / mentoring' },
-            { value: 'skill_sharing', label: '🎨 Skill sharing' }
-        ]
-    };
+    const { CATEGORIES, PRICE_UNITS, COURSE_CATEGORIES, CONDITIONS, store, getCurrentUser } = window.EwhaListings;
+    const t = window.EwhaI18n.t;
 
-    // Price units per listing type ("once" for Buy is set automatically).
-    const PRICE_UNITS = {
-        rent: [
-            { value: 'per_day', label: 'per day' },
-            { value: 'per_week', label: 'per week' }
-        ],
-        service: [
-            { value: 'per_hour', label: 'per hour' },
-            { value: 'once', label: 'per session' }
-        ]
-    };
-
-    // Categories that should show the course name / code / subject fields.
-    const COURSE_CATEGORIES = ['study_notes', 'textbooks', 'tutoring'];
-
-    const FREE_LABELS = {
-        buy: 'This item is free (giveaway)',
-        rent: 'Free to borrow',
-        service: 'This service is free (e.g. language exchange)'
-    };
-
-    const MAX_PHOTO_MB = 5;
+    const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
+    const ALLOWED_PHOTO_TYPES = ['image/jpeg', 'image/png'];
 
     const form = document.getElementById('addItemForm');
+    const message = document.getElementById('formMessage');
+    const submitBtn = document.getElementById('submitBtn');
     const categorySelect = document.getElementById('category');
     const conditionSelect = document.getElementById('condition');
     const priceInput = document.getElementById('price');
@@ -66,12 +28,28 @@
     const courseFields = document.getElementById('courseFields');
     const photoInput = document.getElementById('photo');
     const photoPreview = document.getElementById('photoPreview');
+    const photoPreviewImg = document.getElementById('photoPreviewImg');
+    const photoRemove = document.getElementById('photoRemove');
+
+    const editId = new URLSearchParams(window.location.search).get('id');
+    let existingImageUrl = '';   // photo of the listing being edited
+    let previewObjectUrl = null; // local preview URL (released when replaced)
+    let saving = false;
+
+    // ---------- helpers ----------
 
     function getListingType() {
         return form.querySelector('input[name="listingType"]:checked').value;
     }
 
+    function setListingType(type) {
+        const radio = form.querySelector('input[name="listingType"][value="' + type + '"]');
+        if (radio) radio.checked = true;
+    }
+
+    // Rebuilds a <select>, keeping the current value if it is still allowed.
     function fillSelect(select, options) {
+        const previous = select.value;
         select.innerHTML = '';
         options.forEach(function (opt) {
             const option = document.createElement('option');
@@ -79,130 +57,287 @@
             option.textContent = opt.label;
             select.appendChild(option);
         });
+        if (options.some(function (opt) { return opt.value === previous; })) {
+            select.value = previous;
+        }
     }
 
-    // Show only the fields that belong to the chosen listing type.
-    function updateFieldsForType() {
+    function unitLabel(type, unit) {
+        // "once" means "one-time" for Buy but "per session" for Services.
+        return (type === 'service' && unit === 'once') ? t('unit.session') : t('unit.' + unit);
+    }
+
+    function showMessage(text, kind) {
+        message.textContent = text;
+        message.className = 'additem-message ' + (kind === 'success' ? 'is-success' : 'is-error');
+        message.hidden = false;
+        message.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function clearMessage() {
+        message.hidden = true;
+        message.textContent = '';
+    }
+
+    function markInvalid(field, invalid) {
+        field.classList.toggle('additem-invalid', invalid);
+        field.setAttribute('aria-invalid', invalid ? 'true' : 'false');
+    }
+
+    // ---------- show / hide fields per type ----------
+
+    function renderTypeDependentFields() {
         const type = getListingType();
 
-        fillSelect(categorySelect, CATEGORIES[type]);
+        fillSelect(categorySelect, CATEGORIES[type].map(function (value) {
+            return { value: value, label: t('cat.' + value) };
+        }));
 
-        if (PRICE_UNITS[type]) {
-            fillSelect(priceUnitSelect, PRICE_UNITS[type]);
-        }
+        fillSelect(priceUnitSelect, PRICE_UNITS[type].map(function (value) {
+            return { value: value, label: unitLabel(type, value) };
+        }));
+
+        fillSelect(conditionSelect, [{ value: '', label: t('field.condition.select') }].concat(
+            CONDITIONS.map(function (value) { return { value: value, label: t('cond.' + value) }; })
+        ));
 
         form.querySelectorAll('[data-show-for]').forEach(function (el) {
-            const types = el.getAttribute('data-show-for').split(' ');
-            el.hidden = !types.includes(type);
+            el.hidden = !el.getAttribute('data-show-for').split(' ').includes(type);
         });
 
-        // Condition is required only for Buy & Rent
         conditionSelect.required = (type === 'buy' || type === 'rent');
+        isFreeLabel.setAttribute('data-i18n', 'field.free.' + type);
+        isFreeLabel.textContent = t('field.free.' + type);
 
-        isFreeLabel.textContent = FREE_LABELS[type];
-        updateCourseFields();
+        renderCourseFields();
     }
 
-    function updateCourseFields() {
+    function renderCourseFields() {
         courseFields.hidden = !COURSE_CATEGORIES.includes(categorySelect.value);
     }
 
-    function updatePriceForFree() {
+    function renderFreeState() {
         priceInput.disabled = isFreeCheckbox.checked;
+        priceUnitSelect.disabled = isFreeCheckbox.checked;
         if (isFreeCheckbox.checked) {
-            priceInput.value = 0;
+            priceInput.value = '';
+            markInvalid(priceInput, false);
         }
     }
 
-    function showPhotoPreview() {
-        photoPreview.innerHTML = '';
+    // ---------- photo ----------
+
+    function setPreview(src) {
+        if (previewObjectUrl && previewObjectUrl !== src) {
+            URL.revokeObjectURL(previewObjectUrl);
+            previewObjectUrl = null;
+        }
+        photoPreviewImg.src = src || '';
+        photoPreview.hidden = !src;
+    }
+
+    function handlePhotoChange() {
         const file = photoInput.files[0];
         if (!file) return;
 
-        if (file.size > MAX_PHOTO_MB * 1024 * 1024) {
-            alertUser('Photo is larger than ' + MAX_PHOTO_MB + ' MB. Please choose a smaller file.');
+        if (!ALLOWED_PHOTO_TYPES.includes(file.type)) {
+            showMessage(t('msg.photoType'), 'error');
+            photoInput.value = '';
+            return;
+        }
+        if (file.size > MAX_PHOTO_BYTES) {
+            showMessage(t('msg.photoTooBig'), 'error');
             photoInput.value = '';
             return;
         }
 
-        const img = document.createElement('img');
-        img.alt = 'Selected photo preview';
-        img.src = URL.createObjectURL(file);
-        photoPreview.appendChild(img);
+        clearMessage();
+        const url = URL.createObjectURL(file);
+        setPreview(url);
+        previewObjectUrl = url;
     }
 
-    function alertUser(message) {
-        // Simple inline message for now (no browser popups).
-        let box = document.getElementById('formMessage');
-        if (!box) {
-            box = document.createElement('p');
-            box.id = 'formMessage';
-            box.className = 'text-muted';
-            box.setAttribute('role', 'alert');
-            box.style.marginBottom = '12px';
-            form.querySelector('.additem-actions').before(box);
+    function handlePhotoRemove() {
+        photoInput.value = '';
+        existingImageUrl = '';
+        setPreview('');
+    }
+
+    // ---------- validation ----------
+
+    function validate() {
+        let firstInvalid = null;
+
+        const checks = [
+            { field: document.getElementById('title'), ok: document.getElementById('title').value.trim() !== '' },
+            { field: categorySelect, ok: categorySelect.value !== '' },
+            { field: conditionSelect, ok: !conditionSelect.required || conditionSelect.value !== '' },
+            { field: document.getElementById('description'), ok: document.getElementById('description').value.trim() !== '' },
+            {
+                field: priceInput,
+                ok: isFreeCheckbox.checked || (priceInput.value !== '' && Number(priceInput.value) >= 0 && Number.isInteger(Number(priceInput.value)))
+            },
+            { field: document.getElementById('policyAgree'), ok: document.getElementById('policyAgree').checked }
+        ];
+
+        checks.forEach(function (check) {
+            const hiddenField = check.field.closest('[hidden]');
+            const invalid = !check.ok && !hiddenField;
+            markInvalid(check.field, invalid);
+            if (invalid && !firstInvalid) firstInvalid = check.field;
+        });
+
+        if (firstInvalid) {
+            showMessage(firstInvalid === priceInput ? t('msg.priceMissing') : t('msg.fixErrors'), 'error');
+            firstInvalid.focus({ preventScroll: true });
+            return false;
         }
-        box.textContent = message;
+        return true;
     }
 
-    // Collects the form into an object shaped like the Firestore "listings" document.
+    // ---------- build the Firestore-shaped object ----------
+
     function buildListing() {
         const type = getListingType();
         const isFree = isFreeCheckbox.checked;
-        const value = function (id) {
-            return document.getElementById(id).value.trim();
-        };
+        const value = function (id) { return document.getElementById(id).value.trim(); };
+        const showsCourse = !courseFields.hidden;
 
         return {
             listingType: type,
             title: value('title'),
             description: value('description'),
             category: categorySelect.value,
-            price: isFree ? 0 : Number(priceInput.value || 0),
+            price: isFree ? 0 : Number(priceInput.value),
             isFree: isFree,
             priceUnit: isFree ? 'free' : (type === 'buy' ? 'once' : priceUnitSelect.value),
             condition: (type === 'buy' || type === 'rent') ? conditionSelect.value : '',
-            courseName: courseFields.hidden ? '' : value('courseName'),
-            courseCode: courseFields.hidden ? '' : value('courseCode'),
-            subject: courseFields.hidden ? '' : value('subject'),
+            courseName: showsCourse ? value('courseName') : '',
+            courseCode: showsCourse ? value('courseCode') : '',
+            subject: showsCourse ? value('subject') : '',
             availability: type === 'buy' ? '' : value('availability'),
-            location: value('location'),
-            status: 'active'
-            // imageUrl, ownerId, ownerNickname, createdAt -> added on Nov 26 with Firebase
+            location: value('location')
         };
     }
 
-    function handleSubmit(event) {
-        event.preventDefault();
+    // ---------- submit ----------
 
-        if (!isFreeCheckbox.checked && priceInput.value === '') {
-            alertUser('Please enter a price, or tick the "free" box.');
-            priceInput.focus();
-            return;
-        }
-
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-        }
-
-        const listing = buildListing();
-        console.log('[add-item] listing ready to save:', listing);
-
-        // TODO (Nov 26): upload photo -> get imageUrl, add ownerId / ownerNickname / createdAt,
-        // save to Firestore "listings" collection, then redirect to my-listings.html.
-        alertUser('✅ Form is valid. Saving to Firebase will be connected on Nov 26.');
+    function setSaving(isSaving) {
+        saving = isSaving;
+        submitBtn.disabled = isSaving;
+        submitBtn.textContent = isSaving ? t('btn.saving') : t(editId ? 'btn.save' : 'btn.post');
     }
 
-    // Event listeners
+    async function handleSubmit(event) {
+        event.preventDefault();
+        if (saving) return; // prevent double posts
+        clearMessage();
+        if (!validate()) return;
+
+        setSaving(true);
+        try {
+            const user = await getCurrentUser();
+            if (!user || !user.isVerified) {
+                showMessage(t('msg.loginRequired'), 'error');
+                return;
+            }
+
+            const listing = buildListing();
+            const file = photoInput.files[0];
+            listing.imageUrl = file ? await store.uploadPhoto(file) : existingImageUrl;
+
+            if (editId) {
+                await store.updateListing(editId, listing);
+                window.location.href = 'my-listings.html?msg=updated';
+            } else {
+                await store.createListing(listing);
+                window.location.href = 'my-listings.html?msg=created';
+            }
+        } catch (error) {
+            console.error('[add-item] save failed', error);
+            showMessage(t('msg.saveFailed'), 'error');
+        } finally {
+            setSaving(false);
+        }
+    }
+
+    // ---------- edit mode ----------
+
+    async function loadForEdit(id) {
+        const listing = await store.getListing(id);
+        if (!listing) {
+            showMessage(t('msg.notFound'), 'error');
+            submitBtn.disabled = true;
+            return;
+        }
+
+        setListingType(listing.listingType);
+        renderTypeDependentFields();
+
+        document.getElementById('title').value = listing.title || '';
+        document.getElementById('description').value = listing.description || '';
+        categorySelect.value = listing.category || '';
+        conditionSelect.value = listing.condition || '';
+        isFreeCheckbox.checked = !!listing.isFree;
+        priceInput.value = listing.isFree ? '' : listing.price;
+        if (!listing.isFree && listing.priceUnit) priceUnitSelect.value = listing.priceUnit;
+        document.getElementById('availability').value = listing.availability || '';
+        document.getElementById('location').value = listing.location || '';
+        document.getElementById('courseName').value = listing.courseName || '';
+        document.getElementById('courseCode').value = listing.courseCode || '';
+        document.getElementById('subject').value = listing.subject || '';
+
+        existingImageUrl = listing.imageUrl || '';
+        setPreview(existingImageUrl);
+
+        renderCourseFields();
+        renderFreeState();
+    }
+
+    function applyPageMode() {
+        const title = document.getElementById('pageTitle');
+        const subtitle = document.getElementById('pageSubtitle');
+        title.setAttribute('data-i18n', editId ? 'additem.titleEdit' : 'additem.title');
+        subtitle.setAttribute('data-i18n', editId ? 'additem.subtitleEdit' : 'additem.subtitle');
+        submitBtn.setAttribute('data-i18n', editId ? 'btn.save' : 'btn.post');
+        document.title = (editId ? 'Edit Listing' : 'Post New Listing') + ' - Ewha Market';
+        window.EwhaI18n.translate(document.querySelector('main'));
+    }
+
+    // ---------- events ----------
+
     form.querySelectorAll('input[name="listingType"]').forEach(function (radio) {
-        radio.addEventListener('change', updateFieldsForType);
+        radio.addEventListener('change', function () {
+            renderTypeDependentFields();
+            renderFreeState();
+        });
     });
-    categorySelect.addEventListener('change', updateCourseFields);
-    isFreeCheckbox.addEventListener('change', updatePriceForFree);
-    photoInput.addEventListener('change', showPhotoPreview);
+    categorySelect.addEventListener('change', renderCourseFields);
+    isFreeCheckbox.addEventListener('change', renderFreeState);
+    photoInput.addEventListener('change', handlePhotoChange);
+    photoRemove.addEventListener('click', handlePhotoRemove);
     form.addEventListener('submit', handleSubmit);
 
-    // Initial state
-    updateFieldsForType();
+    // Clear the red border as soon as the user fixes a field.
+    form.addEventListener('input', function (e) { markInvalid(e.target, false); });
+    form.addEventListener('change', function (e) { markInvalid(e.target, false); });
+
+    // Language switched: rebuild the JS-generated option labels.
+    document.addEventListener('ewha:langchange', function () {
+        const keep = { category: categorySelect.value, condition: conditionSelect.value, unit: priceUnitSelect.value };
+        renderTypeDependentFields();
+        categorySelect.value = keep.category;
+        conditionSelect.value = keep.condition;
+        priceUnitSelect.value = keep.unit;
+        renderCourseFields();
+        renderFreeState();
+        if (!saving) submitBtn.textContent = t(editId ? 'btn.save' : 'btn.post');
+    });
+
+    // ---------- start ----------
+
+    applyPageMode();
+    renderTypeDependentFields();
+    renderFreeState();
+    if (editId) loadForEdit(editId);
 })();

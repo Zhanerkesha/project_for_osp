@@ -96,7 +96,8 @@
     color: var(--ewha-green);
 }
 
-textarea.form-control {
+/* Scoped to this form only (does not change other pages' textareas) */
+.additem-layout textarea.form-control {
     resize: vertical;
     min-height: 110px;
 }
@@ -119,11 +120,6 @@ textarea.form-control {
     padding-left: 32px;
 }
 
-.additem-price-wrap .form-control:disabled {
-    background-color: var(--bg-sidebar);
-    color: var(--text-muted);
-}
-
 .additem-checkbox {
     display: flex;
     align-items: flex-start;
@@ -136,11 +132,6 @@ textarea.form-control {
 .additem-checkbox input {
     margin-top: 3px;
     accent-color: var(--ewha-green);
-}
-
-/* Fields that only apply to some listing types */
-.additem-conditional[hidden] {
-    display: none;
 }
 
 /* Photo upload */
@@ -173,17 +164,67 @@ textarea.form-control {
 
 .additem-preview {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    align-items: center;
+    gap: 14px;
     margin-top: 12px;
 }
 
+.additem-preview[hidden] {
+    display: none;
+}
+
 .additem-preview img {
-    width: 96px;
-    height: 96px;
+    width: 110px;
+    height: 110px;
     object-fit: cover;
     border-radius: 10px;
     border: 1px solid var(--border);
+}
+
+.additem-photo-remove {
+    padding: 6px 14px;
+    font-size: 0.85rem;
+}
+
+/* Inline success / error messages (no browser popups) */
+.additem-message {
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.additem-message[hidden] {
+    display: none;
+}
+
+.additem-message.is-success {
+    background-color: var(--ewha-green-light);
+    color: var(--ewha-green);
+    border: 1px solid var(--ewha-green);
+}
+
+/* Functional error color (only used for validation errors, not as a decorative accent) */
+.additem-message.is-error {
+    background-color: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.additem-layout .additem-invalid {
+    border-color: #b91c1c;
+}
+
+.additem-layout input[type="checkbox"].additem-invalid {
+    outline: 2px solid #b91c1c;
+    outline-offset: 2px;
+}
+
+.additem-layout .form-control:disabled {
+    background-color: var(--bg-sidebar);
+    color: var(--text-muted);
+    cursor: not-allowed;
 }
 
 /* Content policy box */
@@ -277,12 +318,12 @@ textarea.form-control {
     color: var(--ewha-green);
 }
 
-.mylist-status.completed {
+.mylist-status.is-completed {
     background-color: var(--bg-sidebar);
     color: var(--text-muted);
 }
 
-.mylist-card.completed img {
+.mylist-card.is-completed img {
     filter: grayscale(0.8);
     opacity: 0.75;
 }
@@ -300,8 +341,49 @@ textarea.form-control {
     font-size: 0.8rem;
 }
 
-.mylist-delete {
-    flex: 0 0 auto !important;
+.mylist-card-actions .mylist-delete {
+    flex: 0 0 auto;
+    width: 34px;
+}
+
+.mylist-grid[hidden] {
+    display: none;
+}
+
+.mylist-demo-note {
+    margin-top: 24px;
+    font-size: 0.8rem;
+}
+
+.mylist-link-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: 6px;
+    color: var(--ewha-green);
+    font: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Delete confirmation dialog */
+.mylist-dialog {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 420px;
+    width: calc(100% - 32px);
+    box-shadow: var(--shadow-md);
+    margin: auto;
+}
+
+.mylist-dialog::backdrop {
+    background-color: rgba(15, 23, 42, 0.45);
+}
+
+.mylist-dialog p {
+    margin-bottom: 20px;
 }
 
 .mylist-empty {
@@ -339,6 +421,10 @@ textarea.form-control {
 
     .additem-actions .btn-ewha,
     .additem-actions .btn-outline-ewha {
+        width: 100%;
+    }
+
+    .mylist-status-select {
         width: 100%;
     }
 }
