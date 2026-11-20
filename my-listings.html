@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Listings - Ewha Market</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="listings.css">
 </head>
 <body>
     <div class="app-layout">
@@ -38,17 +39,144 @@
             </header>
 
             <main class="page-content">
-                <div class="page-header">
-                    <h1>📋 My Listings</h1>
-                    <p class="text-muted">Edit, delete, or mark your Buy, Rent, and Service posts as completed</p>
+                <div class="page-header mylist-header">
+                    <div>
+                        <h1>📋 My Listings</h1>
+                        <p class="text-muted">Edit, delete, or mark your Buy, Rent, and Service posts as completed</p>
+                    </div>
+                    <a href="add-item.html" class="btn-ewha">➕ New Listing</a>
                 </div>
 
-                <!-- Zhanerke: Add a user ad list here with Edit/Delete buttons -->
-                <section class="content-card">
-                    <p>Manage your listings here...</p>
+                <!-- Listing management (Owner: Zhanerke)
+                     Nov 22: layout + tab filtering with sample cards (my-listings.js)
+                     Dec 3: load the logged-in user's listings from Firestore, edit / delete / mark completed -->
+                <div class="mylist-toolbar">
+                    <div class="mylist-tabs" role="tablist" aria-label="Filter by listing type">
+                        <button type="button" class="mylist-tab active" data-filter="all" role="tab" aria-selected="true">All <span class="mylist-count" data-count="all"></span></button>
+                        <button type="button" class="mylist-tab" data-filter="buy" role="tab" aria-selected="false">🛍️ Buy <span class="mylist-count" data-count="buy"></span></button>
+                        <button type="button" class="mylist-tab" data-filter="rent" role="tab" aria-selected="false">🔄 Rent <span class="mylist-count" data-count="rent"></span></button>
+                        <button type="button" class="mylist-tab" data-filter="service" role="tab" aria-selected="false">🤝 Services <span class="mylist-count" data-count="service"></span></button>
+                    </div>
+                    <select id="statusFilter" class="form-control mylist-status-select" aria-label="Filter by status">
+                        <option value="all">All statuses</option>
+                        <option value="active" selected>Active</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+
+                <!-- SAMPLE CARDS: placeholders for the layout. On Dec 3 these are replaced by real listings from Firestore. -->
+                <div id="myListingsGrid" class="items-grid">
+
+                    <article class="item-card mylist-card" data-type="buy" data-status="active">
+                        <div class="item-img-wrap">
+                            <span class="item-badge badge-buy">Buy</span>
+                            <img src="images/Calculus_textbook.jpg" alt="Calculus 9th Edition Textbook">
+                        </div>
+                        <div class="item-info">
+                            <p class="item-price">₩12,000</p>
+                            <p class="item-title">Calculus 9th Edition Textbook</p>
+                            <div class="item-meta">
+                                <span class="mylist-status">Active</span>
+                                <span>2h ago</span>
+                            </div>
+                            <div class="mylist-card-actions">
+                                <a href="add-item.html" class="btn-outline-ewha" title="Edit listing">✏️ Edit</a>
+                                <button type="button" class="btn-outline-ewha" data-action="complete">✔️ Sold</button>
+                                <button type="button" class="btn-outline-ewha mylist-delete" data-action="delete" aria-label="Delete listing" title="Delete">🗑️</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="item-card mylist-card" data-type="buy" data-status="active">
+                        <div class="item-img-wrap">
+                            <span class="item-badge badge-notes">Notes</span>
+                            <img src="images/notes.jpg" alt="Data Structures lecture notes">
+                        </div>
+                        <div class="item-info">
+                            <p class="item-price">₩7,000</p>
+                            <p class="item-title">Data Structures handwritten notes (36338)</p>
+                            <div class="item-meta">
+                                <span class="mylist-status">Active</span>
+                                <span>1d ago</span>
+                            </div>
+                            <div class="mylist-card-actions">
+                                <a href="add-item.html" class="btn-outline-ewha" title="Edit listing">✏️ Edit</a>
+                                <button type="button" class="btn-outline-ewha" data-action="complete">✔️ Sold</button>
+                                <button type="button" class="btn-outline-ewha mylist-delete" data-action="delete" aria-label="Delete listing" title="Delete">🗑️</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="item-card mylist-card" data-type="rent" data-status="active">
+                        <div class="item-img-wrap">
+                            <span class="item-badge badge-rent">Rent</span>
+                            <img src="images/cat-rent.jpg" alt="Casio scientific calculator">
+                        </div>
+                        <div class="item-info">
+                            <p class="item-price">₩2,000 / day</p>
+                            <p class="item-title">Casio fx-991 Scientific Calculator</p>
+                            <div class="item-meta">
+                                <span class="mylist-status">Active</span>
+                                <span>3d ago</span>
+                            </div>
+                            <div class="mylist-card-actions">
+                                <a href="add-item.html" class="btn-outline-ewha" title="Edit listing">✏️ Edit</a>
+                                <button type="button" class="btn-outline-ewha" data-action="complete">✔️ Rented</button>
+                                <button type="button" class="btn-outline-ewha mylist-delete" data-action="delete" aria-label="Delete listing" title="Delete">🗑️</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="item-card mylist-card" data-type="service" data-status="active">
+                        <div class="item-img-wrap">
+                            <span class="item-badge badge-service">Service</span>
+                            <img src="images/cat-services.jpg" alt="Korean-English language exchange">
+                        </div>
+                        <div class="item-info">
+                            <p class="item-price">Free</p>
+                            <p class="item-title">Korean ↔ English language exchange</p>
+                            <div class="item-meta">
+                                <span class="mylist-status">Active</span>
+                                <span>5d ago</span>
+                            </div>
+                            <div class="mylist-card-actions">
+                                <a href="add-item.html" class="btn-outline-ewha" title="Edit listing">✏️ Edit</a>
+                                <button type="button" class="btn-outline-ewha" data-action="complete">✔️ Done</button>
+                                <button type="button" class="btn-outline-ewha mylist-delete" data-action="delete" aria-label="Delete listing" title="Delete">🗑️</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="item-card mylist-card completed" data-type="buy" data-status="completed">
+                        <div class="item-img-wrap">
+                            <span class="item-badge badge-buy">Buy</span>
+                            <img src="images/cat-electronics.jpg" alt="Wireless mouse">
+                        </div>
+                        <div class="item-info">
+                            <p class="item-price">₩8,000</p>
+                            <p class="item-title">Logitech wireless mouse</p>
+                            <div class="item-meta">
+                                <span class="mylist-status completed">Sold</span>
+                                <span>2w ago</span>
+                            </div>
+                            <div class="mylist-card-actions">
+                                <button type="button" class="btn-outline-ewha" data-action="reactivate">↩️ Relist</button>
+                                <button type="button" class="btn-outline-ewha mylist-delete" data-action="delete" aria-label="Delete listing" title="Delete">🗑️</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Empty state -->
+                <section id="myListingsEmpty" class="content-card mylist-empty" hidden>
+                    <div class="mylist-empty-emoji">📭</div>
+                    <h2 class="additem-section-title">No listings here yet</h2>
+                    <p class="text-muted">Sell a textbook, lend a calculator, or offer a language exchange.</p>
+                    <a href="add-item.html" class="btn-ewha">➕ Create your first listing</a>
                 </section>
             </main>
         </div>
     </div>
+    <script src="my-listings.js"></script>
 </body>
 </html>
