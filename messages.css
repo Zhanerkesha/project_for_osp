@@ -1,0 +1,171 @@
+/* Ewha Market - Messages page (messages.html) */
+/* Owner: Zhansaya */
+/* Every class starts with .chat- so nothing overrides style.css.
+    Colors come from the shared variables in style.css*/
+
+/*--------Tabs-------------*/
+.chat-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.chat-tab {
+    padding: 8px 26px;
+    border: 1px solid var(--border); /*--boder removes the border line*/
+    border-radius: 10px;
+    background-color: var(--bg-sidebar); /*what this does?*/
+    color: var(--text-main);
+    font-weight: 600; /*bold*/
+    cursor: pointer;
+}
+
+.chat-tab.is-active {
+    background-color: var(--ewha-green);
+    border-color: var(--ewha-green);
+    color: #fff;
+}
+
+/* -------- Two colomns --------- */
+.chat-layout {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /*list 1/3 and chat 2/3*/
+    height: 600px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden; /*keeps children inside the rounded corners */
+}
+
+.chat-sidebar {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border);
+    min-height: 0; /*needed so the list can scroll inside */
+}
+
+.chat-window {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+/*------- Left: search + list -------*/
+.chat-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 12px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background-color: var(--bg-sidebar);
+}
+
+.chat-search input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 0.88rem;
+}
+
+.chat-list {
+    list-style: none;
+    overflow-y: auto; /*only the list scrolls*/
+    flex: 1;
+}
+
+.chat-list-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%; /* takes all the space in the div possible */
+    padding: 12px 14px; /*air between border and text */
+    border: none; /* no border */
+    border-bottom: 1px solid var(--border); /*what?*/
+    border-left: 3px solid transparent;
+    background: none; /*no background */
+    text-align: left;
+    cursor: pointer;
+    font: inherit; /*???*/
+}
+
+.chat-list-item:hover {
+    background-color: var(--bg-page);
+}
+
+.chat-list-item.is-active {
+    background-color: var(--ewha-green-light);
+    border-left-color: var(--ewha-green);
+}
+
+.chat-avatar {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%; /* circle */
+    background-color: var(--ewha-green);
+    color: #fff;
+    font-weight: 700;
+}
+
+.chat-list-body {
+    flex: 1;
+    min-width: 0; /* long text is cut with ... */
+}
+
+.chat-list-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.chat-list-name { /* username of the chatting person */
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.chat-list-time {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.chat-list-listing, 
+.chat-list-preview {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chat-list-preview {
+    color: var(--text-main);
+}
+
+.chat-badge {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    border-radius: 999px;
+    background-color: var(--ewha-green);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.chat-empty {
+    padding: 24px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
