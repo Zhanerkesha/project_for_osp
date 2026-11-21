@@ -1,0 +1,430 @@
+/* Ewha Market - Listings pages (add-item.html, my-listings.html) */
+/* Owner: Zhanerke */
+/* Page-specific styles only. Every class is prefixed (.additem- / .mylist-)
+   so nothing here overrides the shared style.css. Colors come from the
+   shared CSS variables in style.css (no new accent colors). */
+
+/* ---------- add-item.html ---------- */
+
+.additem-layout {
+    max-width: 760px;
+}
+
+.additem-section-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 14px;
+}
+
+/* Listing type selector (Buy / Rent / Service) */
+.additem-type-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.additem-type-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.additem-type-option label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 14px 10px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background-color: var(--card-bg);
+    cursor: pointer;
+    text-align: center;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.additem-type-option label:hover {
+    border-color: var(--ewha-green);
+}
+
+.additem-type-option input:checked + label {
+    border-color: var(--ewha-green);
+    background-color: var(--ewha-green-light);
+}
+
+.additem-type-option input:focus-visible + label {
+    outline: 2px solid var(--ewha-green);
+    outline-offset: 2px;
+}
+
+.additem-type-emoji {
+    font-size: 1.4rem;
+}
+
+.additem-type-name {
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.additem-type-hint {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+/* Two fields side by side */
+.additem-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.additem-row-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.additem-help {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.additem-required {
+    color: var(--ewha-green);
+}
+
+/* Scoped to this form only (does not change other pages' textareas) */
+.additem-layout textarea.form-control {
+    resize: vertical;
+    min-height: 110px;
+}
+
+/* Price input with ₩ prefix */
+.additem-price-wrap {
+    position: relative;
+}
+
+.additem-price-wrap .additem-currency {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.additem-price-wrap .form-control {
+    padding-left: 32px;
+}
+
+.additem-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--text-main);
+    cursor: pointer;
+}
+
+.additem-checkbox input {
+    margin-top: 3px;
+    accent-color: var(--ewha-green);
+}
+
+/* Photo upload */
+.additem-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 26px;
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    background-color: var(--bg-page);
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.additem-upload:hover {
+    border-color: var(--ewha-green);
+}
+
+.additem-upload input[type="file"] {
+    display: none;
+}
+
+.additem-upload-emoji {
+    font-size: 1.8rem;
+}
+
+.additem-preview {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 12px;
+}
+
+.additem-preview[hidden] {
+    display: none;
+}
+
+.additem-preview img {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+}
+
+.additem-photo-remove {
+    padding: 6px 14px;
+    font-size: 0.85rem;
+}
+
+/* Inline success / error messages (no browser popups) */
+.additem-message {
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.additem-message[hidden] {
+    display: none;
+}
+
+.additem-message.is-success {
+    background-color: var(--ewha-green-light);
+    color: var(--ewha-green);
+    border: 1px solid var(--ewha-green);
+}
+
+/* Functional error color (only used for validation errors, not as a decorative accent) */
+.additem-message.is-error {
+    background-color: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.additem-layout .additem-invalid {
+    border-color: #b91c1c;
+}
+
+.additem-layout input[type="checkbox"].additem-invalid {
+    outline: 2px solid #b91c1c;
+    outline-offset: 2px;
+}
+
+.additem-layout .form-control:disabled {
+    background-color: var(--bg-sidebar);
+    color: var(--text-muted);
+    cursor: not-allowed;
+}
+
+/* Content policy box */
+.additem-policy {
+    background-color: var(--ewha-green-light);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 0.85rem;
+    color: var(--text-main);
+    margin-bottom: 14px;
+}
+
+.additem-policy ul {
+    margin: 6px 0 0 18px;
+}
+
+.additem-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* ---------- my-listings.html ---------- */
+
+.mylist-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.mylist-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+.mylist-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.mylist-tab {
+    padding: 7px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background-color: var(--card-bg);
+    color: var(--text-main);
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mylist-tab:hover {
+    border-color: var(--ewha-green);
+}
+
+.mylist-tab.active {
+    background-color: var(--ewha-green);
+    border-color: var(--ewha-green);
+    color: #ffffff;
+}
+
+.mylist-count {
+    font-weight: 400;
+    opacity: 0.8;
+}
+
+.mylist-status-select {
+    width: auto;
+    min-width: 160px;
+}
+
+.mylist-card .item-img-wrap img {
+    height: 150px;
+}
+
+.mylist-status {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    background-color: var(--ewha-green-light);
+    color: var(--ewha-green);
+}
+
+.mylist-status.is-completed {
+    background-color: var(--bg-sidebar);
+    color: var(--text-muted);
+}
+
+.mylist-card.is-completed img {
+    filter: grayscale(0.8);
+    opacity: 0.75;
+}
+
+.mylist-card-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 12px;
+}
+
+.mylist-card-actions .btn-outline-ewha,
+.mylist-card-actions .btn-ewha {
+    flex: 1;
+    padding: 6px 8px;
+    font-size: 0.8rem;
+}
+
+.mylist-card-actions .mylist-delete {
+    flex: 0 0 auto;
+    width: 34px;
+}
+
+.mylist-grid[hidden] {
+    display: none;
+}
+
+.mylist-demo-note {
+    margin-top: 24px;
+    font-size: 0.8rem;
+}
+
+.mylist-link-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: 6px;
+    color: var(--ewha-green);
+    font: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Delete confirmation dialog */
+.mylist-dialog {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 420px;
+    width: calc(100% - 32px);
+    box-shadow: var(--shadow-md);
+    margin: auto;
+}
+
+.mylist-dialog::backdrop {
+    background-color: rgba(15, 23, 42, 0.45);
+}
+
+.mylist-dialog p {
+    margin-bottom: 20px;
+}
+
+.mylist-empty {
+    text-align: center;
+    padding: 48px 20px;
+}
+
+.mylist-empty[hidden] {
+    display: none;
+}
+
+.mylist-empty-emoji {
+    font-size: 2.4rem;
+    margin-bottom: 8px;
+}
+
+.mylist-empty p {
+    margin-bottom: 16px;
+}
+
+/* ---------- Mobile (full polish on Dec 3) ---------- */
+@media (max-width: 768px) {
+    .additem-row,
+    .additem-row-3 {
+        grid-template-columns: 1fr;
+    }
+
+    .additem-type-hint {
+        display: none;
+    }
+
+    .additem-actions {
+        flex-direction: column-reverse;
+    }
+
+    .additem-actions .btn-ewha,
+    .additem-actions .btn-outline-ewha {
+        width: 100%;
+    }
+
+    .mylist-status-select {
+        width: 100%;
+    }
+}

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post New Listing - Ewha Market</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="listings.css">
 </head>
 <body>
     <div class="app-layout">
@@ -39,16 +40,203 @@
 
             <main class="page-content">
                 <div class="page-header">
-                    <h1>➕ Create New Listing</h1>
-                    <p class="text-muted">Post an item for Buy, Rent, Study Notes, or Student Services</p>
+                    <h1 id="pageTitle" data-i18n="additem.title">➕ Create New Listing</h1>
+                    <p id="pageSubtitle" class="text-muted" data-i18n="additem.subtitle">Post an item for Buy, Rent, Study Notes, or Student Services</p>
                 </div>
 
-                <!-- Zhanerke: add an ad creation form here -->
-                <section class="content-card">
-                    <p>Add item form goes here...</p>
-                </section>
+                <!-- Listing form (Owner: Zhanerke)
+                     New listing:  add-item.html
+                     Edit listing: add-item.html?id=<listingId>  (form is pre-filled, button says "Save Changes")
+                     Field names match the unified Firestore "listings" schema (Notion: 3. Tech Stack & Team Rules). -->
+                <form id="addItemForm" class="additem-layout" novalidate>
+
+                    <!-- Messages (success / error) -->
+                    <div id="formMessage" class="additem-message" role="alert" hidden></div>
+
+                    <!-- 1. Listing type -->
+                    <section class="content-card">
+                        <h2 class="additem-section-title" data-i18n="additem.step1">1. What are you posting?</h2>
+                        <div class="additem-type-group" role="radiogroup" aria-label="Listing type" data-i18n-aria="additem.typeGroup">
+                            <div class="additem-type-option">
+                                <input type="radio" id="typeBuy" name="listingType" value="buy" checked>
+                                <label for="typeBuy">
+                                    <span class="additem-type-emoji" aria-hidden="true">🛍️</span>
+                                    <span class="additem-type-name" data-i18n="type.buy">Buy &amp; Sell</span>
+                                    <span class="additem-type-hint" data-i18n="type.buy.hint">Items &amp; study notes</span>
+                                </label>
+                            </div>
+                            <div class="additem-type-option">
+                                <input type="radio" id="typeRent" name="listingType" value="rent">
+                                <label for="typeRent">
+                                    <span class="additem-type-emoji" aria-hidden="true">🔄</span>
+                                    <span class="additem-type-name" data-i18n="type.rent">Rent &amp; Borrow</span>
+                                    <span class="additem-type-hint" data-i18n="type.rent.hint">Lend for a day or week</span>
+                                </label>
+                            </div>
+                            <div class="additem-type-option">
+                                <input type="radio" id="typeService" name="listingType" value="service">
+                                <label for="typeService">
+                                    <span class="additem-type-emoji" aria-hidden="true">🤝</span>
+                                    <span class="additem-type-name" data-i18n="type.service">Student Service</span>
+                                    <span class="additem-type-hint" data-i18n="type.service.hint">Tutoring, language exchange</span>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 2. Basic info -->
+                    <section class="content-card">
+                        <h2 class="additem-section-title" data-i18n="additem.step2">2. Basic information</h2>
+
+                        <div class="form-group">
+                            <label class="form-label" for="title"><span data-i18n="field.title">Title</span> <span class="additem-required" aria-hidden="true">*</span></label>
+                            <input type="text" id="title" name="title" class="form-control" maxlength="80" required
+                                   data-i18n-placeholder="field.title.ph" placeholder="e.g. Calculus 9th Edition Textbook">
+                        </div>
+
+                        <div class="additem-row">
+                            <div class="form-group">
+                                <label class="form-label" for="category"><span data-i18n="field.category">Category</span> <span class="additem-required" aria-hidden="true">*</span></label>
+                                <select id="category" name="category" class="form-control" required>
+                                    <!-- Filled by add-item.js for the chosen listing type -->
+                                </select>
+                            </div>
+
+                            <!-- Buy & Rent only -->
+                            <div class="form-group" data-show-for="buy rent">
+                                <label class="form-label" for="condition"><span data-i18n="field.condition">Condition</span> <span class="additem-required" aria-hidden="true">*</span></label>
+                                <select id="condition" name="condition" class="form-control">
+                                    <!-- Filled by add-item.js -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="description"><span data-i18n="field.description">Description</span> <span class="additem-required" aria-hidden="true">*</span></label>
+                            <textarea id="description" name="description" class="form-control" maxlength="1000" required
+                                      data-i18n-placeholder="field.description.ph"
+                                      placeholder="Describe the item or service: what's included, any damage, rental/return rules, languages, level..."></textarea>
+                        </div>
+
+                        <!-- Study notes / Textbooks / Tutoring only (shown by add-item.js) -->
+                        <div id="courseFields" hidden>
+                            <div class="additem-row-3">
+                                <div class="form-group">
+                                    <label class="form-label" for="courseName" data-i18n="field.courseName">Course name</label>
+                                    <input type="text" id="courseName" name="courseName" class="form-control" maxlength="60"
+                                           data-i18n-placeholder="field.courseName.ph" placeholder="e.g. Calculus I">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="courseCode" data-i18n="field.courseCode">Course code</label>
+                                    <input type="text" id="courseCode" name="courseCode" class="form-control" maxlength="20"
+                                           data-i18n-placeholder="field.courseCode.ph" placeholder="e.g. 36338">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="subject" data-i18n="field.subject">Subject</label>
+                                    <input type="text" id="subject" name="subject" class="form-control" maxlength="40"
+                                           data-i18n-placeholder="field.subject.ph" placeholder="e.g. Mathematics">
+                                </div>
+                            </div>
+                            <small class="additem-help" data-i18n="field.course.help">Optional, but helps students find your listing by course.</small>
+                        </div>
+                    </section>
+
+                    <!-- 3. Price & availability -->
+                    <section class="content-card">
+                        <h2 class="additem-section-title" data-i18n="additem.step3">3. Price &amp; availability</h2>
+
+                        <div class="additem-row">
+                            <div class="form-group">
+                                <label class="form-label" for="price"><span data-i18n="field.price">Price</span> <span class="additem-required" aria-hidden="true">*</span></label>
+                                <div class="additem-price-wrap">
+                                    <span class="additem-currency" aria-hidden="true">₩</span>
+                                    <input type="number" id="price" name="price" class="form-control" min="0" max="10000000" step="1" inputmode="numeric" placeholder="0">
+                                </div>
+                            </div>
+
+                            <!-- Rent & Service only (Buy is always "once") -->
+                            <div class="form-group" data-show-for="rent service">
+                                <label class="form-label" for="priceUnit" data-i18n="field.priceUnit">Price unit</label>
+                                <select id="priceUnit" name="priceUnit" class="form-control">
+                                    <!-- Filled by add-item.js -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="additem-checkbox">
+                                <input type="checkbox" id="isFree" name="isFree">
+                                <span id="isFreeLabel" data-i18n="field.free.buy">This item is free (giveaway)</span>
+                            </label>
+                        </div>
+
+                        <!-- Rent & Service only -->
+                        <div class="form-group" data-show-for="rent service">
+                            <label class="form-label" for="availability" data-i18n="field.availability">Availability</label>
+                            <input type="text" id="availability" name="availability" class="form-control" maxlength="80"
+                                   data-i18n-placeholder="field.availability.ph" placeholder="e.g. Available now / Mon &amp; Wed afternoons / Until Dec 15">
+                        </div>
+
+                        <!-- NOTE: "location" is not in the Notion schema yet (proposed in PR #9) -->
+                        <div class="form-group">
+                            <label class="form-label" for="location" data-i18n="field.location">Meetup location</label>
+                            <select id="location" name="location" class="form-control">
+                                <option value="" data-i18n="field.location.select">Select a campus spot (optional)</option>
+                                <option value="ECC">ECC</option>
+                                <option value="Student Union">Student Union / 학생문화관</option>
+                                <option value="Main Library">Main Library / 중앙도서관</option>
+                                <option value="Posco Building">Posco Building / 포스코관</option>
+                                <option value="Engineering Building">Engineering Building / 신공학관</option>
+                                <option value="Dormitory">Dormitory / 기숙사</option>
+                                <option value="Online">Online / 온라인</option>
+                            </select>
+                        </div>
+                    </section>
+
+                    <!-- 4. Photo -->
+                    <section class="content-card">
+                        <h2 class="additem-section-title" data-i18n="additem.step4">4. Photo</h2>
+                        <label class="additem-upload" for="photo">
+                            <span class="additem-upload-emoji" aria-hidden="true">📷</span>
+                            <strong data-i18n="field.photo.cta">Click to upload a photo</strong>
+                            <span class="text-muted" data-i18n="field.photo.help">JPG or PNG, up to 5 MB</span>
+                            <input type="file" id="photo" name="photo" accept="image/jpeg,image/png">
+                        </label>
+                        <div id="photoPreview" class="additem-preview" hidden>
+                            <img id="photoPreviewImg" src="" alt="Selected photo preview" data-i18n-aria="field.photo.preview">
+                            <button type="button" id="photoRemove" class="btn-outline-ewha additem-photo-remove" data-i18n="field.photo.remove">Remove photo</button>
+                        </div>
+                    </section>
+
+                    <!-- 5. Content policy + submit -->
+                    <section class="content-card">
+                        <div class="additem-policy">
+                            <strong data-i18n="policy.title">📌 Ewha Market content policy</strong>
+                            <ul>
+                                <li data-i18n="policy.own">Only post items and study materials you own and are allowed to share.</li>
+                                <li data-i18n="policy.copyright">No copyrighted textbook copies, lecture slides, or exam papers.</li>
+                                <li data-i18n="policy.contact">Do not post private contact details. Use Ewha Market chat instead.</li>
+                            </ul>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="additem-checkbox">
+                                <input type="checkbox" id="policyAgree" name="policyAgree" required>
+                                <span><span data-i18n="policy.agree">I confirm this listing follows the content policy.</span> <span class="additem-required" aria-hidden="true">*</span></span>
+                            </label>
+                        </div>
+
+                        <div class="additem-actions">
+                            <a href="my-listings.html" class="btn-outline-ewha" data-i18n="btn.cancel">Cancel</a>
+                            <button type="submit" id="submitBtn" class="btn-ewha" data-i18n="btn.post">Post Listing</button>
+                        </div>
+                    </section>
+                </form>
             </main>
         </div>
     </div>
+    <script src="listings-i18n.js"></script>
+    <script src="listings-data.js"></script>
+    <script src="add-item.js"></script>
 </body>
 </html>
