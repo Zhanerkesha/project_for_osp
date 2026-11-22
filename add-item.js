@@ -5,7 +5,7 @@
 //   add-item.html?id=<id>   -> edit an existing listing (form is pre-filled)
 //
 // All reading/saving goes through EwhaListings.store (listings-data.js),
-// so connecting Firebase later does not change this file.
+// so this file never talks to Firebase directly.
 
 (function () {
     'use strict';
@@ -264,7 +264,15 @@
     // ---------- edit mode ----------
 
     async function loadForEdit(id) {
-        const listing = await store.getListing(id);
+        let listing = null;
+        try {
+            const results = await Promise.all([store.getListing(id), getCurrentUser()]);
+            const user = results[1];
+            // Only the owner may edit: someone else's listing is treated as "not found".
+            if (results[0] && user && results[0].ownerId === user.uid) listing = results[0];
+        } catch (error) {
+            console.error('[add-item] could not load listing', error);
+        }
         if (!listing) {
             showMessage(t('msg.notFound'), 'error');
             submitBtn.disabled = true;

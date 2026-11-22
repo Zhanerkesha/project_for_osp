@@ -236,7 +236,8 @@
         </div>
     </div>
     <script src="listings-i18n.js"></script>
-    <script src="listings-data.js"></script>
-    <script src="add-item.js"></script>
+    <!-- Modules: listings-data.js imports Firebase, so both files load as modules (they still run in this order). -->
+    <script type="module" src="listings-data.js"></script>
+    <script type="module" src="add-item.js"></script>
 </body>
 </html>
