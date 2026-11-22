@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="messages.css">
 </head>
+
 <body>
     <div class="app-layout">
         <aside class="sidebar">
@@ -28,7 +30,8 @@
             <header class="topbar">
                 <form action="search.html" method="GET" class="search-bar">
                     <span class="search-icon">🔍</span>
-                    <input type="text" name="q" placeholder="Enter item title, course code, or keyword..." aria-label="Enter item title">
+                    <input type="text" name="q" placeholder="Enter item title, course code, or keyword..."
+                        aria-label="Enter item title">
                     <a href="search.html" class="filter-btn" title="Filters">🎛️</a>
                 </form>
                 <div class="topbar-actions">
@@ -44,79 +47,71 @@
                     <p class="text-muted">Chat directly with Ewha buyers, sellers, and study partners</p>
                 </div>
 
-                <!-- Zhansaya: Add a list of dialogs and a real chat window here -->
-                <section class="content-card">
-                    <div class="chat-tabs">
-                        <button type="button" class="chat-tab is-active" data-role="buyer">Buying</button>
-                        <button type="button" class="chat-tab" dat-role="seller">Selling</button>
-                    </div>
-                    <div id="chatLayout" class="chat-layout">
-                        <!-- LEFT: conversation list-->
-                        <aside class="chat-sidebar">
-                            <div class="chat-search">
-                                <span aria-hidden="true">🔍</span>
-                                <input id="chatSearch" type="search" placeholder="Search conversations..." aria-label="Search conversations">
+                <div class="chat-tabs">
+                    <button type="button" class="chat-tab is-active" data-role="buyer">Buying</button>
+                    <button type="button" class="chat-tab" data-role="seller">Selling</button>
+                </div>
+                <div id="chatStatus" class="chat-status" role="status" hidden></div>
+                <div id="chatLayout" class="chat-layout">
+                    <!-- LEFT: conversation list-->
+                    <aside class="chat-sidebar">
+                        <div class="chat-search">
+                            <span aria-hidden="true">🔍</span>
+                            <input id="chatSearch" type="search" placeholder="Search conversations..."
+                                aria-label="Search conversations">
+                        </div>
+
+                        <ul id="chatList" class="chat-list">
+
+                        </ul>
+
+                        <p id="chatListEmpty" class="chat-empty" hidden>No conversations yet</p>
+                    </aside>
+                    <!-- RIGHT: chat window-->
+                    <section class="chat-window">
+                        <!-- Shown when no chat is selected -->
+                        <div id="chatPlaceholder" class="chat-placeholder">
+                            <span class="chat-placeholder-icon">💬</span>
+                            <p>Select a conversation to start chatting</p>
+                        </div>
+
+                        <div id="chatActive" class="chat-active" hidden>
+                            <!-- Top: who I'm talkign to + which item -->
+                            <header class="chat-header">
+                                <div class="chat-user">
+                                    <div id="chatUserAvatar" class="chat-avatar"></div>
+                                    <div>
+                                        <p id="chatUserName" class="chat-user-name"></p>
+                                        <p id="chatUserRole" class="chat-user-role"></p>
+                                    </div>
+                                </div>
+                                <a id="chatItem" class="chat-item" href="#">
+                                    <img id="chatItemImg" class="chat-item-img" alt="">
+                                    <div>
+                                        <p id="chatItemTitle" class="chat-item-title"></p>
+                                        <p id="chatItemPrice" class="chat-item-price"></p>
+                                    </div>
+                                </a>
+                            </header>
+
+                            <!--Middle: messages -->
+                            <div id="chatMessages" class="chat-messages" aria-live="polite">
+
                             </div>
 
-                            <ul id="chatList" class="chat-list">
-                                <!-- Fake chat 1 (active) -->
-                                <li>
-                                    <button type="button" class="chat-list-item is-active">
-                                        <div class="chat-avatar">M</div>
-                                        <div class="chat-list-body">
-                                            <div class="chat-list-top">
-                                                <span class="chat-list-name">Kim Ewha</span>
-                                                <span class="chat-list-time">11:49 PM</span>
-                                            </div>
-                                            <p class="chat-list-listing">iPad Air · ₩350,000</p>
-                                            <p class="chat-list-preview">Is the iPad still available?</p>
-                                        </div>
-                                        <span class="chat-badge">1</span>
-                                    </button>
-                                </li>
-
-                                <!--Fake chat 2-->
-                                <li>
-                                    <button type="button" class="chat-list-item">
-                                        <div class="chat-avatar">M</div>
-                                        <div class="chat-list-body">
-                                            <div class="chat-list-top">
-                                                <span class="chat-list-name">Han Ewha</span>
-                                                <span class="chat-list-time">Yesterday</span>
-                                            </div>
-                                            <p class="chat-list-listing">Economics Textbook · ₩12,000</p>
-                                            <p class="chat-list-preview">Can we meet at ECC?</p>
-                                        </div>
-                                    </button>
-                                </li>
-
-                                <!--Fake chat 3-->
-                                <li>
-                                    <button type="button" class="chat-list-item">
-                                        <div class="chat-avatar">M</div>
-                                        <div class="chat-list-body">
-                                            <div class="chat-list-top">
-                                                <span class="chat-list-name">Lee Ewha</span>
-                                                <span class="chat-list-time">Tue</span>
-                                            </div>
-                                            <p class="chat-list-listing">Sony Headphones · ₩45,000</p>
-                                            <p class="chat-list-preview">Is this still available?</p>
-                                        </div>
-                                        <span class="chat-badge">3</span>
-                                    </button>
-                                </li>
-                            </ul>
-
-                            <p id="chatListEmpty" class="chat-empty" hidden>No conversations yet</p>
-                        </aside>
-                        <!-- RIGHT: chat window-->
-                        <section class="chat-window">
-
-                        </section>
-                    </div>
-                </section>
+                            <!-- Bottom: input. A <form>, so Enter = send later -->
+                            <form id="chatForm" class="chat-form">
+                                <input id="chatInput" type="text" placeholder="Type a message..." maxlength="1000"
+                                    autocomplete="off" aria-label="Message">
+                                <button type="submit" class="chat-send">Send</button>
+                            </form>
+                        </div>
+                    </section>
+                </div>
             </main>
         </div>
     </div>
+    <script type="module" src="messages.js"></script>
 </body>
+
 </html>

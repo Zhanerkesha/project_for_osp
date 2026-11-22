@@ -12,9 +12,9 @@
 
 .chat-tab {
     padding: 8px 26px;
-    border: 1px solid var(--border); /*--boder removes the border line*/
+    border: 1px solid var(--border);  /* thin light-grey line (color from style.css) */
     border-radius: 10px;
-    background-color: var(--bg-sidebar); /*what this does?*/
+    background-color: var(--bg-sidebar); 
     color: var(--text-main);
     font-weight: 600; /*bold*/
     cursor: pointer;
@@ -83,12 +83,12 @@
     width: 100%; /* takes all the space in the div possible */
     padding: 12px 14px; /*air between border and text */
     border: none; /* no border */
-    border-bottom: 1px solid var(--border); /*what?*/
+    border-bottom: 1px solid var(--border); 
     border-left: 3px solid transparent;
     background: none; /*no background */
     text-align: left;
     cursor: pointer;
-    font: inherit; /*???*/
+    font: inherit; 
 }
 
 .chat-list-item:hover {
@@ -168,4 +168,177 @@
     text-align: center;
     color: var(--text-muted);
     font-size: 0.9rem;
+}
+
+/* ---------- Right: chat window ---------- */
+.chat-active {
+    flex: 1;
+    display: flex;
+    flex-direction: column;              /* header / messages / input stacked */
+    min-height: 0;
+}
+
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.chat-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.chat-user-name {
+    font-weight: 700;
+    font-size: 1.05rem;
+}
+
+.chat-user-role {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.chat-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 260px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    background-color: var(--bg-sidebar);
+    color: var(--text-main);
+    text-decoration: none;
+}
+
+.chat-item-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    object-fit: cover;                   /* fills the square without stretching */
+}
+
+.chat-item-title {
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chat-item-price {
+    font-weight: 800;
+    color: var(--ewha-green);
+}
+
+.chat-messages {
+    flex: 1;                             /* takes all the space between header and input */
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px;
+    background-color: var(--bg-page);
+}
+
+.chat-form {
+    display: flex;
+    gap: 10px;
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+}
+
+.chat-form input {
+    flex: 1;
+    padding: 10px 16px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background-color: var(--bg-sidebar);
+    outline: none;
+}
+
+.chat-form input:focus {
+    border-color: var(--ewha-green);
+}
+
+.chat-send {
+    padding: 10px 22px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--ewha-green);
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.chat-send:hover {
+    background-color: var(--ewha-green-hover);
+}
+
+/* ---------- Bubbles ---------- */
+.chat-bubble {
+    max-width: 65%;
+    padding: 8px 14px;
+    border-radius: 16px;
+}
+
+.chat-bubble.is-theirs {
+    align-self: flex-start;              /* left */
+    background-color: #e9ecef;
+    border-bottom-left-radius: 4px;      /* small "tail" corner */
+}
+
+.chat-bubble.is-mine {
+    align-self: flex-end;                /* right */
+    background-color: var(--ewha-green);
+    color: #fff;
+    border-bottom-right-radius: 4px;
+}
+
+.chat-bubble-text {
+    white-space: pre-wrap;               /* keeps line breaks */
+    word-break: break-word;              /* very long words don't overflow */
+}
+
+.chat-bubble-time {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.7rem;
+    text-align: right;
+    opacity: 0.75;
+}
+
+/* ---------- Empty states + status ---------- */
+.chat-placeholder {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--text-muted);
+}
+
+.chat-placeholder-icon {
+    font-size: 2.5rem;
+}
+
+.chat-status {
+    margin-bottom: 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background-color: var(--ewha-green-light);
+    color: var(--ewha-green);
+    font-size: 0.9rem;
+}
+
+/* The "hidden" attribute must win over display: flex / grid above */
+.chat-layout[hidden],
+.chat-active[hidden],
+.chat-placeholder[hidden],
+.chat-status[hidden] {
+    display: none;
 }
