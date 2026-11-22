@@ -92,6 +92,7 @@
             'msg.created': '✅ Your listing was posted.',
             'msg.updated': '✅ Your changes were saved.',
             'msg.deleted': '🗑️ Listing deleted.',
+            'msg.loadFailed': 'Could not load your listings. Check your connection and refresh the page.',
 
             // categories
             'cat.textbooks': '📚 Textbooks & reference books',
@@ -151,8 +152,6 @@
             'mylist.empty.text': 'Sell a textbook, lend a calculator, or offer a language exchange.',
             'mylist.empty.cta': '➕ Create your first listing',
             'mylist.loading': 'Loading your listings…',
-            'mylist.demoNote': 'Demo data: these sample listings are stored only in this browser until Firebase is connected.',
-            'mylist.demoReset': 'Reset demo data',
             'mylist.delete.title': 'Delete this listing?',
             'mylist.delete.text': '"{title}" will be removed permanently. This cannot be undone.',
             'mylist.delete.confirm': 'Delete',
@@ -238,6 +237,7 @@
             'msg.created': '✅ 게시물이 등록되었습니다.',
             'msg.updated': '✅ 변경사항이 저장되었습니다.',
             'msg.deleted': '🗑️ 게시물이 삭제되었습니다.',
+            'msg.loadFailed': '게시물을 불러오지 못했습니다. 인터넷 연결을 확인하고 새로고침해주세요.',
 
             'cat.textbooks': '📚 교재 및 참고서',
             'cat.study_notes': '📝 필기 노트 및 학습 자료',
@@ -294,8 +294,6 @@
             'mylist.empty.text': '교재를 판매하거나, 계산기를 빌려주거나, 언어 교환을 시작해보세요.',
             'mylist.empty.cta': '➕ 첫 게시물 등록하기',
             'mylist.loading': '게시물을 불러오는 중…',
-            'mylist.demoNote': '데모 데이터: Firebase 연결 전까지 이 예시 게시물은 이 브라우저에만 저장됩니다.',
-            'mylist.demoReset': '데모 데이터 초기화',
             'mylist.delete.title': '이 게시물을 삭제할까요?',
             'mylist.delete.text': '"{title}" 게시물이 영구적으로 삭제됩니다. 되돌릴 수 없습니다.',
             'mylist.delete.confirm': '삭제',

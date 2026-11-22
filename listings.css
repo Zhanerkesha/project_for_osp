@@ -350,23 +350,6 @@
     display: none;
 }
 
-.mylist-demo-note {
-    margin-top: 24px;
-    font-size: 0.8rem;
-}
-
-.mylist-link-btn {
-    background: none;
-    border: none;
-    padding: 0;
-    margin-left: 6px;
-    color: var(--ewha-green);
-    font: inherit;
-    font-weight: 600;
-    text-decoration: underline;
-    cursor: pointer;
-}
-
 /* Delete confirmation dialog */
 .mylist-dialog {
     border: 1px solid var(--border);

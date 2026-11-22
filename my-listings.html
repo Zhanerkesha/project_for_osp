@@ -79,12 +79,6 @@
                     <a href="add-item.html" class="btn-ewha" data-i18n="mylist.empty.cta">➕ Create your first listing</a>
                 </section>
 
-                <!-- Demo-only notice (delete this block when Firebase is connected) -->
-                <p class="mylist-demo-note text-muted">
-                    <span data-i18n="mylist.demoNote">Demo data: these sample listings are stored only in this browser until Firebase is connected.</span>
-                    <button type="button" id="resetDemo" class="mylist-link-btn" data-i18n="mylist.demoReset">Reset demo data</button>
-                </p>
-
                 <!-- Delete confirmation (in-page dialog, no browser popup) -->
                 <dialog id="deleteDialog" class="mylist-dialog" aria-labelledby="deleteDialogTitle">
                     <form method="dialog">
@@ -119,7 +113,8 @@
         </div>
     </div>
     <script src="listings-i18n.js"></script>
-    <script src="listings-data.js"></script>
-    <script src="my-listings.js"></script>
+    <!-- Modules: listings-data.js imports Firebase, so both files load as modules (they still run in this order). -->
+    <script type="module" src="listings-data.js"></script>
+    <script type="module" src="my-listings.js"></script>
 </body>
 </html>

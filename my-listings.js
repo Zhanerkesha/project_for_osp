@@ -1,7 +1,7 @@
 // Ewha Market - my-listings.html
 // Owner: Zhanerke
 // Shows the current user's listings with Edit / Mark completed / Relist / Delete.
-// Data comes from EwhaListings.store (listings-data.js): demo data now, Firestore on Dec 3.
+// Data comes from EwhaListings.store (listings-data.js), which reads/writes Firestore.
 
 (function () {
     'use strict';
@@ -18,7 +18,6 @@
     const pageMessage = document.getElementById('myListingsMessage');
     const deleteDialog = document.getElementById('deleteDialog');
     const deleteDialogText = document.getElementById('deleteDialogText');
-    const resetDemoBtn = document.getElementById('resetDemo');
 
     let listings = [];
     let currentType = 'all';
@@ -139,9 +138,15 @@
     }
 
     async function reload() {
-        listings = await store.getMyListings();
-        loading.hidden = true;
-        render();
+        try {
+            listings = await store.getMyListings();
+            loading.hidden = true;
+            render();
+        } catch (error) {
+            // Network / Firestore problem: say so instead of showing "Loading…" forever.
+            console.error('[my-listings] load failed', error);
+            loading.textContent = t('msg.loadFailed');
+        }
     }
 
     function showPageMessage(key) {
@@ -210,10 +215,6 @@
 
     statusFilter.addEventListener('change', render);
     grid.addEventListener('click', handleGridClick);
-    resetDemoBtn.addEventListener('click', async function () {
-        await store.resetDemo();
-        await reload();
-    });
     document.addEventListener('ewha:langchange', render);
 
     // Message after coming back from add-item.html (?msg=created / ?msg=updated)
