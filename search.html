@@ -1,25 +1,186 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search & Discovery - Ewha Market</title>
+
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* SEARCH PAGE */
+        /* =========================================
+           SEARCH & DISCOVERY PAGE
+           Uses the shared Ewha design system
+        ========================================= */
+
+        /* Sticky sidebar */
+        .sidebar {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            align-self: flex-start;
+            overflow-y: auto;
+        }
+
+        .brand-logo {
+            font-size: 1.3rem;
+        }
+
+        .side-link svg {
+            flex-shrink: 0;
+        }
+
+        .sidebar-banner {
+            padding: 12px;
+            font-size: 0.85rem;
+        }
+
+        .main-wrapper {
+            min-width: 0;
+        }
+
+        .page-content {
+            max-width: none;
+        }
+
+        /* Top navigation */
+        .topbar {
+            margin-bottom: 22px;
+        }
+
+        .search-bar input {
+            min-width: 0;
+        }
+
+        .search-bar svg,
+        .filter-btn svg {
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .icon-btn svg {
+            color: var(--ewha-green);
+        }
+
+        .page-header {
+            margin-bottom: 18px;
+        }
+
+        .page-header h1 {
+            font-size: 1.6rem;
+            margin-bottom: 4px;
+        }
+
+        /* =========================================
+           COMPACT FILTER PANEL
+        ========================================= */
+
+        #filters {
+            padding: 14px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+        }
+
         .filter-grid {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 18px;
-            margin-top: 18px;
+            grid-template-columns:
+                minmax(105px, 1fr)
+                minmax(115px, 1.1fr)
+                minmax(160px, 1.4fr)
+                minmax(130px, 1.2fr)
+                auto;
+            gap: 10px;
+            align-items: end;
+        }
+
+        #filters .form-group {
+            margin-bottom: 0;
+            min-width: 0;
+        }
+
+        #filters .form-label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        #filters .form-control {
+            width: 100%;
+            min-width: 0;
+            height: 38px;
+            padding: 8px;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            background: var(--card-bg);
+            color: var(--text-main);
+        }
+
+        .price-range {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .price-range input {
+            flex: 1;
+            width: 0;
+            min-width: 0;
+        }
+
+        .price-range span {
+            color: var(--text-muted);
         }
 
         .filter-actions {
             display: flex;
-            flex-wrap: wrap;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .filter-actions button {
+            height: 38px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            white-space: nowrap;
+            font-size: 0.8rem;
+        }
+
+        /* Expandable additional filters */
+        .more-filters {
+            margin-top: 12px;
+        }
+
+        .more-filters summary {
+            cursor: pointer;
+            color: var(--ewha-green);
+            font-size: 0.85rem;
+            font-weight: 600;
+            width: fit-content;
+        }
+
+        .extra-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 12px;
-            margin-top: 22px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .filter-error {
+            color: var(--text-main);
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+
+        /* =========================================
+           SEARCH RESULTS
+        ========================================= */
+
+        .results-panel {
+            margin-bottom: 24px;
         }
 
         .results-heading {
@@ -27,157 +188,268 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 20px;
+            gap: 10px;
+            margin-bottom: 14px;
         }
 
         .results-heading h2 {
-            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        #resultCount {
+            color: var(--text-muted);
+            font-size: 0.85rem;
         }
 
         #searchResults {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 18px;
+            gap: 16px;
         }
 
         .result-card-link {
-            display: block;
+            display: flex;
+            flex-direction: column;
             height: 100%;
+            min-width: 0;
             text-decoration: none;
             color: inherit;
         }
 
         #searchResults .item-card {
-            background: white;
-            border: 1px solid var(--border, #e7e7e7);
-            border-radius: 14px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
             overflow: hidden;
+            box-shadow: var(--shadow-sm);
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
         #searchResults .item-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+            box-shadow: var(--shadow-md);
         }
 
-        #searchResults .item-card:focus-visible {
-            outline: 3px solid #a94786;
-            outline-offset: 3px;
-        }
-
+        /* Product images */
         #searchResults .item-img-wrap {
             position: relative;
-            height: 190px;
             overflow: hidden;
-            background: #f7f1f5;
+            background: var(--bg-sidebar);
         }
 
         #searchResults .item-img-wrap img {
             width: 100%;
-            height: 100%;
+            height: 165px;
             object-fit: cover;
             display: block;
         }
 
+        /* =========================================
+           UNIFIED EWHA GREEN BADGES
+        ========================================= */
+
         #searchResults .item-badge {
             position: absolute;
-            top: 12px;
-            left: 12px;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 11px;
+            top: 10px;
+            left: 10px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 0.68rem;
             font-weight: 700;
+            background: var(--ewha-green);
+            color: white;
         }
 
-        .badge-buy {
-            background: #fce7f3;
-            color: #9d174d;
+        #searchResults .badge-buy,
+        #searchResults .badge-service {
+            background: var(--ewha-green);
+            color: white;
         }
 
-        .badge-rent {
-            background: #d9ebd3;
-            color: #376c41;
+        #searchResults .badge-rent,
+        #searchResults .badge-notes {
+            background: var(--ewha-green-light);
+            color: var(--ewha-green);
+            border: 1px solid var(--ewha-green);
         }
 
-        .badge-service {
-            background: #e8ddf5;
-            color: #68438d;
-        }
-
-        .badge-notes {
-            background: #fff3dc;
-            color: #95601c;
-        }
-
+        /* Product information */
         #searchResults .item-info {
-            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            padding: 12px;
         }
 
         #searchResults .item-price {
-            font-size: 17px;
-            font-weight: 700;
-            margin-bottom: 8px;
+            color: var(--ewha-green);
+            font-size: 1.05rem;
+            font-weight: 800;
+            margin-bottom: 4px;
         }
 
         #searchResults .item-title {
-            font-size: 15px;
+            color: var(--text-main);
+            font-size: 0.92rem;
             font-weight: 600;
-            margin: 0 0 8px;
+            margin: 4px 0 6px;
+            overflow-wrap: anywhere;
         }
 
         .item-description {
-            font-size: 12px;
+            font-size: 0.8rem;
             line-height: 1.5;
-            color: var(--text-muted, #777);
-            margin: 0 0 9px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
         }
 
         .item-course {
-            font-size: 12px;
-            margin-bottom: 9px;
-            color: #8b3b70;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--ewha-green);
+            margin-bottom: 8px;
         }
 
         #searchResults .item-meta {
-            font-size: 12px;
-            color: var(--text-muted, #777);
+            display: block;
+            margin-top: auto;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            padding-top: 8px;
+            border-top: 1px solid var(--border);
         }
 
+        /* Empty state */
         .empty-state {
             text-align: center;
-            padding: 45px 20px;
+            padding: 40px 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
         }
 
         .empty-state h3 {
             margin-bottom: 8px;
+            color: var(--ewha-green);
+        }
+
+        .empty-state p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
 
         .demo-note {
-            font-size: 12px;
-            color: var(--text-muted, #777);
-            margin-top: 20px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 16px;
         }
 
         .hidden {
             display: none !important;
         }
 
-        @media (max-width: 1150px) {
+        /* Keyboard accessibility */
+        a:focus-visible,
+        button:focus-visible,
+        select:focus-visible,
+        input:focus-visible,
+        summary:focus-visible {
+            outline: 2px solid var(--ewha-green);
+            outline-offset: 3px;
+        }
+
+        /* =========================================
+           RESPONSIVE DESIGN
+        ========================================= */
+
+        @media (max-width: 1200px) {
+            .filter-grid {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+
+            .filter-actions {
+                grid-column: 1 / -1;
+                justify-content: flex-end;
+            }
+        }
+
+        @media (max-width: 1100px) {
             #searchResults {
                 grid-template-columns: repeat(3, minmax(0, 1fr));
             }
         }
 
-        @media (max-width: 900px) {
-            .filter-grid,
+        @media (max-width: 950px) {
+            .filter-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
             #searchResults {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 800px) {
+            .app-layout {
+                display: block;
+            }
+
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                padding: 12px;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .brand-logo {
+                margin-bottom: 10px;
+            }
+
+            .side-nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 4px;
+            }
+
+            .side-link {
+                padding: 8px 10px;
+                font-size: 0.85rem;
+            }
+
+            .sidebar-banner {
+                display: none;
+            }
+
+            .main-wrapper {
+                padding: 14px;
+            }
+
+            .topbar {
+                flex-wrap: wrap;
+            }
+
+            .search-bar {
+                max-width: none;
+            }
+
+            .extra-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
             .filter-grid,
+            .extra-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-bar {
+                flex-basis: 100%;
+            }
+
             #searchResults {
                 grid-template-columns: 1fr;
             }
@@ -185,51 +457,129 @@
             .filter-actions button {
                 flex: 1;
             }
+
+            #searchResults .item-img-wrap img {
+                height: 200px;
+            }
         }
     </style>
 </head>
 
 <body>
+
     <div class="app-layout">
 
-        <!-- SIDEBAR -->
+        <!-- =====================================
+             SIDEBAR
+        ====================================== -->
+
         <aside class="sidebar">
+
             <a href="index.html" class="brand-logo">
-                🌸 Ewha<br>Market
+                Ewha Market
             </a>
 
             <nav class="side-nav" aria-label="Main navigation">
+
                 <a href="index.html" class="side-link">
-                    🏠 Home
+
+                    <svg width="18" height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true">
+                        <path d="M3 10L12 3L21 10V21H3Z"/>
+                        <path d="M9 21V13H15V21"/>
+                    </svg>
+
+                    Home
+
                 </a>
 
-                <a href="categories.html" class="side-link">
-                    🗂️ Categories
+                <a href="categories.html" class="side-link active">
+
+                    <svg width="18" height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        aria-hidden="true">
+                        <rect x="3" y="3"
+                            width="7" height="7" rx="1"/>
+                        <rect x="14" y="3"
+                            width="7" height="7" rx="1"/>
+                        <rect x="3" y="14"
+                            width="7" height="7" rx="1"/>
+                        <rect x="14" y="14"
+                            width="7" height="7" rx="1"/>
+                    </svg>
+
+                    Categories
+
                 </a>
 
                 <a href="messages.html" class="side-link">
-                    💬 Chat
+
+                    <svg width="18" height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        stroke-linejoin="round"
+                        aria-hidden="true">
+                        <path d="M21 11.5A9 9 0 0 1 12 20.5
+                            A10 10 0 0 1 8 19.5
+                            L3 21L4.5 16
+                            A9 9 0 1 1 21 11.5Z"/>
+                    </svg>
+
+                    Chat
+
                 </a>
 
                 <a href="profile.html" class="side-link">
-                    👤 My Profile
+
+                    <svg width="18" height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        aria-hidden="true">
+                        <circle cx="12" cy="8" r="4"/>
+                        <path d="M4 21V19
+                            A8 8 0 0 1 20 19V21"/>
+                    </svg>
+
+                    My Profile
+
                 </a>
+
             </nav>
 
             <div class="sidebar-banner">
-                <div class="banner-emoji">🎓</div>
+
                 <p><strong>Ewha Campus Hub</strong></p>
+
                 <small>
                     Verified students only<br>
                     (@ewha.ac.kr / @ewhain.net)
                 </small>
+
             </div>
+
         </aside>
 
-        <!-- MAIN WRAPPER -->
+        <!-- =====================================
+             MAIN WRAPPER
+        ====================================== -->
+
         <div class="main-wrapper">
 
             <!-- TOPBAR -->
+
             <header class="topbar">
 
                 <form
@@ -238,7 +588,16 @@
                     method="GET"
                     class="search-bar"
                 >
-                    <span class="search-icon">🔍</span>
+
+                    <svg width="18" height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        aria-hidden="true">
+                        <circle cx="11" cy="11" r="7"/>
+                        <path d="M16 16L21 21"/>
+                    </svg>
 
                     <input
                         type="text"
@@ -254,8 +613,20 @@
                         title="Filters"
                         aria-label="Go to search filters"
                     >
-                        🎛️
+                        <svg width="18" height="18"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            aria-hidden="true">
+                            <path d="M4 6H20M4 12H20M4 18H20"/>
+                            <circle cx="8" cy="6" r="2" fill="white"/>
+                            <circle cx="15" cy="12" r="2" fill="white"/>
+                            <circle cx="10" cy="18" r="2" fill="white"/>
+                        </svg>
                     </a>
+
                 </form>
 
                 <div class="topbar-actions">
@@ -265,8 +636,9 @@
                         class="lang-btn"
                         type="button"
                         title="Language support coming soon"
+                        disabled
                     >
-                        🌐 EN ▾
+                        EN ▾
                     </button>
 
                     <a
@@ -275,233 +647,400 @@
                         title="Chat"
                         aria-label="Chat"
                     >
-                        💬
+                        <svg width="18" height="18"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.7"
+                            aria-hidden="true">
+                            <path d="M21 11.5A9 9 0 0 1 12 20.5
+                                A10 10 0 0 1 8 19.5
+                                L3 21L4.5 16
+                                A9 9 0 1 1 21 11.5Z"/>
+                        </svg>
                     </a>
 
                     <a
                         href="login.html"
                         class="login-pill"
-                        title="Profile / Log In"
+                        title="Log In"
                     >
-                        👤 Log In
+                        Log In
                     </a>
 
                 </div>
+
             </header>
 
             <!-- PAGE CONTENT -->
+
             <main class="page-content">
 
                 <div class="page-header">
-                    <h1>🔎 Search & Discovery</h1>
+
+                    <h1>Search & Discovery</h1>
+
                     <p class="text-muted">
                         Find secondhand items, rentals,
                         study materials, and student services
                         within the Ewha community.
                     </p>
+
                 </div>
 
-                <!-- FILTERS -->
-                <section class="content-card" id="filters">
-                    <h2>Filter Listings</h2>
+                <!-- =================================
+                     COMPACT FILTERS
+                ================================== -->
+
+                <section
+                    class="content-card"
+                    id="filters"
+                    aria-label="Listing filters"
+                >
 
                     <div class="filter-grid">
 
                         <!-- LISTING TYPE -->
+
                         <div class="form-group">
-                            <label for="listingType" class="form-label">
+
+                            <label for="listingType"
+                                class="form-label">
                                 Listing Type
                             </label>
 
-                            <select id="listingType" class="form-control">
+                            <select id="listingType"
+                                class="form-control">
+
                                 <option value="all">All Types</option>
                                 <option value="buy">Buy & Sell</option>
                                 <option value="rent">Rent & Lend</option>
-                                <option value="services">Student Services</option>
-                                <option value="notes">Study Materials</option>
+                                <option value="services">
+                                    Student Services
+                                </option>
+                                <option value="notes">
+                                    Study Materials
+                                </option>
+
                             </select>
+
                         </div>
 
                         <!-- CATEGORY -->
+
                         <div class="form-group">
-                            <label for="categoryFilter" class="form-label">
+
+                            <label for="categoryFilter"
+                                class="form-label">
                                 Category
                             </label>
 
-                            <select id="categoryFilter" class="form-control">
+                            <select id="categoryFilter"
+                                class="form-control">
 
-                                <option value="all">All Categories</option>
+                                <option value="all">
+                                    All Categories
+                                </option>
 
                                 <optgroup label="Buy & Sell">
-                                    <option value="fashion">Clothes</option>
-                                    <option value="shoes">Shoes</option>
-                                    <option value="accessories">Bags & Accessories</option>
-                                    <option value="beauty">Beauty & Makeup</option>
-                                    <option value="electronics">Electronics</option>
-                                    <option value="furniture">Home & Living</option>
-                                    <option value="books">Books</option>
-                                    <option value="hobbies">Toys & Hobbies</option>
-                                    <option value="sports">Sports & Fitness</option>
-                                    <option value="stationery">Stationery</option>
-                                    <option value="free-items">Free Items</option>
-                                    <option value="other">Other</option>
+                                    <option value="fashion">
+                                        Clothes
+                                    </option>
+                                    <option value="shoes">
+                                        Shoes
+                                    </option>
+                                    <option value="accessories">
+                                        Bags & Accessories
+                                    </option>
+                                    <option value="beauty">
+                                        Beauty & Makeup
+                                    </option>
+                                    <option value="electronics">
+                                        Electronics
+                                    </option>
+                                    <option value="furniture">
+                                        Home & Living
+                                    </option>
+                                    <option value="books">
+                                        Books
+                                    </option>
+                                    <option value="hobbies">
+                                        Toys & Hobbies
+                                    </option>
+                                    <option value="sports">
+                                        Sports & Fitness
+                                    </option>
+                                    <option value="stationery">
+                                        Stationery
+                                    </option>
+                                    <option value="free-items">
+                                        Free Items
+                                    </option>
+                                    <option value="other">
+                                        Other
+                                    </option>
                                 </optgroup>
 
                                 <optgroup label="Rent & Lend">
-                                    <option value="calculators">Calculators</option>
-                                    <option value="cameras">Cameras & Electronics</option>
-                                    <option value="event-equipment">Event Equipment</option>
+                                    <option value="calculators">
+                                        Calculators
+                                    </option>
+                                    <option value="cameras">
+                                        Cameras & Electronics
+                                    </option>
+                                    <option value="event-equipment">
+                                        Event Equipment
+                                    </option>
                                 </optgroup>
 
                                 <optgroup label="Student Services">
-                                    <option value="tutoring">Tutoring</option>
-                                    <option value="language">Language Exchange</option>
-                                    <option value="translation">Translation</option>
-                                    <option value="career">Career & Portfolio Help</option>
-                                    <option value="study-groups">Study Groups</option>
+                                    <option value="tutoring">
+                                        Tutoring
+                                    </option>
+                                    <option value="language">
+                                        Language Exchange
+                                    </option>
+                                    <option value="translation">
+                                        Translation
+                                    </option>
+                                    <option value="career">
+                                        Career & Portfolio Help
+                                    </option>
+                                    <option value="study-groups">
+                                        Study Groups
+                                    </option>
                                 </optgroup>
 
                                 <optgroup label="Study Materials">
-                                    <option value="study">Lecture Notes</option>
-                                    <option value="past-papers">Past Papers / Jokbo</option>
-                                    <option value="study-guides">Study Guides</option>
-                                    <option value="lab-supplies">Lab & Engineering Supplies</option>
+                                    <option value="study">
+                                        Lecture Notes
+                                    </option>
+                                    <option value="past-papers">
+                                        Past Papers / Jokbo
+                                    </option>
+                                    <option value="study-guides">
+                                        Study Guides
+                                    </option>
+                                    <option value="lab-supplies">
+                                        Lab & Engineering Supplies
+                                    </option>
                                 </optgroup>
 
                             </select>
+
                         </div>
 
-                        <!-- CONDITION -->
+                        <!-- PRICE RANGE -->
+
                         <div class="form-group">
-                            <label for="conditionFilter" class="form-label">
-                                Condition
+
+                            <label for="minPrice"
+                                class="form-label">
+                                Price (₩)
                             </label>
 
-                            <select id="conditionFilter" class="form-control">
-                                <option value="all">Any Condition</option>
-                                <option value="new">New</option>
-                                <option value="like-new">Like New</option>
-                                <option value="good">Good</option>
-                                <option value="used">Used</option>
-                            </select>
-                        </div>
+                            <div class="price-range">
 
-                        <!-- MIN PRICE -->
-                        <div class="form-group">
-                            <label for="minPrice" class="form-label">
-                                Minimum Price (₩)
-                            </label>
+                                <input
+                                    type="number"
+                                    id="minPrice"
+                                    class="form-control"
+                                    min="0"
+                                    placeholder="Min"
+                                    aria-label="Minimum price"
+                                >
 
-                            <input
-                                type="number"
-                                id="minPrice"
-                                class="form-control"
-                                min="0"
-                                placeholder="e.g. 1000"
-                            >
-                        </div>
+                                <span>–</span>
 
-                        <!-- MAX PRICE -->
-                        <div class="form-group">
-                            <label for="maxPrice" class="form-label">
-                                Maximum Price (₩)
-                            </label>
+                                <input
+                                    type="number"
+                                    id="maxPrice"
+                                    class="form-control"
+                                    min="0"
+                                    placeholder="Max"
+                                    aria-label="Maximum price"
+                                >
 
-                            <input
-                                type="number"
-                                id="maxPrice"
-                                class="form-control"
-                                min="0"
-                                placeholder="e.g. 20000"
-                            >
+                            </div>
+
                         </div>
 
                         <!-- COURSE SEARCH -->
+
                         <div class="form-group">
-                            <label for="courseSearch" class="form-label">
-                                Course Name / Code
+
+                            <label for="courseSearch"
+                                class="form-label">
+                                Course Code / Name
                             </label>
 
                             <input
                                 type="text"
                                 id="courseSearch"
                                 class="form-control"
-                                placeholder="e.g. Python or 38403"
+                                placeholder="e.g. 38403, Python"
                             >
+
                         </div>
 
-                        <!-- PAYMENT -->
-                        <div class="form-group">
-                            <label for="paymentFilter" class="form-label">
-                                Service Payment
-                            </label>
+                        <!-- APPLY AND RESET -->
 
-                            <select id="paymentFilter" class="form-control">
-                                <option value="all">All Services</option>
-                                <option value="free">Free Services</option>
-                                <option value="paid">Paid Services</option>
-                            </select>
-                        </div>
+                        <div class="filter-actions">
 
-                        <!-- SORT -->
-                        <div class="form-group">
-                            <label for="sortFilter" class="form-label">
-                                Sort By
-                            </label>
+                            <button
+                                type="button"
+                                id="applyFilters"
+                                class="btn-ewha"
+                            >
+                                Apply Filters
+                            </button>
 
-                            <select id="sortFilter" class="form-control">
-                                <option value="newest">Newest First</option>
-                                <option value="price-low">Price: Low to High</option>
-                                <option value="price-high">Price: High to Low</option>
-                                <option value="name">Name: A to Z</option>
-                            </select>
+                            <button
+                                type="button"
+                                id="resetFilters"
+                                class="btn-outline-ewha"
+                            >
+                                Reset
+                            </button>
+
                         </div>
 
                     </div>
 
-                    <div class="filter-actions">
-                        <button
-                            type="button"
-                            id="applyFilters"
-                            class="btn-ewha"
-                        >
-                            Apply Filters
-                        </button>
+                    <!-- ADDITIONAL FILTERS -->
 
-                        <button
-                            type="button"
-                            id="resetFilters"
-                            class="btn-outline-ewha"
-                        >
-                            Reset Filters
-                        </button>
-                    </div>
+                    <details class="more-filters">
+
+                        <summary>More filters</summary>
+
+                        <div class="extra-grid">
+
+                            <!-- CONDITION -->
+
+                            <div class="form-group"
+                                id="conditionGroup">
+
+                                <label for="conditionFilter"
+                                    class="form-label">
+                                    Condition
+                                </label>
+
+                                <select id="conditionFilter"
+                                    class="form-control">
+
+                                    <option value="all">
+                                        Any Condition
+                                    </option>
+                                    <option value="new">New</option>
+                                    <option value="like-new">
+                                        Like New
+                                    </option>
+                                    <option value="good">Good</option>
+                                    <option value="used">Used</option>
+
+                                </select>
+
+                            </div>
+
+                            <!-- SERVICE PAYMENT -->
+
+                            <div class="form-group"
+                                id="paymentGroup">
+
+                                <label for="paymentFilter"
+                                    class="form-label">
+                                    Service Payment
+                                </label>
+
+                                <select id="paymentFilter"
+                                    class="form-control">
+
+                                    <option value="all">
+                                        All Services
+                                    </option>
+                                    <option value="free">
+                                        Free Services
+                                    </option>
+                                    <option value="paid">
+                                        Paid Services
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <!-- SORT -->
+
+                            <div class="form-group">
+
+                                <label for="sortFilter"
+                                    class="form-label">
+                                    Sort By
+                                </label>
+
+                                <select id="sortFilter"
+                                    class="form-control">
+
+                                    <option value="newest">
+                                        Newest First
+                                    </option>
+                                    <option value="price-low">
+                                        Price: Low to High
+                                    </option>
+                                    <option value="price-high">
+                                        Price: High to Low
+                                    </option>
+                                    <option value="name">
+                                        Name: A to Z
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </details>
+
+                    <p id="filterError"
+                        class="filter-error hidden"
+                        role="alert">
+                    </p>
+
                 </section>
 
-                <!-- SEARCH RESULTS -->
-                <section class="content-card">
+                <!-- =================================
+                     SEARCH RESULTS
+                ================================== -->
+
+                <section class="results-panel">
 
                     <div class="results-heading">
+
                         <h2>Available Listings</h2>
 
-                        <span id="resultCount" aria-live="polite">
+                        <span id="resultCount"
+                            aria-live="polite">
                             0 listings found
                         </span>
+
                     </div>
 
-                    <div
-                        id="searchResults"
-                        class="items-grid"
-                    ></div>
+                    <div id="searchResults"
+                        class="items-grid">
+                    </div>
 
-                    <div
-                        id="emptyState"
-                        class="empty-state hidden"
-                    >
-                        <h3>🔍 No listings found</h3>
+                    <!-- EMPTY STATE -->
+
+                    <div id="emptyState"
+                        class="empty-state hidden">
+
+                        <h3>No results found</h3>
+
                         <p>
                             Try another keyword or change your filters.
                         </p>
+
                     </div>
 
                     <p class="demo-note">
@@ -509,20 +1048,22 @@
                         Ewha Market prototype. Real listings will
                         be connected through Firebase later.
                     </p>
+
                 </section>
 
             </main>
+
         </div>
+
     </div>
 
     <script>
+
         // =========================================
         // SAMPLE LISTINGS
         // 37 DEMONSTRATION LISTINGS
         // =========================================
 
-        // Helper for creating sample listings.
-        // Each listing uses the same data structure.
         function createListing(
             id, title, type, category, condition,
             price, priceUnit, description, image,
@@ -874,8 +1415,7 @@
                 3500, "",
                 "Student-written revision guide.",
                 "images/linear.jpeg",
-                "Linear Algebra", "",
-                "Mathematics"
+                "Linear Algebra", "", "Mathematics"
             ),
 
             createListing(
@@ -893,62 +1433,72 @@
         // GET HTML ELEMENTS
         // =========================================
 
-        const searchForm = document.getElementById("searchForm");
-        const searchInput = document.getElementById("searchInput");
+        const searchForm =
+            document.getElementById("searchForm");
 
-        const listingType = document.getElementById("listingType");
-        const categoryFilter = document.getElementById("categoryFilter");
-        const conditionFilter = document.getElementById("conditionFilter");
+        const searchInput =
+            document.getElementById("searchInput");
 
-        const minPrice = document.getElementById("minPrice");
-        const maxPrice = document.getElementById("maxPrice");
-        const courseSearch = document.getElementById("courseSearch");
+        const listingType =
+            document.getElementById("listingType");
 
-        const paymentFilter = document.getElementById("paymentFilter");
-        const sortFilter = document.getElementById("sortFilter");
+        const categoryFilter =
+            document.getElementById("categoryFilter");
 
-        const applyFilters = document.getElementById("applyFilters");
-        const resetFilters = document.getElementById("resetFilters");
+        const conditionFilter =
+            document.getElementById("conditionFilter");
 
-        const searchResults = document.getElementById("searchResults");
-        const resultCount = document.getElementById("resultCount");
-        const emptyState = document.getElementById("emptyState");
+        const minPrice =
+            document.getElementById("minPrice");
 
-        // =========================================
-        // URL PARAMETERS
-        // =========================================
+        const maxPrice =
+            document.getElementById("maxPrice");
 
-        const params = new URLSearchParams(window.location.search);
+        const courseSearch =
+            document.getElementById("courseSearch");
 
-        const urlQuery = params.get("q");
-        const urlType = params.get("type");
-        const urlCategory = params.get("category");
+        const paymentFilter =
+            document.getElementById("paymentFilter");
 
-        if (urlQuery) {
-            searchInput.value = urlQuery;
-        }
+        const sortFilter =
+            document.getElementById("sortFilter");
 
-        if (
-            urlType &&
-            Array.from(listingType.options)
-                .some(option => option.value === urlType)
-        ) {
-            listingType.value = urlType;
-        }
+        const applyFilters =
+            document.getElementById("applyFilters");
 
-        if (
-            urlCategory &&
-            Array.from(categoryFilter.options)
-                .some(option => option.value === urlCategory)
-        ) {
-            categoryFilter.value = urlCategory;
-        }
+        const resetFilters =
+            document.getElementById("resetFilters");
+
+        const searchResults =
+            document.getElementById("searchResults");
+
+        const resultCount =
+            document.getElementById("resultCount");
+
+        const emptyState =
+            document.getElementById("emptyState");
+
+        const filterError =
+            document.getElementById("filterError");
+
+        const conditionGroup =
+            document.getElementById("conditionGroup");
+
+        const paymentGroup =
+            document.getElementById("paymentGroup");
+
+        const moreFilters =
+            document.querySelector(".more-filters");
+
+        const originalCategoryOptions =
+            categoryFilter.innerHTML;
 
         // =========================================
         // CATEGORY LABELS
         // =========================================
 
         function formatCategory(category) {
+
             const labels = {
                 fashion: "Clothes",
                 shoes: "Shoes",
@@ -980,10 +1530,141 @@
         }
 
         // =========================================
+        // DYNAMIC CATEGORY FILTERS
+        // =========================================
+
+        const categoriesByType = {
+
+            buy: [
+                "fashion",
+                "shoes",
+                "accessories",
+                "beauty",
+                "electronics",
+                "furniture",
+                "books",
+                "hobbies",
+                "sports",
+                "stationery",
+                "free-items",
+                "other"
+            ],
+
+            rent: [
+                "calculators",
+                "cameras",
+                "books",
+                "event-equipment",
+                "other"
+            ],
+
+            services: [
+                "tutoring",
+                "language",
+                "translation",
+                "career",
+                "study-groups"
+            ],
+
+            notes: [
+                "study",
+                "books",
+                "past-papers",
+                "study-guides",
+                "lab-supplies"
+            ]
+
+        };
+
+        function updateCategoryOptions() {
+
+            const selectedType = listingType.value;
+            const previousCategory = categoryFilter.value;
+
+            if (selectedType === "all") {
+
+                categoryFilter.innerHTML =
+                    originalCategoryOptions;
+
+            } else {
+
+                categoryFilter.innerHTML =
+                    '<option value="all">All Categories</option>';
+
+                const categories =
+                    categoriesByType[selectedType] || [];
+
+                categories.forEach(category => {
+
+                    const option =
+                        document.createElement("option");
+
+                    option.value = category;
+
+                    option.textContent =
+                        formatCategory(category);
+
+                    categoryFilter.appendChild(option);
+
+                });
+
+            }
+
+            const categoryExists =
+                Array.from(categoryFilter.options)
+                    .some(option =>
+                        option.value === previousCategory
+                    );
+
+            categoryFilter.value =
+                categoryExists ? previousCategory : "all";
+
+        }
+
+        // =========================================
+        // DISPLAY RELEVANT FILTERS
+        // =========================================
+
+        function updateFilterVisibility() {
+
+            const selectedType = listingType.value;
+
+            const showCondition =
+                selectedType === "all" ||
+                selectedType === "buy" ||
+                selectedType === "rent" ||
+                selectedType === "notes";
+
+            const showPayment =
+                selectedType === "all" ||
+                selectedType === "services";
+
+            conditionGroup.classList.toggle(
+                "hidden", !showCondition
+            );
+
+            paymentGroup.classList.toggle(
+                "hidden", !showPayment
+            );
+
+            // Reset filters that are not relevant.
+
+            if (!showCondition) {
+                conditionFilter.value = "all";
+            }
+
+            if (!showPayment) {
+                paymentFilter.value = "all";
+            }
+
+        }
+
+        // =========================================
         // FORMAT PRICE
         // =========================================
 
         function formatPrice(item) {
+
             if (item.price === 0) {
                 return "Free";
             }
@@ -992,7 +1673,7 @@
                 "₩" + item.price.toLocaleString("ko-KR");
 
             if (item.priceUnit) {
-                return priceText + "/" + item.priceUnit;
+                return priceText + " / " + item.priceUnit;
             }
 
             return priceText;
@@ -1013,13 +1694,17 @@
                     : " listings found");
 
             if (items.length === 0) {
+
                 emptyState.classList.remove("hidden");
+
                 return;
             }
 
             emptyState.classList.add("hidden");
 
             items.forEach(item => {
+
+                // Create clickable product card.
 
                 const card = document.createElement("a");
 
@@ -1031,21 +1716,31 @@
                     encodeURIComponent(item.id);
 
                 // IMAGE
-                const imageWrap = document.createElement("div");
+
+                const imageWrap =
+                    document.createElement("div");
+
                 imageWrap.className = "item-img-wrap";
 
-                const image = document.createElement("img");
+                const image =
+                    document.createElement("img");
+
                 image.src = item.image;
                 image.alt = item.title;
                 image.loading = "lazy";
 
                 image.onerror = function () {
+
                     this.onerror = null;
                     this.src = "images/cat-books.jpg";
+
                 };
 
                 // TYPE BADGE
-                const badge = document.createElement("span");
+
+                const badge =
+                    document.createElement("span");
+
                 badge.className = "item-badge";
 
                 const badgeLabels = {
@@ -1062,55 +1757,79 @@
                     notes: "badge-notes"
                 };
 
-                badge.textContent = badgeLabels[item.type];
-                badge.classList.add(badgeClasses[item.type]);
+                badge.textContent =
+                    badgeLabels[item.type];
+
+                badge.classList.add(
+                    badgeClasses[item.type]
+                );
 
                 imageWrap.appendChild(image);
                 imageWrap.appendChild(badge);
 
-                // ITEM INFO
-                const info = document.createElement("div");
+                // ITEM INFORMATION
+
+                const info =
+                    document.createElement("div");
+
                 info.className = "item-info";
 
-                const price = document.createElement("div");
+                const price =
+                    document.createElement("div");
+
                 price.className = "item-price";
                 price.textContent = formatPrice(item);
 
-                const title = document.createElement("h3");
+                const title =
+                    document.createElement("h3");
+
                 title.className = "item-title";
                 title.textContent = item.title;
 
-                const description = document.createElement("p");
-                description.className = "item-description";
-                description.textContent = item.description;
+                const description =
+                    document.createElement("p");
+
+                description.className =
+                    "item-description";
+
+                description.textContent =
+                    item.description;
 
                 info.appendChild(price);
                 info.appendChild(title);
                 info.appendChild(description);
 
                 // COURSE INFORMATION
+
                 if (item.courseName) {
-                    const course = document.createElement("div");
+
+                    const course =
+                        document.createElement("div");
+
                     course.className = "item-course";
 
                     course.textContent =
-                        "📘 " +
                         item.courseName +
                         (item.courseCode
                             ? " (" + item.courseCode + ")"
                             : "");
 
                     info.appendChild(course);
+
                 }
 
                 // CATEGORY AND CONDITION
-                const meta = document.createElement("div");
+
+                const meta =
+                    document.createElement("div");
+
                 meta.className = "item-meta";
 
                 meta.textContent =
                     formatCategory(item.category) +
                     (item.condition
-                        ? " • " + item.condition.replace("-", " ")
+                        ? " • " +
+                          item.condition.replace("-", " ")
                         : "");
 
                 info.appendChild(meta);
@@ -1119,7 +1838,9 @@
                 card.appendChild(info);
 
                 searchResults.appendChild(card);
+
             });
+
         }
 
         // =========================================
@@ -1131,9 +1852,14 @@
             const keyword =
                 searchInput.value.trim().toLowerCase();
 
-            const selectedType = listingType.value;
-            const selectedCategory = categoryFilter.value;
-            const selectedCondition = conditionFilter.value;
+            const selectedType =
+                listingType.value;
+
+            const selectedCategory =
+                categoryFilter.value;
+
+            const selectedCondition =
+                conditionFilter.value;
 
             const minimum =
                 minPrice.value === ""
@@ -1148,10 +1874,51 @@
             const courseKeyword =
                 courseSearch.value.trim().toLowerCase();
 
-            const selectedPayment = paymentFilter.value;
-            const selectedSort = sortFilter.value;
+            const selectedPayment =
+                paymentFilter.value;
+
+            const selectedSort =
+                sortFilter.value;
+
+            // Validate price input.
+
+            if (
+                !minPrice.validity.valid ||
+                !maxPrice.validity.valid ||
+                (minimum !== null && minimum < 0) ||
+                (maximum !== null && maximum < 0)
+            ) {
+
+                filterError.textContent =
+                    "Please enter a valid non-negative price.";
+
+                filterError.classList.remove("hidden");
+
+                return false;
+
+            }
+
+            if (
+                minimum !== null &&
+                maximum !== null &&
+                minimum > maximum
+            ) {
+
+                filterError.textContent =
+                    "Minimum price cannot be greater than maximum price.";
+
+                filterError.classList.remove("hidden");
+
+                return false;
+
+            }
+
+            filterError.classList.add("hidden");
 
             let filtered = listings.filter(item => {
+
+                // Search title, description, course,
+                // course code, subject and category.
 
                 const searchableText = [
                     item.title,
@@ -1167,29 +1934,37 @@
                     keyword === "" ||
                     searchableText.includes(keyword);
 
+                // Listing type
+
                 const matchesType =
                     selectedType === "all" ||
                     item.type === selectedType;
+
+                // Category
 
                 const matchesCategory =
                     selectedCategory === "all" ||
                     item.category === selectedCategory;
 
+                // Condition
+
                 const matchesCondition =
                     selectedCondition === "all" ||
-                    item.condition === selectedCondition ||
-                    (
-                        item.type === "services" &&
-                        item.condition === ""
-                    );
+                    item.condition === selectedCondition;
+
+                // Minimum price
 
                 const matchesMinimum =
                     minimum === null ||
                     item.price >= minimum;
 
+                // Maximum price
+
                 const matchesMaximum =
                     maximum === null ||
                     item.price <= maximum;
+
+                // Course-specific search
 
                 const courseText = [
                     item.courseName,
@@ -1201,16 +1976,32 @@
                     courseKeyword === "" ||
                     courseText.includes(courseKeyword);
 
+                // Free or paid service filter
+
                 let matchesPayment = true;
 
                 if (selectedPayment !== "all") {
+
                     if (item.type !== "services") {
+
                         matchesPayment = false;
-                    } else if (selectedPayment === "free") {
-                        matchesPayment = item.price === 0;
-                    } else if (selectedPayment === "paid") {
-                        matchesPayment = item.price > 0;
+
+                    } else if (
+                        selectedPayment === "free"
+                    ) {
+
+                        matchesPayment =
+                            item.price === 0;
+
+                    } else if (
+                        selectedPayment === "paid"
+                    ) {
+
+                        matchesPayment =
+                            item.price > 0;
+
                     }
+
                 }
 
                 return (
@@ -1223,105 +2014,248 @@
                     matchesCourse &&
                     matchesPayment
                 );
+
             });
 
+            // =====================================
             // SORT RESULTS
+            // =====================================
+
             if (selectedSort === "newest") {
+
                 filtered.sort((a, b) =>
                     b.date.localeCompare(a.date)
                 );
+
             }
 
             if (selectedSort === "price-low") {
-                filtered.sort((a, b) => a.price - b.price);
+
+                filtered.sort((a, b) =>
+                    a.price - b.price
+                );
+
             }
 
             if (selectedSort === "price-high") {
-                filtered.sort((a, b) => b.price - a.price);
+
+                filtered.sort((a, b) =>
+                    b.price - a.price
+                );
+
             }
 
             if (selectedSort === "name") {
+
                 filtered.sort((a, b) =>
                     a.title.localeCompare(b.title)
                 );
+
             }
 
             renderListings(filtered);
+
+            return true;
+
         }
 
         // =========================================
-        // UPDATE URL WHEN FILTERS ARE APPLIED
+        // URL PARAMETERS
+        // Supports navigation from categories.html
+        // =========================================
+
+        const params =
+            new URLSearchParams(window.location.search);
+
+        const urlQuery = params.get("q");
+        const urlType = params.get("type");
+        const urlCategory = params.get("category");
+
+        if (urlQuery) {
+
+            searchInput.value = urlQuery;
+
+        }
+
+        if (
+            urlType &&
+            Array.from(listingType.options)
+                .some(option => option.value === urlType)
+        ) {
+
+            listingType.value = urlType;
+
+        }
+
+        updateCategoryOptions();
+        updateFilterVisibility();
+
+        if (
+            urlCategory &&
+            Array.from(categoryFilter.options)
+                .some(option => option.value === urlCategory)
+        ) {
+
+            categoryFilter.value = urlCategory;
+
+        }
+
+        // =========================================
+        // UPDATE SEARCH URL
         // =========================================
 
         function updateSearchURL() {
 
-            const url = new URL(window.location.href);
-            const keyword = searchInput.value.trim();
+            const url =
+                new URL(window.location.href);
+
+            const keyword =
+                searchInput.value.trim();
 
             if (keyword) {
+
                 url.searchParams.set("q", keyword);
+
             } else {
+
                 url.searchParams.delete("q");
+
             }
 
             if (listingType.value !== "all") {
-                url.searchParams.set("type", listingType.value);
+
+                url.searchParams.set(
+                    "type",
+                    listingType.value
+                );
+
             } else {
+
                 url.searchParams.delete("type");
+
             }
 
             if (categoryFilter.value !== "all") {
+
                 url.searchParams.set(
                     "category",
                     categoryFilter.value
                 );
+
             } else {
+
                 url.searchParams.delete("category");
+
             }
 
             window.history.replaceState({}, "", url);
+
         }
 
         // =========================================
-        // SEARCH FORM
+        // APPLY SEARCH AND FILTERS
         // =========================================
 
-        searchForm.addEventListener("submit", function (event) {
-            event.preventDefault();
-            updateSearchURL();
-            filterListings();
-        });
+        function applySearch() {
 
-        // =========================================
-        // APPLY FILTERS
-        // =========================================
+            if (filterListings()) {
 
-        applyFilters.addEventListener("click", function () {
-            updateSearchURL();
-            filterListings();
+                updateSearchURL();
+
+            }
+
+        }
+
+        // Search form
+
+        searchForm.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+                applySearch();
+
+            }
+        );
+
+        // Listing type change
+
+        listingType.addEventListener(
+            "change",
+            function () {
+
+                updateCategoryOptions();
+                updateFilterVisibility();
+
+            }
+        );
+
+        // Apply filters button
+
+        applyFilters.addEventListener(
+            "click",
+            applySearch
+        );
+
+        // Allow Enter key for filter inputs.
+
+        [
+            minPrice,
+            maxPrice,
+            courseSearch
+        ].forEach(input => {
+
+            input.addEventListener(
+                "keydown",
+                function (event) {
+
+                    if (event.key === "Enter") {
+
+                        event.preventDefault();
+
+                        applySearch();
+
+                    }
+
+                }
+            );
+
         });
 
         // =========================================
         // RESET FILTERS
         // =========================================
 
-        resetFilters.addEventListener("click", function () {
+        resetFilters.addEventListener(
+            "click",
+            function () {
 
-            searchInput.value = "";
-            listingType.value = "all";
-            categoryFilter.value = "all";
-            conditionFilter.value = "all";
+                searchInput.value = "";
+                listingType.value = "all";
 
-            minPrice.value = "";
-            maxPrice.value = "";
-            courseSearch.value = "";
+                updateCategoryOptions();
 
-            paymentFilter.value = "all";
-            sortFilter.value = "newest";
+                categoryFilter.value = "all";
+                conditionFilter.value = "all";
 
-            updateSearchURL();
-            filterListings();
-        });
+                minPrice.value = "";
+                maxPrice.value = "";
+                courseSearch.value = "";
+
+                paymentFilter.value = "all";
+                sortFilter.value = "newest";
+
+                moreFilters.open = false;
+
+                filterError.classList.add("hidden");
+
+                updateFilterVisibility();
+
+                applySearch();
+
+            }
+        );
 
         // =========================================
         // INITIAL DISPLAY
@@ -1330,5 +2264,7 @@
         filterListings();
 
     </script>
+
 </body>
 </html>
+
