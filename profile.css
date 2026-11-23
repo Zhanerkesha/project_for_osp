@@ -1,98 +1,300 @@
 /* Profile Page
-Owner: Sara */
+   Owner: Sara */
 
+.profile-page {
+    padding-bottom: 40px;
+}
 
-.profile-dashboard {
-    background: #ffffff;
-    border-radius: 18px;
-    min-height: 550px;
-    padding: 40px 30px;
+/* Profile Card */
 
+.profile-card {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: space-between;
-}
+    gap: 25px;
 
+    background: #ffffff;
+    border: 1px solid #e8e8e8;
+    border-radius: 18px;
 
-/* Welcome section */
-
-.profile-welcome {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.profile-avatar {
-    font-size: 90px;
-    margin-bottom: 10px;
-}
-
-.profile-welcome h2 {
-    font-size: 22px;
-    margin-bottom: 8px;
-}
-
-.profile-welcome p {
-    color: var(--text-muted);
-    font-size: 14px;
+    padding: 28px 32px;
+    margin-bottom: 30px;
 }
 
 .profile-user-info {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    text-align: center;
+    text-align: left;
+    gap: 22px;
+    margin: 0;
 }
 
-/* Profile shortcuts */
+.profile-avatar {
+    width: 86px;
+    height: 86px;
+    min-width: 86px;
 
-.profile-shortcuts {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 55px;
-    margin: 50px 0;
-    flex-wrap: wrap;
+
+    border: 2px solid #d6d6d6;
+    border-radius: 50%;
+    background: #f8f9f8;
+
+    font-size: 32px;
+    margin: 0;
+}
+
+.profile-user-details h2 {
+    font-size: 23px;
+    margin: 0 0 8px;
+}
+
+.profile-email {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin: 0 0 10px;
+}
+
+.verification-badge {
+    display: inline-block;
+    width: fit-content;
+
+    padding: 5px 10px;
+    border-radius: 20px;
+
+    background: #eeeeee;
+    color: #666666;
+
+    font-size: 12px;
+}
+
+.verification-badge.verified {
+    background: #e6f4ea;
+    color: #398052;
+}
+
+/* post listing button */
+
+.post-listing-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 12px 20px;
+    border-radius: 30px;
+
+    background: #263c30;
+    color: white;
+
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+
+    white-space: nowrap;
+    transition: 0.2s;
+}
+
+.post-listing-btn:hover {
+    background: #3c5a48;
+    transform: translateY(-2px);
+}
+
+/* profile shortcuts */
+
+.profile-shortcuts {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+
+    margin: 0 0 35px;
 }
 
 .profile-shortcut {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
+    gap: 14px;
+
+    width: auto;
+    min-width: 0;
+
+    padding: 20px 18px;
+
+    background: #ffffff;
+    border: 1px solid #e8e8e8;
+    border-radius: 15px;
 
     text-decoration: none;
     color: var(--text-main);
 
-    width: 110px;
-    padding: 15px;
-
-    border-radius: 14px;
-    transition: background-color 0.2s, transform 0.2s;
+    transition: 0.2s;
 }
 
 .profile-shortcut:hover {
-    background-color: var(--ewha-green-light);
-    transform: translateY(-4px);
+    background: #f8faf8;
+    border-color: #b7c8bc;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
 .shortcut-icon {
-    font-size: 48px;
-    margin-bottom: 10px;
+    font-size: 26px;
+    color: var(--ewha-green);
+
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.shortcut-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.shortcut-text h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 5px;
+}
+
+.shortcut-text p {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.shortcut-arrow {
+    font-size: 22px;
+    color: #999999;
+}
+
+/* active listings */
+
+.active-listings-section {
+    margin-top: 10px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+.section-heading h2 {
+    font-size: 21px;
+    margin: 0;
+}
+
+.section-heading a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.section-heading a:hover {
     color: var(--ewha-green);
 }
 
-.profile-shortcut span {
-    font-size: 15px;
-    font-weight: 500;
+.active-listings-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
 }
 
+.active-listing-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 
-/* Logout button */
+    min-width: 0;
+    padding: 15px;
+
+    background: #ffffff;
+    border: 1px solid #e8e8e8;
+    border-radius: 14px;
+
+    transition: 0.2s;
+}
+
+.active-listing-card:hover {
+    border-color: #c8d4cb;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+}
+
+.listing-image {
+    width: 70px;
+    height: 75px;
+    min-width: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f3f5f3;
+    border-radius: 10px;
+
+    font-size: 30px;
+}
+
+.listing-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.listing-info h3 {
+    font-size: 14px;
+    font-weight: 600;
+
+    margin: 0 0 10px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.listing-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.listing-meta strong {
+    font-size: 14px;
+    color: #527b63;
+}
+
+.listing-status {
+    font-size: 11px;
+    color: #548267;
+}
+
+.edit-listing-btn {
+    font-size: 12px;
+    text-decoration: none;
+    color: #555555;
+
+    padding: 6px 10px;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+
+    transition: 0.2s;
+}
+
+.edit-listing-btn:hover {
+    background: #f3f5f3;
+}
+
+/* log out */
 
 .profile-footer {
     display: flex;
     justify-content: center;
-    margin-top: auto;
+    margin-top: 35px;
 }
 
 .logout-btn {
@@ -111,27 +313,61 @@ Owner: Sara */
 
 .logout-btn:hover {
     background: #e03b3b;
+    color: white;
 }
 
+/* responsive design */
 
-/* Responsive profile layout */
+@media (max-width: 1100px) {
+
+    .profile-shortcuts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .active-listings-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
 
 @media (max-width: 700px) {
 
-    .profile-dashboard {
-        padding: 25px 15px;
+    .profile-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 22px;
     }
 
-    .profile-shortcuts {
+    .profile-user-info {
         gap: 15px;
     }
 
-    .profile-shortcut {
-        width: 120px;
+    .profile-avatar {
+        width: 68px;
+        height: 68px;
+        min-width: 68px;
+        font-size: 25px;
     }
 
-    .shortcut-icon {
-        font-size: 40px;
+    .profile-user-details h2 {
+        font-size: 19px;
+    }
+
+    .post-listing-btn {
+        width: 100%;
+    }
+
+    .profile-shortcuts {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .profile-shortcut {
+        padding: 16px;
+    }
+
+    .active-listings-grid {
+        grid-template-columns: 1fr;
     }
 
 }

@@ -1,3 +1,5 @@
+<!-- Profile Page
+   Owner: Sara -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +14,34 @@
 <body>
     <div class="app-layout">
         <aside class="sidebar">
-            <a href="index.html" class="brand-logo">🌸 Ewha<br>Market</a>
+            <a href="index.html" class="brand-logo">
+                <svg class="brand-flower" viewBox="4 4 56 56" width="44" height="44" fill="none" stroke="currentColor"
+                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path
+                        d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z" />
+                    <path
+                        d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z"
+                        transform="rotate(72 32 32)" />
+                    <path
+                        d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z"
+                        transform="rotate(144 32 32)" />
+                    <path
+                        d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z"
+                        transform="rotate(216 32 32)" />
+                    <path
+                        d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z"
+                        transform="rotate(288 32 32)" />
+
+                    <line x1="32" y1="32" x2="32" y2="21" stroke-width="1.8" />
+                    <line x1="32" y1="32" x2="42.5" y2="28.5" stroke-width="1.8" />
+                    <line x1="32" y1="32" x2="38.5" y2="41" stroke-width="1.8" />
+                    <line x1="32" y1="32" x2="25.5" y2="41" stroke-width="1.8" />
+                    <line x1="32" y1="32" x2="21.5" y2="28.5" stroke-width="1.8" />
+
+                    <circle cx="32" cy="32" r="3.2" fill="#f1f5f9" stroke="currentColor" stroke-width="2.2" />
+                </svg>
+                <span>Ewha<br>Market</span>
+            </a>
             <nav class="side-nav" aria-label="Main navigation">
                 <a href="index.html" class="side-link">🏠 Home</a>
                 <a href="categories.html" class="side-link">🗂️ Categories</a>
@@ -27,88 +56,167 @@
         </aside>
 
         <div class="main-wrapper">
-            <header class="topbar">
-                <form action="search.html" method="GET" class="search-bar">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" name="q" placeholder="Enter item title, course code, or keyword..."
-                        aria-label="Enter item title">
-                    <a href="search.html" class="filter-btn" title="Filters">🎛️</a>
-                </form>
-                <div class="topbar-actions">
-                    <button id="langToggle" class="lang-btn" type="button">🌐 EN ▾</button>
-                    <a href="messages.html" class="icon-btn" title="Chat">💬</a>
-                    <a href="login.html" class="login-pill" title="Profile / Log In">👤 Log In</a>
-                </div>
-            </header>
 
-            <main class="page-content">
+            <main class="page-content profile-page">
+
+                <!-- Page heading -->
                 <div class="page-header">
-                    <h1>👤 Profile</h1>
-                    <p class="text-muted">View your verified student badge, active listings, and saved favorites</p>
+                    <h1>My Profile</h1>
+                    <p class="text-muted">
+                        View your verified student badge, active listings, and saved favorites
+                    </p>
                 </div>
 
-                <!-- Sara: Add a profile card, a link to my-listings.html, and favorites here -->
-                <!-- PROFILE DASHBOARD -->
-                <section class="profile-dashboard">
+                <!-- Profile card -->
+                <section class="profile-card">
 
-                    <!-- Profile information -->
                     <div class="profile-user-info">
 
                         <div class="profile-avatar" id="profileAvatar">
                             👤
                         </div>
 
-                        <h2>Welcome, <span id="profileNickname">User</span>!</h2>
+                        <div class="profile-user-details">
+                            <h2><span id="profileNickname">User</span></h2>
 
-                        <p id="profileEmail" class="profile-email"></p>
+                            <p id="profileEmail" class="profile-email"></p>
 
-                        <span id="verificationBadge" class="verification-badge">
-                            Checking verification...
-                        </span>
-
-                    </div>
-
-                    <!-- Profile shortcuts -->
-                    <div class="profile-shortcuts">
-
-                        <!-- Favorites -->
-                        <a href="favorites.html" class="profile-shortcut">
-                            <div class="shortcut-icon">❤️</div>
-                            <span>Favorites</span>
-                        </a>
-
-                        <!-- History -->
-                        <a href="history.html" class="profile-shortcut">
-                            <div class="shortcut-icon">⌛</div>
-                            <span>History</span>
-                        </a>
-
-                        <!-- Orders -->
-                        <a href="orders.html" class="profile-shortcut">
-                            <div class="shortcut-icon">📦</div>
-                            <span>Orders</span>
-                        </a>
-
-                        <!-- My Listings -->
-                        <a href="my-listings.html" class="profile-shortcut">
-                            <div class="shortcut-icon">🗒️</div>
-                            <span>My Listings</span>
-                        </a>
+                            <span id="verificationBadge" class="verification-badge">
+                                Checking verification...
+                            </span>
+                        </div>
 
                     </div>
 
-                    <!-- Logout -->
-                    <div class="profile-footer">
-                        <button id="logoutBtn" class="logout-btn" type="button">
-                            ↪ Log Out
-                        </button>
+                    <a href="add-item.html" class="post-listing-btn">
+                        <span>＋</span> Post New Listing
+                    </a>
+
+                </section>
+
+
+                <!-- Profile shortcuts -->
+                <section class="profile-shortcuts">
+
+                    <a href="my-listings.html" class="profile-shortcut">
+                        <div class="shortcut-icon">▤</div>
+                        <div class="shortcut-text">
+                            <h3>My Listings</h3>
+                            <p>Manage your items</p>
+                        </div>
+                        <span class="shortcut-arrow">›</span>
+                    </a>
+
+                    <a href="favorites.html" class="profile-shortcut">
+                        <div class="shortcut-icon">♡</div>
+                        <div class="shortcut-text">
+                            <h3>Favorites</h3>
+                            <p>Saved items</p>
+                        </div>
+                        <span class="shortcut-arrow">›</span>
+                    </a>
+
+                    <a href="orders.html" class="profile-shortcut">
+                        <div class="shortcut-icon">◇</div>
+                        <div class="shortcut-text">
+                            <h3>Orders</h3>
+                            <p>Your current orders</p>
+                        </div>
+                        <span class="shortcut-arrow">›</span>
+                    </a>
+
+                    <a href="history.html" class="profile-shortcut">
+                        <div class="shortcut-icon">◷</div>
+                        <div class="shortcut-text">
+                            <h3>History</h3>
+                            <p>Recently viewed</p>
+                        </div>
+                        <span class="shortcut-arrow">›</span>
+                    </a>
+
+                </section>
+
+
+                <!-- Active listings -->
+                <section class="active-listings-section">
+
+                    <div class="section-heading">
+                        <h2>Active Listings</h2>
+                        <a href="my-listings.html">View All ›</a>
+                    </div>
+
+                    <div class="active-listings-grid">
+
+                        <!-- Listing 1 -->
+                        <article class="active-listing-card">
+                            <div class="listing-image">
+                                <span>📚</span>
+                            </div>
+
+                            <div class="listing-info">
+                                <h3>Calculus Textbook</h3>
+                                <div class="listing-meta">
+                                    <strong>$100</strong>
+                                    <span class="listing-status">Active</span>
+                                </div>
+                            </div>
+
+                            <a href="my-listings.html" class="edit-listing-btn">Edit</a>
+                        </article>
+
+
+                        <!-- Listing 2 -->
+                        <article class="active-listing-card">
+                            <div class="listing-image">
+                                <span>🧮</span>
+                            </div>
+
+                            <div class="listing-info">
+                                <h3>Casio Calculator</h3>
+                                <div class="listing-meta">
+                                    <strong>$80</strong>
+                                    <span class="listing-status">Active</span>
+                                </div>
+                            </div>
+
+                            <a href="my-listings.html" class="edit-listing-btn">Edit</a>
+                        </article>
+
+
+                        <!-- Listing 3 -->
+                        <article class="active-listing-card">
+                            <div class="listing-image">
+                                <span>🧥</span>
+                            </div>
+
+                            <div class="listing-info">
+                                <h3>Ewha Hoodie</h3>
+                                <div class="listing-meta">
+                                    <strong>$50</strong>
+                                    <span class="listing-status">Active</span>
+                                </div>
+                            </div>
+
+                            <a href="my-listings.html" class="edit-listing-btn">Edit</a>
+                        </article>
+
                     </div>
 
                 </section>
 
+
+                <!-- Logout -->
+                <div class="profile-footer">
+                    <button id="logoutBtn" class="logout-btn" type="button">
+                        ↪ Log Out
+                    </button>
+                </div>
+
                 <!-- Error message -->
                 <p id="profileError" class="text-muted" hidden></p>
+
             </main>
+
         </div>
     </div>
     <script type="module" src="profile.js"></script>

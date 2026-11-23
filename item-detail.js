@@ -1,4 +1,5 @@
-// Ewha Market - Item Detail Page
+// Item Detail
+// Owner: Sara
 import './listings-data.js';
 
 (function () {
@@ -42,86 +43,121 @@ import './listings-data.js';
     }
 
     // Display listing information
+
     function renderListing(listing) {
 
+        // Title
         document.getElementById('itemTitle').textContent =
             listing.title || 'Untitled listing';
 
-        document.getElementById('itemDescriptionShort').textContent =
-            listing.category ? formatText(listing.category) : '';
-
-        document.getElementById('itemPrice').textContent =
-            formatPrice(listing);
-
-        document.getElementById('itemCategory').textContent =
-            formatText(listing.category);
-
+        // Buy / Rent / Service
         document.getElementById('itemType').textContent =
             formatText(listing.listingType);
 
+        // Price
+        document.getElementById('itemPrice').textContent =
+            formatPrice(listing);
+
+        // Category
+        document.getElementById('itemCategory').textContent =
+            formatText(listing.category);
+
+        // Condition
         document.getElementById('itemCondition').textContent =
             listing.condition || 'Not specified';
 
+        // Description
         document.getElementById('itemFullDescription').textContent =
             listing.description || 'No description provided.';
 
+        // Seller
         document.getElementById('itemSeller').textContent =
             listing.ownerNickname || 'Unknown seller';
 
+        // Location
         document.getElementById('itemLocation').textContent =
             listing.location || 'Not specified';
 
-        document.getElementById('itemAvailability').textContent =
-            listing.availability || 'Not specified';
+        // Availability
+        const availabilityElement =
+            document.getElementById('itemAvailability');
+
+        if (availabilityElement) {
+            availabilityElement.textContent =
+                listing.availability || 'Not specified';
+        }
 
         // Course information
         const courseRow = document.getElementById('courseRow');
+        const courseElement = document.getElementById('itemCourse');
 
         if (listing.courseName || listing.courseCode || listing.subject) {
-            courseRow.hidden = false;
 
-            document.getElementById('itemCourse').textContent = [
+            if (courseRow) courseRow.hidden = false;
+
+            courseElement.textContent = [
                 listing.courseName,
                 listing.courseCode,
                 listing.subject
             ].filter(Boolean).join(' | ');
-        } else {
+
+        } else if (courseRow) {
             courseRow.hidden = true;
         }
 
-        // Condition only applies to buy/rent listings
-        document.getElementById('conditionRow').hidden =
-            !(listing.listingType === 'buy' || listing.listingType === 'rent');
+        // Condition visibility
+        const conditionRow = document.getElementById('conditionRow');
 
-        // Availability only applies to rent/services
-        document.getElementById('availabilityRow').hidden =
-            listing.listingType === 'buy';
+        if (conditionRow) {
+            conditionRow.hidden =
+                !(listing.listingType === 'buy' ||
+                    listing.listingType === 'rent');
+        }
+
+        // Availability visibility
+        const availabilityRow =
+            document.getElementById('availabilityRow');
+
+        if (availabilityRow) {
+            availabilityRow.hidden =
+                listing.listingType === 'buy';
+        }
 
         // Status
         const status = listing.status || 'active';
 
-        document.getElementById('itemStatus').textContent =
-            formatText(status);
+        const statusElement = document.getElementById('itemStatus');
 
-        document.getElementById('itemStatusDetail').textContent =
-            formatText(status);
+        if (statusElement) {
+            statusElement.textContent = formatText(status);
+        }
 
-        // Product image
+        // Main image
         const image = document.getElementById('itemImage');
 
-        image.src = listing.imageUrl || 'images/ewha.jpg';
-        image.alt = listing.title || 'Listing image';
+        if (image) {
+            image.src = listing.imageUrl || 'images/ewha.jpg';
+            image.alt = listing.title || 'Listing image';
+        }
 
-        // Edit button links to existing edit form
-        document.getElementById('editListingBtn').href =
-            'add-item.html?id=' + encodeURIComponent(listing.listingId);
+        // Edit listing link
+        const editButton = document.getElementById('editListingBtn');
 
-        // Update page title
-        document.title = listing.title + ' - Ewha Market';
+        if (editButton) {
+            editButton.href =
+                'add-item.html?id=' +
+                encodeURIComponent(listing.listingId);
+        }
 
+        // Page title
+        document.title =
+            (listing.title || 'Item Details') + ' - Ewha Market';
+
+        // Display the listing
         loading.hidden = true;
         details.hidden = false;
     }
+
 
     // Load listing from Firestore
     async function loadListing() {

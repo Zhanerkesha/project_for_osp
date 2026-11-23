@@ -1,3 +1,5 @@
+<!-- Item Detail Page
+   Owner: Sara -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,6 +17,31 @@
         <!-- SIDEBAR -->
         <aside class="sidebar">
             <a href="index.html" class="brand-logo">
+                <svg class="brand-flower" viewBox="4 4 56 56" width="44" height="44" fill="none" stroke="currentColor"
+                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path
+                        d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z" />
+                    <path
+                        d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z"
+                        transform="rotate(72 32 32)" />
+                    <path
+                        d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z"
+                        transform="rotate(144 32 32)" />
+                    <path
+                        d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z"
+                        transform="rotate(216 32 32)" />
+                    <path
+                        d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z"
+                        transform="rotate(288 32 32)" />
+
+                    <line x1="32" y1="32" x2="32" y2="21" stroke-width="1.8" />
+                    <line x1="32" y1="32" x2="42.5" y2="28.5" stroke-width="1.8" />
+                    <line x1="32" y1="32" x2="38.5" y2="41" stroke-width="1.8" />
+                    <line x1="32" y1="32" x2="25.5" y2="41" stroke-width="1.8" />
+                    <line x1="32" y1="32" x2="21.5" y2="28.5" stroke-width="1.8" />
+
+                    <circle cx="32" cy="32" r="3.2" fill="#f1f5f9" stroke="currentColor" stroke-width="2.2" />
+                </svg>
                 <span>Ewha<br>Market</span>
             </a>
 
@@ -67,106 +94,153 @@
             </header>
 
             <!-- ITEM DETAIL -->
+
+            <!-- ITEM DETAIL PAGE -->
             <main class="page-content item-detail-page">
 
-                <section class="listing-detail-card">
+                <!-- Page heading -->
+                <div class="item-page-heading">
+                    <h1>Item Details</h1>
 
-                    <!-- Listing title -->
-                    <div class="listing-heading">
-                        <div>
-                            <h1>My listing</h1>
-                            <p class="listing-subtitle">
-                                Description text of the item
-                            </p>
-                        </div>
+                    <div class="item-breadcrumbs">
+                        <a href="index.html">Home</a>
+                        <span>›</span>
+                        <a href="categories.html">Textbooks</a>
+                        <span>›</span>
+                        <span>Calculus 9th Edition Textbook</span>
                     </div>
+                </div>
 
-                    <!-- Listing status -->
-                    <div class="listing-status-row">
-                        <span class="listing-status status-active">
-                            ● Active
-                        </span>
-                    </div>
 
-                    <!-- Images, description, and management -->
-                    <div class="listing-detail-grid">
+                <!-- ITEM DETAIL CARD -->
+                <section class="item-detail-card">
 
-                        <!-- IMAGE GALLERY -->
-                        <div class="listing-gallery">
+                    <div class="item-detail-layout">
 
-                            <div class="listing-photo-main">
-                                <span>Item photo</span>
+                        <!-- LEFT: IMAGE GALLERY -->
+                        <div class="item-gallery">
+
+                            <!-- Main image -->
+                            <div class="item-main-image" id="mainItemImage">
+                                <img src="" alt="Calculus textbook">
                             </div>
 
-                            <div class="listing-thumbnails">
-                                <div class="listing-photo-thumb">
-                                    Photo 2
+                            <!-- Thumbnails -->
+                            <div class="item-image-thumbnails">
+
+                                <button class="item-thumbnail active" type="button">
+                                    <img src="" alt="Textbook front">
+                                </button>
+
+                                <button class="item-thumbnail" type="button">
+                                    <img src="" alt="Textbook inside pages">
+                                </button>
+
+                                <button class="item-thumbnail" type="button">
+                                    <img src="" alt="Textbook condition">
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- RIGHT: ITEM INFORMATION -->
+                        <div class="item-information">
+
+                            <!-- Item type -->
+                            <span class="item-type-badge">
+                                ◇ Buy
+                            </span>
+
+                            <!-- Title -->
+                            <h2 class="item-title">
+                                Calculus 9th Edition Textbook
+                            </h2>
+
+                            <!-- Price -->
+                            <div class="item-price">
+                                ₩12,000
+                            </div>
+
+                            <!-- Item metadata -->
+                            <div class="item-meta">
+
+                                <span>✦ Like New</span>
+                                <span>▤ Textbooks</span>
+                                <span>Math 101 / Calculus I</span>
+
+                            </div>
+
+                            <!-- Location -->
+                            <div class="item-location-info">
+
+                                <p>
+                                    <span>⌖</span>
+                                    Meetup Spot ECC Gate 4
+                                </p>
+
+                                <p>
+                                    <span>◷</span>
+                                    Posted 2 hours ago
+                                </p>
+
+                            </div>
+
+
+                            <!-- Description -->
+                            <div class="item-description">
+                                <p>
+                                    Metric version, barely used for one semester.
+                                    No missing pages, very minimal pencil markings
+                                    in chapters 2 and 3. Perfect for calculus I classes.
+                                </p>
+                            </div>
+
+
+                            <!-- SELLER INFORMATION -->
+                            <div class="item-seller">
+
+                                <div class="seller-avatar">
+                                    👤
                                 </div>
 
-                                <div class="listing-photo-thumb">
-                                    Photo 3
+                                <div class="seller-details">
+
+                                    <strong>@ewha_student</strong>
+
+                                    <div class="seller-verification">
+                                        <span>✦ Verified Ewha Student</span>
+                                        <span class="seller-rating">★ 4.9 (18 reviews)</span>
+                                    </div>
+
                                 </div>
+
+                            </div>
+
+
+                            <!-- ACTION BUTTONS -->
+                            <div class="item-action-buttons">
+
+                                <a href="messages.html" class="message-seller-btn">
+                                    <span>▢</span>
+                                    Message Seller
+                                </a>
+
+                                <button class="favorite-item-btn" type="button">
+                                    ♡ Save to Favorites
+                                </button>
+
                             </div>
 
                         </div>
-
-                        <!-- ITEM DESCRIPTION -->
-                        <div class="listing-description-box">
-                            <p>
-                                Item details entered by the user will appear here
-                                (item's condition, features, included accessories, pickup information, etc.)
-                            </p>
-                        </div>
-
-                        <!-- MANAGEMENT SECTION -->
-                        <aside class="listing-manage">
-
-                            <div class="listing-status-panel">
-                                <span class="status-panel-label">
-                                    Listing status
-                                </span>
-
-                                <strong>Available</strong>
-
-                                <small>
-                                    You can buy/rent this item.
-                                </small>
-                            </div>
-
-                            <!-- for personal listings
-                            <h2>Manage</h2>
-
-                            !!!need to add edit functionality
-                            <a href="add-item.html" class="manage-btn">
-                                Edit listing
-                            </a>
-
-                            <a href="add-item.html" class="manage-btn">
-                                Create new listing
-                            </a>
-
-                            <button class="manage-btn manage-delete" type="button">
-                                Delete listing
-                            </button>
-                            -->
-                        </aside>
 
                     </div>
-
-                    <!-- CHATS ABOUT ITEM -->
-                    <section class="listing-chat-section">
-
-                        <h2>Chats about this item</h2>
-
-                        <div class="listing-chat-placeholder">
-                            Chats window (need to implement chat functionality)
-                        </div>
-
-                    </section>
 
                 </section>
 
             </main>
+
 
         </div>
     </div>
