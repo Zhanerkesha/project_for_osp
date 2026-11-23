@@ -1,54 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Item Details - Ewha Market</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="item-detail.css">
 </head>
+
 <body>
     <div class="app-layout">
+
+        <!-- SIDEBAR -->
         <aside class="sidebar">
-            <a href="index.html" class="brand-logo">🌸 Ewha<br>Market</a>
+            <a href="index.html" class="brand-logo">
+                <span>Ewha<br>Market</span>
+            </a>
+
             <nav class="side-nav" aria-label="Main navigation">
                 <a href="index.html" class="side-link">🏠 Home</a>
                 <a href="categories.html" class="side-link">🗂️ Categories</a>
                 <a href="messages.html" class="side-link">💬 Chat</a>
-                <a href="profile.html" class="side-link">👤 My Profile</a>
+                <a href="profile.html" class="side-link active">👤 My Profile</a>
             </nav>
+
             <div class="sidebar-banner">
                 <div class="banner-emoji">🎓</div>
                 <p><strong>Ewha Campus Hub</strong></p>
-                <small>Verified students only<br>(@ewha.ac.kr / @ewhain.net)</small>
+                <small>
+                    Verified students only<br>
+                    (@ewha.ac.kr / @ewhain.net)
+                </small>
             </div>
         </aside>
 
+        <!-- MAIN CONTENT -->
         <div class="main-wrapper">
+
+            <!-- TOPBAR -->
             <header class="topbar">
                 <form action="search.html" method="GET" class="search-bar">
                     <span class="search-icon">🔍</span>
-                    <input type="text" name="q" placeholder="Enter item title, course code, or keyword..." aria-label="Enter item title">
-                    <a href="search.html" class="filter-btn" title="Filters">🎛️</a>
+
+                    <input type="text" name="q" placeholder="Enter item title, course code, or keyword..."
+                        aria-label="Enter item title">
+
+                    <a href="search.html" class="filter-btn" title="Filters">
+                        🎛️
+                    </a>
                 </form>
+
                 <div class="topbar-actions">
-                    <button id="langToggle" class="lang-btn" type="button">🌐 EN ▾</button>
-                    <a href="messages.html" class="icon-btn" title="Chat">💬</a>
-                    <a href="login.html" class="login-pill" title="Profile / Log In">👤 Log In</a>
+                    <button id="langToggle" class="lang-btn" type="button">
+                        🌐 EN ▾
+                    </button>
+
+                    <a href="messages.html" class="icon-btn" title="Chat">
+                        💬
+                    </a>
+
+                    <a href="login.html" class="login-pill" title="Profile / Log In">
+                        👤 Log In
+                    </a>
                 </div>
             </header>
 
-            <main class="page-content">
-                <div class="page-header">
-                    <h1>Item Details</h1>
-                    <p class="text-muted">View listing info, seller profile, and start a chat</p>
-                </div>
+            <!-- ITEM DETAIL -->
+            <main class="page-content item-detail-page">
 
-                <!-- Sara: Add a photo of the product, price, description, and a Contact Seller button here -->
-                <section class="content-card">
-                    <p>Item details go here...</p>
+                <section class="listing-detail-card">
+
+                    <!-- Listing title -->
+                    <div class="listing-heading">
+                        <div>
+                            <h1>My listing</h1>
+                            <p class="listing-subtitle">
+                                Description text of the item
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Listing status -->
+                    <div class="listing-status-row">
+                        <span class="listing-status status-active">
+                            ● Active
+                        </span>
+                    </div>
+
+                    <!-- Images, description, and management -->
+                    <div class="listing-detail-grid">
+
+                        <!-- IMAGE GALLERY -->
+                        <div class="listing-gallery">
+
+                            <div class="listing-photo-main">
+                                <span>Item photo</span>
+                            </div>
+
+                            <div class="listing-thumbnails">
+                                <div class="listing-photo-thumb">
+                                    Photo 2
+                                </div>
+
+                                <div class="listing-photo-thumb">
+                                    Photo 3
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- ITEM DESCRIPTION -->
+                        <div class="listing-description-box">
+                            <p>
+                                Item details entered by the user will appear here
+                                (item's condition, features, included accessories, pickup information, etc.)
+                            </p>
+                        </div>
+
+                        <!-- MANAGEMENT SECTION -->
+                        <aside class="listing-manage">
+
+                            <div class="listing-status-panel">
+                                <span class="status-panel-label">
+                                    Listing status
+                                </span>
+
+                                <strong>Available</strong>
+
+                                <small>
+                                    You can buy/rent this item.
+                                </small>
+                            </div>
+
+                            <!-- for personal listings
+                            <h2>Manage</h2>
+
+                            !!!need to add edit functionality
+                            <a href="add-item.html" class="manage-btn">
+                                Edit listing
+                            </a>
+
+                            <a href="add-item.html" class="manage-btn">
+                                Create new listing
+                            </a>
+
+                            <button class="manage-btn manage-delete" type="button">
+                                Delete listing
+                            </button>
+                            -->
+                        </aside>
+
+                    </div>
+
+                    <!-- CHATS ABOUT ITEM -->
+                    <section class="listing-chat-section">
+
+                        <h2>Chats about this item</h2>
+
+                        <div class="listing-chat-placeholder">
+                            Chats window (need to implement chat functionality)
+                        </div>
+
+                    </section>
+
                 </section>
+
             </main>
+
         </div>
     </div>
+    <script type="module" src="item-detail.js"></script>
 </body>
+
 </html>

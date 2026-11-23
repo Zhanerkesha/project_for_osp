@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile - Ewha Market</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="profile.css">
 </head>
+
 <body>
     <div class="app-layout">
         <aside class="sidebar">
@@ -27,7 +30,8 @@
             <header class="topbar">
                 <form action="search.html" method="GET" class="search-bar">
                     <span class="search-icon">🔍</span>
-                    <input type="text" name="q" placeholder="Enter item title, course code, or keyword..." aria-label="Enter item title">
+                    <input type="text" name="q" placeholder="Enter item title, course code, or keyword..."
+                        aria-label="Enter item title">
                     <a href="search.html" class="filter-btn" title="Filters">🎛️</a>
                 </form>
                 <div class="topbar-actions">
@@ -39,16 +43,75 @@
 
             <main class="page-content">
                 <div class="page-header">
-                    <h1>👤 Student Profile</h1>
+                    <h1>👤 Profile</h1>
                     <p class="text-muted">View your verified student badge, active listings, and saved favorites</p>
                 </div>
 
                 <!-- Sara: Add a profile card, a link to my-listings.html, and favorites here -->
-                <section class="content-card">
-                    <p>Profile info and active listings go here...</p>
+                <!-- PROFILE DASHBOARD -->
+                <section class="profile-dashboard">
+
+                    <!-- Profile information -->
+                    <div class="profile-user-info">
+
+                        <div class="profile-avatar" id="profileAvatar">
+                            👤
+                        </div>
+
+                        <h2>Welcome, <span id="profileNickname">User</span>!</h2>
+
+                        <p id="profileEmail" class="profile-email"></p>
+
+                        <span id="verificationBadge" class="verification-badge">
+                            Checking verification...
+                        </span>
+
+                    </div>
+
+                    <!-- Profile shortcuts -->
+                    <div class="profile-shortcuts">
+
+                        <!-- Favorites -->
+                        <a href="favorites.html" class="profile-shortcut">
+                            <div class="shortcut-icon">❤️</div>
+                            <span>Favorites</span>
+                        </a>
+
+                        <!-- History -->
+                        <a href="history.html" class="profile-shortcut">
+                            <div class="shortcut-icon">⌛</div>
+                            <span>History</span>
+                        </a>
+
+                        <!-- Orders -->
+                        <a href="orders.html" class="profile-shortcut">
+                            <div class="shortcut-icon">📦</div>
+                            <span>Orders</span>
+                        </a>
+
+                        <!-- My Listings -->
+                        <a href="my-listings.html" class="profile-shortcut">
+                            <div class="shortcut-icon">🗒️</div>
+                            <span>My Listings</span>
+                        </a>
+
+                    </div>
+
+                    <!-- Logout -->
+                    <div class="profile-footer">
+                        <button id="logoutBtn" class="logout-btn" type="button">
+                            ↪ Log Out
+                        </button>
+                    </div>
+
                 </section>
+
+                <!-- Error message -->
+                <p id="profileError" class="text-muted" hidden></p>
             </main>
         </div>
     </div>
+    <script type="module" src="profile.js"></script>
 </body>
+
 </html>
