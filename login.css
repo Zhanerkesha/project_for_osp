@@ -1,0 +1,682 @@
+/* =========================================
+   EWHA MARKET - AUTHENTICATION PAGE
+   Owner: Safiyya
+   ========================================= */
+
+.auth-body {
+  min-height: 100vh;
+  background: #f6f7f8;
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: var(--text-main);
+}
+
+.auth-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+}
+
+/* =========================================
+   LEFT PANEL - CAMPUS INTRODUCTION
+   ========================================= */
+
+.auth-hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  padding: 30px clamp(35px, 6vw, 90px);
+  color: #ffffff;
+  overflow: hidden;
+
+  background:
+    linear-gradient(115deg, rgba(0, 55, 37, 0.94), rgba(0, 70, 42, 0.86)),
+    url("images/ewha.jpg");
+
+  background-size: cover;
+  background-position: center;
+}
+
+/* Logo */
+
+.auth-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  width: fit-content;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: clamp(1.6rem, 2.4vw, 2.3rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.auth-flower {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+/* Main introduction */
+
+.auth-hero-content {
+  width: 100%;
+  max-width: 760px;
+  margin: 35px 0;
+}
+
+.auth-eyebrow {
+  margin-bottom: 27px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.auth-hero-content h1 {
+  margin-bottom: 22px;
+  font-size: clamp(2.1rem, 3.2vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+}
+
+.auth-description {
+  max-width: 620px;
+  margin-bottom: 42px;
+  font-size: clamp(1rem, 1.3vw, 1.25rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.96);
+}
+
+/* Feature cards */
+
+.auth-features {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+.auth-feature {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  min-height: 76px;
+  padding: 15px 20px;
+
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 19px;
+  background: rgba(255, 255, 255, 0.12);
+
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+}
+
+.feature-icon svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Footer */
+
+.auth-hero-footer {
+  padding-bottom: 4px;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* =========================================
+   RIGHT PANEL - LOGIN FORM
+   ========================================= */
+
+.auth-main {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 110px 35px 75px;
+  background: #f6f7f8;
+}
+
+/* Language selector */
+
+.auth-language {
+  position: absolute;
+  top: 30px;
+  right: 48px;
+}
+
+
+/* Login card */
+
+.auth-main-content {
+  width: 100%;
+  max-width: 525px;
+}
+
+.login-panel {
+  width: 100%;
+  padding: 37px 38px 35px;
+
+  border: 1px solid #e0e4e2;
+  border-radius: 21px;
+  background: #ffffff;
+
+  box-shadow: 0 15px 40px rgba(15, 23, 42, 0.09);
+  text-align: left;
+}
+
+.login-heading {
+  margin-bottom: 5px;
+  color: var(--ewha-green);
+  font-size: 2.45rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.login-tagline {
+  margin-bottom: 26px;
+  color: #64748b;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+/* Form fields */
+
+.login-field {
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.login-field .form-control {
+  width: 100%;
+  height: 64px;
+  padding: 0 23px;
+
+  border: 1px solid #d5dcd8;
+  border-radius: 999px;
+  background: #ffffff;
+
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 1rem;
+
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.login-field .form-control::placeholder {
+  color: #64748b;
+  opacity: 1;
+}
+
+.login-field .form-control:focus {
+  outline: none;
+  border-color: var(--ewha-green);
+  box-shadow: 0 0 0 3px var(--ewha-green-light);
+}
+
+.login-hint {
+  display: block;
+  margin: 7px 0 0 6px;
+  color: #64748b;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+/* Password */
+
+.login-password {
+  position: relative;
+}
+
+.login-password .form-control {
+  padding-right: 85px;
+}
+
+.login-toggle {
+  position: absolute;
+  top: 50%;
+  right: 22px;
+  transform: translateY(-50%);
+
+  border: none;
+  background: transparent;
+  color: #64748b;
+
+  font-family: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.login-toggle:hover {
+  color: var(--ewha-green);
+}
+
+/* Forgot password */
+
+.login-links {
+  margin: 19px 0 17px;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.login-links a {
+  color: var(--ewha-green);
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.login-links a:hover {
+  text-decoration: underline;
+}
+
+/* Feedback */
+
+.login-message {
+  min-height: 1.2em;
+  margin: 5px 0 9px;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.login-message.error {
+  color: #b42318;
+}
+
+.login-message.success {
+  color: var(--ewha-green);
+}
+
+/* Resend verification */
+
+.login-resend {
+  display: block;
+  margin: 0 auto 12px;
+  padding: 4px;
+
+  border: none;
+  background: none;
+  color: var(--ewha-green);
+
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.login-resend[hidden] {
+  display: none;
+}
+
+/* Login button */
+
+.login-submit {
+  width: 100%;
+  height: 64px;
+  margin-top: 6px;
+
+  border: none;
+  border-radius: 999px;
+  background: var(--ewha-green);
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+
+.login-submit:hover:not(:disabled) {
+  background: var(--ewha-green-hover);
+  transform: translateY(-1px);
+}
+
+.login-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Registration link */
+
+.login-register {
+  margin-top: 20px;
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.login-register a {
+  color: var(--ewha-green);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.login-register a:hover {
+  text-decoration: underline;
+}
+
+/* Back link */
+
+.auth-back-link {
+  display: block;
+  margin-top: 33px;
+  color: #164b3a;
+  font-size: 1rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+.auth-back-link:hover {
+  text-decoration: underline;
+}
+
+.auth-back-link span {
+  margin-right: 7px;
+}
+
+/* Accessibility */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+
+@media (max-width: 1000px) {
+  .auth-layout {
+    grid-template-columns: 0.9fr 1.1fr;
+  }
+
+  .auth-hero {
+    padding: 28px 35px;
+  }
+
+  .auth-hero-content h1 {
+    font-size: 2.2rem;
+  }
+
+  .auth-feature {
+    font-size: 0.9rem;
+    padding: 13px;
+  }
+
+  .login-panel {
+    padding: 32px 27px;
+  }
+}
+
+@media (max-width: 768px) {
+  .auth-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-hero {
+    min-height: auto;
+    padding: 28px 25px 35px;
+  }
+
+  .auth-hero-content {
+    margin: 45px 0 35px;
+  }
+
+  .auth-hero-content h1 {
+    font-size: 2.25rem;
+  }
+
+  .auth-description {
+    margin-bottom: 28px;
+  }
+
+  .auth-features {
+    gap: 12px;
+  }
+
+  .auth-feature {
+    min-height: 65px;
+  }
+
+  .auth-hero-footer {
+    margin-top: 15px;
+  }
+
+  .auth-main {
+    min-height: auto;
+    padding: 100px 22px 45px;
+  }
+
+  .auth-language {
+    top: 25px;
+    right: 22px;
+  }
+
+  .auth-main-content {
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-logo {
+    font-size: 1.6rem;
+  }
+
+  .auth-flower {
+    width: 40px;
+    height: 40px;
+  }
+
+  .auth-hero-content h1 {
+    font-size: 1.9rem;
+  }
+
+  .auth-eyebrow {
+    font-size: 0.78rem;
+  }
+
+  .login-panel {
+    padding: 28px 21px;
+    border-radius: 17px;
+  }
+
+  .login-heading {
+    font-size: 2rem;
+  }
+
+  .login-field .form-control,
+  .login-submit {
+    height: 56px;
+  }
+
+  .auth-back-link {
+    margin-top: 25px;
+  }
+}
+
+/* Desktop: compact, full-screen authentication layout */
+
+@media (min-width: 769px) {
+  html,
+  body.auth-body {
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .auth-layout {
+    height: 100vh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .auth-hero {
+    min-height: 0;
+    height: 100vh;
+    padding: 24px 5%;
+  }
+
+  .auth-logo {
+    font-size: 1.75rem;
+  }
+
+  .auth-flower {
+    width: 40px;
+    height: 40px;
+  }
+
+  .auth-hero-content {
+    margin: 15px 0;
+  }
+
+  .auth-eyebrow {
+    font-size: 0.8rem;
+    margin-bottom: 18px;
+  }
+
+  .auth-hero-content h1 {
+    font-size: 2.3rem;
+    line-height: 1.15;
+    margin-bottom: 14px;
+  }
+
+  .auth-description {
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+  }
+
+  .auth-features {
+    gap: 12px;
+  }
+
+  .auth-feature {
+    min-height: 58px;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+  }
+
+  .feature-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .auth-hero-footer {
+    font-size: 0.85rem;
+  }
+
+  .auth-main {
+    min-height: 0;
+    height: 100vh;
+    padding: 75px 30px 35px;
+  }
+
+  .login-panel {
+    padding: 29px 32px;
+  }
+
+  .login-heading {
+    font-size: 2rem;
+  }
+
+  .login-tagline {
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+
+  .login-field .form-control {
+    height: 52px;
+    font-size: 0.92rem;
+  }
+
+  .login-submit {
+    height: 52px;
+    font-size: 0.95rem;
+  }
+
+  .login-register,
+  .auth-back-link {
+    font-size: 0.88rem;
+  }
+
+  .auth-back-link {
+    margin-top: 23px;
+  }
+}
+
+/* Match the homepage branding and typography */
+
+.auth-logo {
+  color: #ffffff;
+  font-family:
+    "Segoe UI",
+    -apple-system,
+    BlinkMacSystemFont,
+    Arial,
+    sans-serif;
+  font-size: 1.75rem;
+  font-weight: 800;
+}
+
+.auth-flower {
+  width: 44px;
+  height: 44px;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+/* Consistent typography with marketplace pages */
+
+.auth-hero-content h1 {
+  font-size: 2.2rem;
+}
+
+.login-heading {
+  font-size: 1.8rem;
+}
+
+.login-tagline {
+  font-size: 0.9rem;
+}
+
+.login-field .form-control {
+  font-family: inherit;
+  font-size: 0.92rem;
+}
+
+.login-submit {
+  font-family: inherit;
+  font-size: 0.95rem;
+}
