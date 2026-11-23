@@ -3,102 +3,161 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#00462A" />
     <title>Log In - Ewha Market</title>
+
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="login.css" />
   </head>
-  <body>
-    <div class="app-layout">
-      <aside class="sidebar">
-        <a href="index.html" class="brand-logo">🌸 Ewha<br />Market</a>
-        <nav class="side-nav" aria-label="Main navigation">
-          <a href="index.html" class="side-link">🏠 Home</a>
-          <a href="categories.html" class="side-link">🗂️ Categories</a>
-          <a href="messages.html" class="side-link">💬 Chat</a>
-          <a href="profile.html" class="side-link">👤 My Profile</a>
-        </nav>
-        <div class="sidebar-banner">
-          <div class="banner-emoji">🎓</div>
-          <p><strong>Ewha Campus Hub</strong></p>
-          <small>Verified students only<br />(@ewha.ac.kr / @ewhain.net)</small>
-        </div>
-      </aside>
 
-      <div class="main-wrapper">
-        <header class="topbar">
-          <form action="search.html" method="GET" class="search-bar">
-            <span class="search-icon">🔍</span>
-            <input
-              type="text"
-              name="q"
-              placeholder="Enter item title, course code, or keyword..."
-              aria-label="Enter item title"
+  <body class="auth-body">
+    <main class="auth-layout">
+      <!-- LEFT: Campus introduction -->
+      <section class="auth-hero">
+        <a href="index.html" class="auth-logo">
+          <svg
+            class="brand-flower auth-flower"
+            viewBox="4 4 56 56"
+            width="44"
+            height="44"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path
+              d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z"
             />
-            <a href="search.html" class="filter-btn" title="Filters">🎛️</a>
-          </form>
-          <div class="topbar-actions">
-            <button id="langToggle" class="lang-btn" type="button">
-              🌐 EN ▾
-            </button>
-            <a href="messages.html" class="icon-btn" title="Chat">💬</a>
-            <a href="login.html" class="login-pill" title="Profile / Log In"
-              >👤 Log In</a
-            >
-          </div>
-        </header>
+            <path
+              d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z"
+              transform="rotate(72 32 32)"
+            />
+            <path
+              d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z"
+              transform="rotate(144 32 32)"
+            />
+            <path
+              d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z"
+              transform="rotate(216 32 32)"
+            />
+            <path
+              d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z"
+              transform="rotate(288 32 32)"
+            />
+          </svg>
+          <span>Ewha Market</span>
+        </a>
 
-        <main class="page-content login-page">
+        <div class="auth-hero-content">
+          <p class="auth-eyebrow">YOUR CAMPUS. YOUR COMMUNITY.</p>
+
+          <h1>
+            Your Trusted Ewha<br />
+            Campus Marketplace
+          </h1>
+
+          <p class="auth-description">
+            Buy, sell, rent, and share course materials with verified Ewha
+            students.
+          </p>
+
+          <div class="auth-features">
+            <div class="auth-feature">
+              <span class="feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+              </span>
+              <span>Verified Ewha student community</span>
+            </div>
+
+            <div class="auth-feature">
+              <span class="feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M5 4h14v16H5z" />
+                  <path d="M8 8h8M8 12h8M8 16h5" />
+                </svg>
+              </span>
+              <span>Second-hand items and course materials</span>
+            </div>
+
+            <div class="auth-feature">
+              <span class="feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M4 12h16M14 6l6 6-6 6M10 6l-6 6 6 6" />
+                </svg>
+              </span>
+              <span>Buy, sell, rent, and connect on campus</span>
+            </div>
+          </div>
+        </div>
+
+        <footer class="auth-hero-footer">
+          Made for Ewha, by Ewha students.
+        </footer>
+      </section>
+
+      <!-- RIGHT: Login -->
+      <section class="auth-main">
+        <div class="auth-language">
+          <button id="langToggle" class="lang-btn" type="button">
+            🌐 EN ▾
+          </button>
+        </div>
+
+        <div class="auth-main-content">
           <section class="login-panel">
-            <h1 class="login-brand" data-i18n="auth.brand">Ewha Market</h1>
-            <p class="login-tagline" data-i18n="auth.tagline">
+            <h2 class="login-heading" data-i18n="login.title">Log in</h2>
+
+            <p class="login-tagline" data-i18n="login.tagline">
               A campus marketplace exclusively for Ewha students.
             </p>
-            <h2 class="login-heading" data-i18n="auth.login.title">Log in</h2>
 
             <form id="loginForm" novalidate>
               <div class="login-field">
                 <label
                   for="email"
                   class="visually-hidden"
-                  data-i18n="auth.email"
-                  >Ewha email address</label
+                  data-i18n="login.email"
                 >
+                  Ewha email address
+                </label>
+
                 <input
                   type="email"
                   id="email"
                   class="form-control"
                   placeholder="Ewha email address"
-                  data-i18n-placeholder="auth.email"
+                  data-i18n-placeholder="login.email"
                   autocomplete="email"
                   required
                 />
-                <small class="login-hint" data-i18n="auth.email.hint"
-                  >Use your university email (@ewha.ac.kr or @ewhain.net)</small
-                >
+
+                <small class="login-hint" data-i18n="login.emailHint">
+                  Use your university email (@ewha.ac.kr or @ewhain.net)
+                </small>
               </div>
 
               <div class="login-field">
-                <label
-                  for="password"
-                  class="visually-hidden"
-                  data-i18n="auth.password"
-                  >Password</label
-                >
+                <label for="password" class="visually-hidden"> Password </label>
+
                 <div class="login-password">
                   <input
                     type="password"
                     id="password"
                     class="form-control"
                     placeholder="Password"
-                    data-i18n-placeholder="auth.password"
                     autocomplete="current-password"
                     required
                   />
+
                   <button
                     type="button"
                     id="togglePassword"
                     class="login-toggle"
-                    data-i18n="auth.show"
+                    data-i18n="login.show"
                   >
                     Show
                   </button>
@@ -106,9 +165,9 @@
               </div>
 
               <div class="login-links">
-                <a href="#" id="forgotLink" data-i18n="auth.forgot"
-                  >Forgot password?</a
-                >
+                <a href="#" id="forgotLink" data-i18n="login.forgot">
+                  Forgot password?
+                </a>
               </div>
 
               <p
@@ -122,8 +181,8 @@
                 type="button"
                 id="resendBtn"
                 class="login-resend"
-                data-i18n="auth.resend"
                 hidden
+                data-i18n="login.resend"
               >
                 Resend verification email
               </button>
@@ -132,22 +191,28 @@
                 type="submit"
                 class="login-submit"
                 id="loginButton"
-                data-i18n="auth.login.button"
+                data-i18n="login.submit"
               >
                 Log in
               </button>
             </form>
 
             <p class="login-register">
-              <span data-i18n="auth.noAccount">Don't have an account?</span
-              ><br />
-              <a href="register.html" data-i18n="auth.register.link"
+              <span data-i18n="login.noAccount">Don't have an account?</span>
+              <a href="register.html" data-i18n="login.createAccount"
                 >Create account</a
               >
             </p>
           </section>
-        </main>
-      </div>
-    </div>
+
+          <a href="index.html" class="auth-back-link">
+            <span aria-hidden="true">←</span>
+            Back to Marketplace
+          </a>
+        </div>
+      </section>
+    </main>
+    <script src="listings-i18n.js"></script>
+    <script type="module" src="login.js"></script>
   </body>
 </html>
