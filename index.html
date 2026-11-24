@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Ewha Market - Campus Marketplace</title>
+        <link rel="stylesheet" href="auth-ui.css">
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
@@ -58,7 +59,7 @@
                     <div class="topbar-actions">
                         <button id="langToggle" class="lang-btn" type="button">🌐 EN ▾</button>
                         <a href="messages.html" class="icon-btn" title="Chat">💬</a>
-                        <a href="login.html" class="login-pill" title="Profile / Log In">👤 <span data-i18n="nav.login">Log In</span></a>
+                        <a href="login.html" class="login-pill login-btn" data-i18n="nav.login">👤 Log In</a>
                     </div>
                  </header>
 
@@ -209,7 +210,7 @@
                         'nav.categories': 'Categories',
                         'nav.chat': 'Chat',
                         'nav.profile': 'My Profile',
-                        'nav.login': 'Log In',
+                        'nav.login': '👤 Log In',
                         'sidebar.hub': 'Ewha Campus Hub',
                         'sidebar.verified': 'Verified students only<br>(@ewha.ac.kr / @ewhain.net)',
                         'search.placeholder': 'Enter item title, course code, or keyword...',
@@ -243,7 +244,7 @@
                         'nav.categories': '카테고리',
                         'nav.chat': '채팅',
                         'nav.profile': '마이페이지',
-                        'nav.login': '로그인',
+                        'nav.login': '👤 로그인',
                         'sidebar.hub': '이화 캠퍼스 허브',
                         'sidebar.verified': '이화인 인증 학생 전용<br>(@ewha.ac.kr / @ewhain.net)',
                         'search.placeholder': '물품명, 학수번호 또는 키워드를 입력하세요...',
@@ -274,14 +275,9 @@
                     }
                 };
 
-                function setLanguage(lang) {
+                function applyHomeTranslations(lang) {
                     const normalized = lang === 'ko' ? 'ko' : 'en';
                     const dict = HOME_STRINGS[normalized];
-
-                    document.documentElement.setAttribute('lang', normalized);
-                    try  {
-                        localStorage.setItem('lang', normalized);
-                    } catch (e) {}
 
                     document.querySelectorAll('[data-i18n]').forEach(el => {
                         const key = el.getAttribute('data-i18n');
@@ -300,15 +296,6 @@
                             el.setAttribute('placeholder', dict[key]);
                         }
                     });
-
-                    const topToggle = document.getElementById('langToggle');
-                    if (topToggle) {
-                        topToggle.textContent = normalized === 'ko' ? '🌐 KO ▾' : '🌐 EN ▾';
-                    }
-
-                    document.querySelectorAll('.lang-pills .pill').forEach(pill => {
-                        pill.classList.toggle('active', pill.dataset.lang === normalized);
-                    });
                 }
 
                 document.addEventListener('DOMContentLoaded', () => {
@@ -316,21 +303,18 @@
                     try { 
                         saved = localStorage.getItem('lang') || 'en'; 
                     } catch (e) {}
-                    setLanguage(saved);
+                    applyHomeTranslations(saved);
 
-                    const topToggle = document.getElementById('langToggle');
-                    if (topToggle) {
-                        topToggle.addEventListener('click', () => {
-                            const current = document.documentElement.getAttribute('lang') || 'en';
-                            setLanguage(current === 'en' ? 'ko' : 'en');
-                        });
-                    }
-
-                    document.querySelectorAll('.lang-pills .pill').forEach(pill => {
-                        pill.addEventListener('click', () => setLanguage(pill.dataset.lang));
+                    const observer = new MutationObserver(() => {
+                        const current = document.documentElement.getAttribute('lang') || 'en';
+                        applyHomeTranslations(current);
                     });
+                    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
                 });
             }) ();
         </script>
+        <script src="listings-i18n.js"></script>
+        <script src="lang-toggle.js"></script>
+        <script type="module" src="auth-ui.js"></script>
     </body>
 </html>
