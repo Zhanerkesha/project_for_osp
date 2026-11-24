@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-i18n="logout.pageTitle">Logging out - Ewha Market</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <main style="display: grid; place-items: center; min-height: 100vh; text-align: center; padding: 24px;">
+      <p class="text-muted" role="status" data-i18n="logout.text">Logging you out…</p>
+    </main>
+
+    <script src="listings-i18n.js"></script>
+    <script src="lang-toggle.js"></script>
+    <script type="module">
+      // Signs the student out, then opens the login page.
+      // Any page can link to it: <a href="logout.html">Log out</a>
+      import { auth } from "./firebase-config.js";
+      import { signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+      signOut(auth)
+        .catch((error) => console.error("Logout error:", error))
+        .finally(() => window.location.replace("login.html"));
+    </script>
+  </body>
+</html>

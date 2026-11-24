@@ -179,6 +179,13 @@
       "time.weeks": "{n}w ago",
 
       // Login page
+      "login.eyebrow": "YOUR CAMPUS. YOUR COMMUNITY.",
+      "login.heroTitle": "Your Trusted Ewha Campus Marketplace",
+      "login.heroDescription":
+        "Buy, sell, rent, and share course materials with verified Ewha students.",
+      "login.feature1": "Verified Ewha student community",
+      "login.feature2": "Second-hand items and course materials",
+      "login.feature3": "Buy, sell, rent, and connect on campus",
       "login.title": "Log in",
       "login.tagline": "A campus marketplace exclusively for Ewha students.",
       "login.email": "Ewha email address",
@@ -193,7 +200,6 @@
       "login.noAccount": "Don't have an account?",
       "login.createAccount": "Create account",
       "login.back": "Back to Marketplace",
-      "login.feature": "Buy, sell, rent, and connect on campus",
       "login.footer": "Made for Ewha, by Ewha students.",
       "login.loading": "Logging in...",
       "login.error.empty": "Please enter your email and password.",
@@ -210,9 +216,115 @@
       "login.error.resend": "Could not resend the email. Please try again.",
       "login.error.emailFirst": "Please enter your email address first.",
       "login.success.reset":
-        "Password reset email sent. Please check your inbox.",
+        "If an account exists for this email, we sent a password reset link. Please check your inbox.",
       "login.error.notFound": "No account was found with this email.",
       "login.error.reset": "Could not send the reset email. Please try again.",
+
+      // Page titles
+      "login.pageTitle": "Log In - Ewha Market",
+
+      // Register page
+      "register.pageTitle": "Create Account - Ewha Market",
+      "register.title": "Create account",
+      "register.tagline":
+        "Join the campus marketplace for verified Ewha students.",
+      "register.name": "Full name",
+      "register.nickname": "Nickname (shown on your listings)",
+      "register.email": "Ewha email address",
+      "register.password": "Password",
+      "register.passwordHint":
+        "At least 8 characters, with a letter and a number.",
+      "register.confirm": "Confirm password",
+      "register.submit": "Create account",
+      "register.loading": "Creating account...",
+      "register.haveAccount": "Already have an account?",
+      "register.loginLink": "Log in",
+      "register.error.empty": "Please fill in all fields.",
+      "register.error.name": "Please enter your name (at least 2 characters).",
+      "register.error.nickname": "Nickname must be 2-20 characters.",
+      "register.error.email":
+        "Please use your Ewha university email (@ewha.ac.kr or @ewhain.net).",
+      "register.error.weak":
+        "Password must be at least 8 characters and include a letter and a number.",
+      "register.error.mismatch": "Passwords do not match.",
+      "register.error.terms": "Please accept the content policy to continue.",
+      "register.error.exists":
+        "An account with this email already exists. Try logging in.",
+      "register.error.network": "Network error. Please check your connection.",
+      "register.error.attempts": "Too many attempts. Please try again later.",
+      "register.error.general":
+        "Could not create the account. Please try again.",
+      "register.studentId": "Student ID",
+      "register.studentIdHint":
+        "Your Ewha student ID (letters and numbers, 4-15 characters). It is kept private.",
+      "register.error.studentId":
+        "Please enter a valid student ID (4-15 letters or numbers).",
+      "register.error.studentIdTaken": "This student ID is already registered.",
+      "register.error.profile":
+        "Could not save your profile. Please try again.",
+      "nav.login": "👤 Log In",
+      "nav.logout": "Log out",
+      "login.remember": "Remember me",
+      "login.error.emailRequired": "Please enter your email address.",
+      "login.error.passwordRequired": "Please enter your password.",
+      "register.termsPre": "I agree to the ",
+      "register.termsLink": "Terms of Use",
+      "register.termsAnd": " and ",
+      "register.privacyLink": "Privacy Policy",
+      "register.termsPost": ", and I will only post items I own.",
+      "register.major": "Major / department (optional)",
+      "register.strength.1": "Password strength: too weak",
+      "register.strength.2": "Password strength: fair",
+      "register.strength.3": "Password strength: good",
+      "register.strength.4": "Password strength: strong",
+      "register.verify.title": "Check your email",
+      "register.verify.text":
+        "We sent a verification link to {email}. Open it, then come back here.",
+      "register.verify.spam": "Can't find it? Check your spam folder.",
+      "register.verify.resend": "Resend email",
+      "register.verify.resendIn": "Resend in {s}s",
+      "register.verify.sent": "Verification email sent again.",
+      "register.verify.done": "I've verified my email",
+      "register.verify.notYet":
+        "Your email is not verified yet. Please open the link in the email.",
+      "register.verify.toLogin": "Back to log in",
+      "register.verify.error":
+        "Could not send the email. Please try again with the button below.",
+      "terms.pageTitle": "Terms of Use - Ewha Market",
+      "privacy.pageTitle": "Privacy Policy - Ewha Market",
+      "action.pageTitle": "Account action - Ewha Market",
+      "action.loading.title": "Please wait…",
+      "action.loading.text": "Checking your link…",
+      "action.verified.title": "Email verified",
+      "action.verified.text": "Your email is verified. You can now log in.",
+      "action.invalid.title": "Link not valid",
+      "action.invalid.text":
+        "This link is invalid or has expired. Request a new one from the log in page.",
+      "action.reset.title": "Choose a new password",
+      "action.reset.text": "Enter a new password for {email}.",
+      "action.reset.newPassword": "New password",
+      "action.reset.confirm": "Confirm new password",
+      "action.reset.submit": "Save new password",
+      "action.reset.saving": "Saving...",
+      "action.reset.done.title": "Password updated",
+      "action.reset.done.text":
+        "Your password was changed. You can now log in with it.",
+      "action.recover.title": "Email restored",
+      "action.recover.text":
+        "Your email address was restored. If you did not request this change, reset your password.",
+      "action.toLogin": "Go to log in",
+      "action.error.general": "Something went wrong. Please try again.",
+      "register.studentType": "Student type",
+      "register.type.placeholder": "Select your student type",
+      "register.type.degree": "Degree student (undergraduate / graduate)",
+      "register.type.exchange": "Exchange student",
+      "register.type.nondegree": "Part-time / non-degree student",
+      "register.type.language": "Language institute student",
+      "register.error.studentType": "Please select your student type.",
+      "logout.pageTitle": "Logging out - Ewha Market",
+      "logout.text": "Logging you out…",
+      "register.success":
+        "Account created! We sent a verification email. Please verify it, then log in.",
     },
 
     ko: {
@@ -361,6 +473,13 @@
       "time.hours": "{n}시간 전",
       "time.days": "{n}일 전",
       "time.weeks": "{n}주 전",
+      "login.eyebrow": "우리의 캠퍼스, 우리의 커뮤니티",
+      "login.heroTitle": "믿을 수 있는 이화 캠퍼스 마켓플레이스",
+      "login.heroDescription":
+        "인증된 이화 학생들과 교재와 다양한 물품을 사고팔고, 대여하고 나누세요.",
+      "login.feature1": "인증된 이화 학생 커뮤니티",
+      "login.feature2": "중고 물품 및 학습 자료",
+      "login.feature3": "캠퍼스에서 사고팔고, 대여하고 소통하세요",
       "login.title": "로그인",
       "login.tagline": "이화여대 학생만을 위한 교내 마켓플레이스입니다.",
       "login.email": "이화 이메일 주소",
@@ -375,7 +494,6 @@
       "login.noAccount": "계정이 없으신가요?",
       "login.createAccount": "회원가입",
       "login.back": "마켓플레이스로 돌아가기",
-      "login.feature": "교내에서 사고팔고, 대여하고, 소통하세요.",
       "login.footer": "이화인을 위해, 이화인이 만들었습니다.",
       "login.loading": "로그인 중...",
       "login.error.empty": "이메일과 비밀번호를 입력해 주세요.",
@@ -395,23 +513,129 @@
         "이메일을 다시 보낼 수 없습니다. 다시 시도해 주세요.",
       "login.error.emailFirst": "먼저 이메일 주소를 입력해 주세요.",
       "login.success.reset":
-        "비밀번호 재설정 이메일을 보냈습니다. 받은 편지함을 확인해 주세요.",
+        "해당 이메일로 가입된 계정이 있다면 비밀번호 재설정 링크를 보냈습니다. 받은 편지함을 확인해 주세요.",
       "login.error.notFound": "해당 이메일로 등록된 계정을 찾을 수 없습니다.",
       "login.error.reset":
         "비밀번호 재설정 이메일을 보낼 수 없습니다. 다시 시도해 주세요.",
+
+      "login.pageTitle": "로그인 - 이화마켓",
+
+      "register.pageTitle": "회원가입 - 이화마켓",
+      "register.title": "회원가입",
+      "register.tagline":
+        "인증된 이화 학생을 위한 교내 마켓플레이스에 가입하세요.",
+      "register.name": "이름",
+      "register.nickname": "닉네임 (게시글에 표시됩니다)",
+      "register.email": "이화 이메일 주소",
+      "register.password": "비밀번호",
+      "register.passwordHint": "영문과 숫자를 포함해 8자 이상 입력하세요.",
+      "register.confirm": "비밀번호 확인",
+      "register.submit": "회원가입",
+      "register.loading": "계정 만드는 중...",
+      "register.haveAccount": "이미 계정이 있으신가요?",
+      "register.loginLink": "로그인",
+      "register.error.empty": "모든 항목을 입력해 주세요.",
+      "register.error.name": "이름을 2자 이상 입력해 주세요.",
+      "register.error.nickname": "닉네임은 2~20자로 입력해 주세요.",
+      "register.error.email":
+        "이화여대 이메일(@ewha.ac.kr 또는 @ewhain.net)을 사용해 주세요.",
+      "register.error.weak":
+        "비밀번호는 영문과 숫자를 포함해 8자 이상이어야 합니다.",
+      "register.error.mismatch": "비밀번호가 일치하지 않습니다.",
+      "register.error.terms": "계속하려면 게시 규칙에 동의해 주세요.",
+      "register.error.exists":
+        "이미 이 이메일로 가입된 계정이 있습니다. 로그인해 주세요.",
+      "register.error.network":
+        "네트워크 오류입니다. 인터넷 연결을 확인해 주세요.",
+      "register.error.attempts":
+        "시도가 너무 많습니다. 잠시 후 다시 시도해 주세요.",
+      "register.error.general": "계정을 만들 수 없습니다. 다시 시도해 주세요.",
+      "register.studentId": "학번",
+      "register.studentIdHint":
+        "이화 학번(영문과 숫자, 4~15자)을 입력하세요. 다른 사용자에게 공개되지 않습니다.",
+      "register.error.studentId":
+        "올바른 학번(영문·숫자 4~15자)을 입력해 주세요.",
+      "register.error.studentIdTaken": "이미 등록된 학번입니다.",
+      "register.error.profile":
+        "프로필을 저장할 수 없습니다. 다시 시도해 주세요.",
+      "nav.login": "👤 로그인",
+      "nav.logout": "로그아웃",
+      "login.remember": "로그인 상태 유지",
+      "login.error.emailRequired": "이메일 주소를 입력해 주세요.",
+      "login.error.passwordRequired": "비밀번호를 입력해 주세요.",
+      "register.termsPre": "",
+      "register.termsLink": "이용약관",
+      "register.termsAnd": " 및 ",
+      "register.privacyLink": "개인정보 처리방침",
+      "register.termsPost": "에 동의하며, 본인이 소유한 물품만 등록하겠습니다.",
+      "register.major": "전공 / 학과 (선택)",
+      "register.strength.1": "비밀번호 강도: 약함",
+      "register.strength.2": "비밀번호 강도: 보통",
+      "register.strength.3": "비밀번호 강도: 좋음",
+      "register.strength.4": "비밀번호 강도: 강함",
+      "register.verify.title": "이메일을 확인해 주세요",
+      "register.verify.text":
+        "{email}(으)로 인증 링크를 보냈습니다. 링크를 연 뒤 이 페이지로 돌아오세요.",
+      "register.verify.spam": "메일이 보이지 않나요? 스팸함을 확인해 주세요.",
+      "register.verify.resend": "메일 다시 보내기",
+      "register.verify.resendIn": "{s}초 후 다시 보내기",
+      "register.verify.sent": "인증 메일을 다시 보냈습니다.",
+      "register.verify.done": "인증을 완료했어요",
+      "register.verify.notYet":
+        "아직 이메일이 인증되지 않았습니다. 메일의 링크를 열어 주세요.",
+      "register.verify.toLogin": "로그인으로 돌아가기",
+      "register.verify.error":
+        "메일을 보낼 수 없습니다. 아래 버튼으로 다시 시도해 주세요.",
+      "terms.pageTitle": "이용약관 - 이화마켓",
+      "privacy.pageTitle": "개인정보 처리방침 - 이화마켓",
+      "action.pageTitle": "계정 확인 - 이화마켓",
+      "action.loading.title": "잠시만 기다려 주세요…",
+      "action.loading.text": "링크를 확인하는 중입니다…",
+      "action.verified.title": "이메일 인증 완료",
+      "action.verified.text":
+        "이메일 인증이 완료되었습니다. 이제 로그인할 수 있습니다.",
+      "action.invalid.title": "유효하지 않은 링크",
+      "action.invalid.text":
+        "링크가 올바르지 않거나 만료되었습니다. 로그인 페이지에서 새 링크를 요청해 주세요.",
+      "action.reset.title": "새 비밀번호 설정",
+      "action.reset.text": "{email} 계정의 새 비밀번호를 입력하세요.",
+      "action.reset.newPassword": "새 비밀번호",
+      "action.reset.confirm": "새 비밀번호 확인",
+      "action.reset.submit": "새 비밀번호 저장",
+      "action.reset.saving": "저장 중...",
+      "action.reset.done.title": "비밀번호 변경 완료",
+      "action.reset.done.text":
+        "비밀번호가 변경되었습니다. 새 비밀번호로 로그인해 주세요.",
+      "action.recover.title": "이메일 복구 완료",
+      "action.recover.text":
+        "이메일 주소가 복구되었습니다. 변경을 요청하지 않았다면 비밀번호를 재설정하세요.",
+      "action.toLogin": "로그인으로 이동",
+      "action.error.general": "문제가 발생했습니다. 다시 시도해 주세요.",
+      "register.studentType": "학생 유형",
+      "register.type.placeholder": "학생 유형을 선택하세요",
+      "register.type.degree": "학위과정 학생 (학부 / 대학원)",
+      "register.type.exchange": "교환학생",
+      "register.type.nondegree": "시간제 / 비학위 학생",
+      "register.type.language": "언어교육원 학생",
+      "register.error.studentType": "학생 유형을 선택해 주세요.",
+      "logout.pageTitle": "로그아웃 - 이화마켓",
+      "logout.text": "로그아웃하는 중…",
+      "register.success":
+        "계정이 만들어졌습니다! 인증 이메일을 보냈으니 인증 후 로그인해 주세요.",
     },
   };
 
   function currentLang() {
-    let lang = (
-      document.documentElement.getAttribute("lang") || ""
-    ).toLowerCase();
+    let lang = "";
+    try {
+      lang = (localStorage.getItem("lang") || "").toLowerCase();
+    } catch (e) {
+      lang = "";
+    }
     if (!STRINGS[lang]) {
-      try {
-        lang = (localStorage.getItem("lang") || "").toLowerCase();
-      } catch (e) {
-        lang = "";
-      }
+      lang = (
+        document.documentElement.getAttribute("lang") || ""
+      ).toLowerCase();
     }
     return STRINGS[lang] ? lang : "en";
   }
@@ -455,7 +679,10 @@
     const lang = currentLang();
     if (lang === lastLang) return;
     lastLang = lang;
-    translate(document.querySelector("main") || document);
+    if (document.documentElement.getAttribute("lang") !== lang) {
+      document.documentElement.setAttribute("lang", lang);
+    }
+    translate(document);
     document.dispatchEvent(
       new CustomEvent("ewha:langchange", { detail: { lang: lang } }),
     );

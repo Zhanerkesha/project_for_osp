@@ -1,0 +1,109 @@
+/* Ewha Market - Terms of Use and Privacy Policy pages (on top of the original style.css) */
+
+/* Show only the text for the chosen language (the language button sets <html lang>) */
+html[lang="ko"] [data-lang="en"],
+html:not([lang="ko"]) [data-lang="ko"] {
+  display: none;
+}
+
+.legal-page {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 20px 20px 60px;
+}
+
+.legal-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.legal-top .brand-logo {
+  margin-bottom: 0;
+}
+
+.legal-card {
+  padding: 32px 36px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--card-bg);
+  box-shadow: var(--shadow-sm);
+  line-height: 1.65;
+}
+
+.legal-card h1 {
+  margin-bottom: 4px;
+  color: var(--ewha-green);
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.legal-updated {
+  margin-bottom: 24px;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}
+
+.legal-card h2 {
+  margin: 26px 0 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.legal-card p,
+.legal-card li {
+  font-size: 0.95rem;
+}
+
+.legal-card ul {
+  margin: 8px 0 8px 22px;
+}
+
+.legal-card li {
+  margin-bottom: 6px;
+}
+
+.legal-card a {
+  color: var(--ewha-green);
+  font-weight: 600;
+}
+
+.legal-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 24px;
+  font-size: 0.92rem;
+}
+
+.legal-footer a {
+  color: var(--ewha-green);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.legal-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .legal-page {
+    padding: 14px 14px 40px;
+  }
+
+  .legal-card {
+    padding: 22px 18px;
+  }
+
+  .legal-card h1 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Korean: break lines between words, not inside them */
+html[lang="ko"] .legal-card {
+  word-break: keep-all;
+}
