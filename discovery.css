@@ -34,20 +34,6 @@
     box-sizing: border-box;
 }
 
-.discovery-page .discovery-brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.discovery-page .ewha-flower,
-.discovery-page .brand-flower {
-    width: 44px;
-    height: 44px;
-    flex-shrink: 0;
-    color: var(--ewha-green, #00462a);
-}
-
 .discovery-page .nav-emoji {
     display: inline-flex;
     align-items: center;

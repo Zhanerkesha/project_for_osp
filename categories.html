@@ -7,59 +7,83 @@
 
     <title>Categories - Ewha Market</title>
 
-    <!-- Shared team stylesheet -->
     <link rel="stylesheet" href="style.css">
-
-    <!-- Discovery stylesheet -->
     <link rel="stylesheet" href="discovery.css">
 
     <!-- Lucide icons -->
+
     <script defer src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 
-    <!-- Discovery JavaScript -->
     <script src="discovery.js" defer></script>
+
 </head>
 
 <body class="discovery-page categories-page">
 
     <div class="app-layout">
 
-        <!-- ==============================
-             SIDEBAR
-        =============================== -->
+        <!-- SIDEBAR -->
 
         <aside class="sidebar">
 
-            <a href="index.html" class="brand-logo discovery-brand">
+            <!-- SHARED EWHA FLOWER LOGO -->
 
-                <svg class="ewha-flower"
-                     viewBox="0 0 50 50"
+            <a href="index.html" class="brand-logo">
+
+                <svg class="brand-flower"
+                     viewBox="4 4 56 56"
+                     width="44"
+                     height="44"
                      fill="none"
                      stroke="currentColor"
-                     stroke-width="1.6"
+                     stroke-width="2.5"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
                      aria-hidden="true">
 
-                    <ellipse cx="25" cy="14" rx="6" ry="11"/>
+                    <path d="M32 32 C24 21, 22 9, 28.5 6 C30.8 5, 32 8, 32 8 C32 8, 33.2 5, 35.5 6 C42 9, 40 21, 32 32 Z"/>
 
-                    <ellipse cx="25" cy="14" rx="6" ry="11"
-                             transform="rotate(72 25 25)"/>
+                    <path d="M32 32 C24 21, 22 9, 28.5 6 C30.8 5, 32 8, 32 8 C32 8, 33.2 5, 35.5 6 C42 9, 40 21, 32 32 Z"
+                          transform="rotate(72 32 32)"/>
 
-                    <ellipse cx="25" cy="14" rx="6" ry="11"
-                             transform="rotate(144 25 25)"/>
+                    <path d="M32 32 C24 21, 22 9, 28.5 6 C30.8 5, 32 8, 32 8 C32 8, 33.2 5, 35.5 6 C42 9, 40 21, 32 32 Z"
+                          transform="rotate(144 32 32)"/>
 
-                    <ellipse cx="25" cy="14" rx="6" ry="11"
-                             transform="rotate(216 25 25)"/>
+                    <path d="M32 32 C24 21, 22 9, 28.5 6 C30.8 5, 32 8, 32 8 C32 8, 33.2 5, 35.5 6 C42 9, 40 21, 32 32 Z"
+                          transform="rotate(216 32 32)"/>
 
-                    <ellipse cx="25" cy="14" rx="6" ry="11"
-                             transform="rotate(288 25 25)"/>
+                    <path d="M32 32 C24 21, 22 9, 28.5 6 C30.8 5, 32 8, 32 8 C32 8, 33.2 5, 35.5 6 C42 9, 40 21, 32 32 Z"
+                          transform="rotate(288 32 32)"/>
 
-                    <circle cx="25" cy="25" r="4"/>
+                    <line x1="32" y1="32" x2="32" y2="19.5"
+                          stroke-width="1.8"/>
+
+                    <line x1="32" y1="32" x2="43.5" y2="28"
+                          stroke-width="1.8"/>
+
+                    <line x1="32" y1="32" x2="39" y2="41.5"
+                          stroke-width="1.8"/>
+
+                    <line x1="32" y1="32" x2="25" y2="41.5"
+                          stroke-width="1.8"/>
+
+                    <line x1="32" y1="32" x2="20.5" y2="28"
+                          stroke-width="1.8"/>
+
+                    <circle cx="32"
+                            cy="32"
+                            r="3.4"
+                            fill="#f1f5f9"
+                            stroke="currentColor"
+                            stroke-width="2.2"/>
 
                 </svg>
 
                 <span>Ewha<br>Market</span>
 
             </a>
+
+            <!-- NAVIGATION -->
 
             <nav class="side-nav" aria-label="Main navigation">
 
@@ -87,6 +111,8 @@
 
             </nav>
 
+            <!-- CAMPUS BANNER -->
+
             <div class="sidebar-banner">
 
                 <div class="campus-icon">🎓</div>
@@ -102,9 +128,7 @@
 
         </aside>
 
-        <!-- ==============================
-             MAIN WRAPPER
-        =============================== -->
+        <!-- MAIN WRAPPER -->
 
         <div class="main-wrapper">
 
@@ -114,11 +138,15 @@
 
                 <form action="search.html"
                       method="GET"
-                      class="search-bar">
+                      class="search-bar"
+                      role="search">
 
-                    <span class="search-icon">🔍</span>
+                    <span class="search-icon"
+                          aria-hidden="true">
+                        🔍
+                    </span>
 
-                    <input type="text"
+                    <input type="search"
                            name="q"
                            placeholder="Enter item title, course code, or keyword..."
                            aria-label="Search listings">
@@ -137,18 +165,21 @@
                     <button id="langToggle"
                             class="lang-btn"
                             type="button"
+                            title="Language support coming soon"
                             disabled>
                         🌐 EN ▾
                     </button>
 
                     <a href="messages.html"
                        class="icon-btn"
-                       title="Chat">
+                       title="Chat"
+                       aria-label="Chat">
                         💬
                     </a>
 
                     <a href="login.html"
-                       class="login-pill">
+                       class="login-pill"
+                       title="Log In">
                         👤 Log In
                     </a>
 
@@ -156,9 +187,7 @@
 
             </header>
 
-            <!-- ==============================
-                 PAGE CONTENT
-            =============================== -->
+            <!-- PAGE CONTENT -->
 
             <main class="page-content">
 
@@ -174,9 +203,7 @@
 
                 </div>
 
-                <!-- ==========================
-                     MAIN CATEGORIES
-                =========================== -->
+                <!-- MAIN CATEGORIES -->
 
                 <section class="content-card category-section">
 
@@ -321,9 +348,7 @@
 
                 </section>
 
-                <!-- ==========================
-                     SUBCATEGORIES
-                =========================== -->
+                <!-- SUBCATEGORIES -->
 
                 <section class="content-card category-section">
 
@@ -338,9 +363,7 @@
 
                     </div>
 
-                    <!-- ======================
-                         BUY & SELL
-                    ======================= -->
+                    <!-- BUY & SELL -->
 
                     <div class="subcategory-group buy-group">
 
@@ -359,7 +382,7 @@
 
                         <div class="subcategory-grid">
 
-                            <!-- Clothes -->
+                            <!-- CLOTHES -->
 
                             <a href="search.html?type=buy&amp;category=fashion"
                                class="subcategory-card">
@@ -375,7 +398,7 @@
 
                             </a>
 
-                            <!-- Shoes -->
+                            <!-- SHOES -->
 
                             <a href="search.html?type=buy&amp;category=shoes"
                                class="subcategory-card">
@@ -391,7 +414,7 @@
 
                             </a>
 
-                            <!-- Accessories -->
+                            <!-- ACCESSORIES -->
 
                             <a href="search.html?type=buy&amp;category=accessories"
                                class="subcategory-card">
@@ -407,7 +430,7 @@
 
                             </a>
 
-                            <!-- Beauty -->
+                            <!-- BEAUTY -->
 
                             <a href="search.html?type=buy&amp;category=beauty"
                                class="subcategory-card">
@@ -418,12 +441,12 @@
 
                                 <div class="subcategory-text">
                                     <h3>Beauty &amp; Makeup</h3>
-                                    <p>Unused cosmetics and beauty tools</p>
+                                    <p>Beauty tools and organizers</p>
                                 </div>
 
                             </a>
 
-                            <!-- Electronics -->
+                            <!-- ELECTRONICS -->
 
                             <a href="search.html?type=buy&amp;category=electronics"
                                class="subcategory-card">
@@ -439,7 +462,7 @@
 
                             </a>
 
-                            <!-- Home and Living -->
+                            <!-- HOME AND LIVING -->
 
                             <a href="search.html?type=buy&amp;category=furniture"
                                class="subcategory-card">
@@ -455,7 +478,7 @@
 
                             </a>
 
-                            <!-- Books -->
+                            <!-- BOOKS -->
 
                             <a href="search.html?type=buy&amp;category=books"
                                class="subcategory-card">
@@ -471,7 +494,7 @@
 
                             </a>
 
-                            <!-- Toys and Hobbies -->
+                            <!-- TOYS AND HOBBIES -->
 
                             <a href="search.html?type=buy&amp;category=hobbies"
                                class="subcategory-card">
@@ -487,7 +510,7 @@
 
                             </a>
 
-                            <!-- Sports -->
+                            <!-- SPORTS -->
 
                             <a href="search.html?type=buy&amp;category=sports"
                                class="subcategory-card">
@@ -503,7 +526,7 @@
 
                             </a>
 
-                            <!-- Stationery -->
+                            <!-- STATIONERY -->
 
                             <a href="search.html?type=buy&amp;category=stationery"
                                class="subcategory-card">
@@ -519,7 +542,7 @@
 
                             </a>
 
-                            <!-- Free Items -->
+                            <!-- FREE ITEMS -->
 
                             <a href="search.html?type=buy&amp;category=free-items"
                                class="subcategory-card">
@@ -535,7 +558,7 @@
 
                             </a>
 
-                            <!-- Other -->
+                            <!-- OTHER -->
 
                             <a href="search.html?type=buy&amp;category=other"
                                class="subcategory-card">
@@ -555,9 +578,7 @@
 
                     </div>
 
-                    <!-- ======================
-                         RENT & LEND
-                    ======================= -->
+                    <!-- RENT & LEND -->
 
                     <div class="subcategory-group rent-group">
 
@@ -576,7 +597,7 @@
 
                         <div class="subcategory-grid">
 
-                            <!-- Calculators -->
+                            <!-- CALCULATORS -->
 
                             <a href="search.html?type=rent&amp;category=calculators"
                                class="subcategory-card">
@@ -592,7 +613,7 @@
 
                             </a>
 
-                            <!-- Cameras -->
+                            <!-- CAMERAS -->
 
                             <a href="search.html?type=rent&amp;category=cameras"
                                class="subcategory-card">
@@ -608,7 +629,7 @@
 
                             </a>
 
-                            <!-- Books -->
+                            <!-- BOOKS -->
 
                             <a href="search.html?type=rent&amp;category=books"
                                class="subcategory-card">
@@ -624,7 +645,7 @@
 
                             </a>
 
-                            <!-- Event Equipment -->
+                            <!-- EVENT EQUIPMENT -->
 
                             <a href="search.html?type=rent&amp;category=event-equipment"
                                class="subcategory-card">
@@ -640,7 +661,7 @@
 
                             </a>
 
-                            <!-- Other Rentals -->
+                            <!-- OTHER RENTALS -->
 
                             <a href="search.html?type=rent&amp;category=other"
                                class="subcategory-card">
@@ -660,9 +681,7 @@
 
                     </div>
 
-                    <!-- ======================
-                         STUDENT SERVICES
-                    ======================= -->
+                    <!-- STUDENT SERVICES -->
 
                     <div class="subcategory-group services-group">
 
@@ -681,7 +700,7 @@
 
                         <div class="subcategory-grid">
 
-                            <!-- Tutoring -->
+                            <!-- TUTORING -->
 
                             <a href="search.html?type=services&amp;category=tutoring"
                                class="subcategory-card">
@@ -697,7 +716,7 @@
 
                             </a>
 
-                            <!-- Language Exchange -->
+                            <!-- LANGUAGE EXCHANGE -->
 
                             <a href="search.html?type=services&amp;category=language"
                                class="subcategory-card">
@@ -713,7 +732,7 @@
 
                             </a>
 
-                            <!-- Translation -->
+                            <!-- TRANSLATION -->
 
                             <a href="search.html?type=services&amp;category=translation"
                                class="subcategory-card">
@@ -729,7 +748,7 @@
 
                             </a>
 
-                            <!-- Career -->
+                            <!-- CAREER -->
 
                             <a href="search.html?type=services&amp;category=career"
                                class="subcategory-card">
@@ -745,7 +764,7 @@
 
                             </a>
 
-                            <!-- Study Groups -->
+                            <!-- STUDY GROUPS -->
 
                             <a href="search.html?type=services&amp;category=study-groups"
                                class="subcategory-card">
@@ -765,9 +784,7 @@
 
                     </div>
 
-                    <!-- ======================
-                         STUDY MATERIALS
-                    ======================= -->
+                    <!-- STUDY MATERIALS -->
 
                     <div class="subcategory-group notes-group">
 
@@ -786,7 +803,7 @@
 
                         <div class="subcategory-grid">
 
-                            <!-- Lecture Notes -->
+                            <!-- LECTURE NOTES -->
 
                             <a href="search.html?type=notes&amp;category=study"
                                class="subcategory-card">
@@ -802,7 +819,7 @@
 
                             </a>
 
-                            <!-- Course Textbooks -->
+                            <!-- COURSE TEXTBOOKS -->
 
                             <a href="search.html?type=notes&amp;category=books"
                                class="subcategory-card">
@@ -818,7 +835,7 @@
 
                             </a>
 
-                            <!-- Past Papers -->
+                            <!-- PAST PAPERS -->
 
                             <a href="search.html?type=notes&amp;category=past-papers"
                                class="subcategory-card">
@@ -834,7 +851,7 @@
 
                             </a>
 
-                            <!-- Study Guides -->
+                            <!-- STUDY GUIDES -->
 
                             <a href="search.html?type=notes&amp;category=study-guides"
                                class="subcategory-card">
@@ -850,7 +867,7 @@
 
                             </a>
 
-                            <!-- Lab Supplies -->
+                            <!-- LAB SUPPLIES -->
 
                             <a href="search.html?type=notes&amp;category=lab-supplies"
                                class="subcategory-card">
@@ -872,9 +889,7 @@
 
                 </section>
 
-                <!-- ==========================
-                     FEATURED LISTINGS
-                =========================== -->
+                <!-- FEATURED LISTINGS -->
 
                 <section class="content-card category-section">
 
@@ -892,8 +907,11 @@
                         </div>
 
                         <a href="search.html" class="view-all">
+
                             View all
+
                             <i data-lucide="arrow-right"></i>
+
                         </a>
 
                     </div>
