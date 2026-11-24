@@ -1,0 +1,853 @@
+/* =========================================
+   EWHA MARKET - DISCOVERY STYLESHEET
+   Search and Categories pages only
+========================================= */
+
+/* =========================================
+   SHARED DISCOVERY LAYOUT
+========================================= */
+
+.discovery-page {
+    margin: 0;
+    background: var(--bg-page, #f8fafc);
+    overflow-x: hidden;
+}
+
+.discovery-page .app-layout {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.discovery-page .sidebar {
+    flex-shrink: 0;
+}
+
+.discovery-page .main-wrapper {
+    flex: 1;
+    min-width: 0;
+}
+
+.discovery-page .page-content {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.discovery-page .nav-emoji {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    flex-shrink: 0;
+    font-size: 1rem;
+}
+
+.discovery-page .campus-icon {
+    font-size: 1.6rem;
+    margin-bottom: 6px;
+}
+
+.discovery-page .search-bar {
+    min-width: 0;
+}
+
+.discovery-page .search-bar input {
+    min-width: 0;
+}
+
+.discovery-page .topbar-actions {
+    flex-shrink: 0;
+}
+
+.discovery-page .page-header {
+    margin-bottom: 18px;
+}
+
+.discovery-page .page-header h1 {
+    font-size: 1.6rem;
+    margin-bottom: 4px;
+}
+
+.discovery-page .hidden {
+    display: none !important;
+}
+
+/* =========================================
+   SEARCH PAGE - FILTERS
+========================================= */
+
+.discovery-page #filters {
+    padding: 14px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+}
+
+.discovery-page .filter-grid {
+    display: grid;
+    grid-template-columns:
+        minmax(105px, 1fr)
+        minmax(115px, 1.1fr)
+        minmax(160px, 1.4fr)
+        minmax(130px, 1.2fr)
+        auto;
+    gap: 10px;
+    align-items: end;
+}
+
+.discovery-page #filters .form-group {
+    margin-bottom: 0;
+    min-width: 0;
+}
+
+.discovery-page #filters .form-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.discovery-page #filters .form-control {
+    width: 100%;
+    min-width: 0;
+    height: 38px;
+    padding: 8px;
+    font-size: 0.85rem;
+    border-radius: 8px;
+    background: var(--card-bg, #ffffff);
+    color: var(--text-main, #0f172a);
+}
+
+.discovery-page .price-range {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.discovery-page .price-range input {
+    flex: 1;
+    width: 0;
+    min-width: 0;
+}
+
+.discovery-page .price-range span {
+    color: var(--text-muted, #64748b);
+}
+
+.discovery-page .filter-actions {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.discovery-page .filter-actions button {
+    height: 38px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    white-space: nowrap;
+    font-size: 0.8rem;
+}
+
+.discovery-page .more-filters {
+    margin-top: 12px;
+}
+
+.discovery-page .more-filters summary {
+    cursor: pointer;
+    color: var(--ewha-green, #00462a);
+    font-size: 0.85rem;
+    font-weight: 600;
+    width: fit-content;
+}
+
+.discovery-page .extra-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border, #e2e8f0);
+}
+
+.discovery-page .filter-error {
+    color: #b91c1c;
+    font-size: 0.8rem;
+    margin-top: 10px;
+}
+
+/* =========================================
+   SEARCH PAGE - RESULTS
+========================================= */
+
+.discovery-page .results-panel {
+    margin-bottom: 24px;
+}
+
+.discovery-page .results-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.discovery-page .results-heading h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.discovery-page #resultCount {
+    color: var(--text-muted, #64748b);
+    font-size: 0.85rem;
+}
+
+.discovery-page #searchResults {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.discovery-page .result-card-link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-width: 0;
+    text-decoration: none;
+    color: inherit;
+}
+
+.discovery-page #searchResults .item-card {
+    background: var(--card-bg, #ffffff);
+    border: 1px solid var(--border, #e2e8f0);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.discovery-page #searchResults .item-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.discovery-page #searchResults .item-img-wrap {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-sidebar, #f1f5f9);
+}
+
+.discovery-page #searchResults .item-img-wrap img {
+    width: 100%;
+    height: 165px;
+    object-fit: cover;
+    display: block;
+}
+
+.discovery-page #searchResults .item-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 700;
+}
+
+.discovery-page #searchResults .item-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 12px;
+}
+
+.discovery-page #searchResults .item-price {
+    color: var(--ewha-green, #00462a);
+    font-size: 1.05rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.discovery-page #searchResults .item-title {
+    color: var(--text-main, #0f172a);
+    font-size: 0.92rem;
+    font-weight: 600;
+    margin: 4px 0 6px;
+    overflow-wrap: anywhere;
+}
+
+.discovery-page .item-description {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--text-muted, #64748b);
+    margin-bottom: 8px;
+}
+
+.discovery-page .item-course {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--ewha-green, #00462a);
+    margin-bottom: 8px;
+}
+
+.discovery-page #searchResults .item-meta {
+    display: block;
+    margin-top: auto;
+    font-size: 0.75rem;
+    color: var(--text-muted, #64748b);
+    padding-top: 8px;
+    border-top: 1px solid var(--border, #e2e8f0);
+}
+
+/* =========================================
+   SEARCH PAGE - EMPTY STATE
+========================================= */
+
+.discovery-page .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--card-bg, #ffffff);
+    border: 1px solid var(--border, #e2e8f0);
+    border-radius: 12px;
+}
+
+.discovery-page .empty-state h3 {
+    margin-bottom: 8px;
+    color: var(--ewha-green, #00462a);
+}
+
+.discovery-page .empty-state p {
+    color: var(--text-muted, #64748b);
+    font-size: 0.9rem;
+}
+
+.discovery-page .demo-note {
+    font-size: 0.75rem;
+    color: var(--text-muted, #64748b);
+    margin-top: 16px;
+}
+
+/* =========================================
+   CATEGORIES PAGE - SECTIONS
+========================================= */
+
+.categories-page .category-section {
+    margin-bottom: 20px;
+    padding: 18px;
+    min-width: 0;
+}
+
+.categories-page .category-section-title {
+    margin-bottom: 14px;
+}
+
+.categories-page .category-section-title h2 {
+    font-size: 1.15rem;
+    margin: 0 0 5px;
+    color: var(--text-main, #0f172a);
+}
+
+.categories-page .category-section-title p {
+    margin: 0;
+    color: var(--text-muted, #64748b);
+    font-size: 0.85rem;
+}
+
+/* =========================================
+   CATEGORIES PAGE - MAIN CATEGORY CARDS
+========================================= */
+
+.categories-page .category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.categories-page .category-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+    background: var(--card-bg, #ffffff);
+    border: 1px solid var(--border, #e2e8f0);
+    border-radius: 12px;
+    color: inherit;
+    text-decoration: none;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.categories-page .category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--ewha-green, #00462a);
+}
+
+.categories-page .category-image {
+    width: 100%;
+    max-width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+    background: var(--bg-sidebar, #f1f5f9);
+}
+
+.categories-page .category-details {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 12px;
+}
+
+.categories-page .category-details h3 {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 1rem;
+    margin: 0 0 7px;
+    color: var(--ewha-green, #00462a);
+}
+
+.categories-page .category-details h3 svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.categories-page .category-details p {
+    font-size: 0.8rem;
+    color: var(--text-muted, #64748b);
+    line-height: 1.5;
+    margin: 0 0 12px;
+}
+
+.categories-page .category-count {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin-top: auto;
+    padding: 9px 10px;
+    border-radius: 8px;
+    background: var(--ewha-green-light, #e6f0ec);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--ewha-green, #00462a);
+}
+
+.categories-page .category-count svg {
+    width: 15px;
+    height: 15px;
+}
+
+/* =========================================
+   CATEGORIES PAGE - SUBCATEGORY GROUPS
+========================================= */
+
+.categories-page .subcategory-group {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border, #e2e8f0);
+}
+
+.categories-page .subcategory-group:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.categories-page .subcategory-group-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.categories-page .subcategory-group-title h3 {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 1rem;
+    margin: 0;
+    color: var(--ewha-green, #00462a);
+}
+
+.categories-page .subcategory-group-title h3 svg {
+    width: 18px;
+    height: 18px;
+}
+
+.categories-page .group-label {
+    font-size: 0.75rem;
+    color: var(--text-muted, #64748b);
+}
+
+/* =========================================
+   CATEGORIES PAGE - SUBCATEGORY CARDS
+========================================= */
+
+.categories-page .subcategory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.categories-page .subcategory-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    min-width: 0;
+    min-height: 85px;
+    background: var(--card-bg, #ffffff);
+    border: 1px solid var(--border, #e2e8f0);
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    transition:
+        background 0.2s,
+        transform 0.2s,
+        border-color 0.2s;
+}
+
+.categories-page .subcategory-card:hover {
+    background: var(--ewha-green-light, #e6f0ec);
+    border-color: var(--ewha-green, #00462a);
+    transform: translateY(-2px);
+}
+
+.categories-page .subcategory-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: var(--ewha-green-light, #e6f0ec);
+    color: var(--ewha-green, #00462a);
+}
+
+.categories-page .subcategory-icon svg {
+    width: 21px;
+    height: 21px;
+    stroke-width: 1.7;
+}
+
+.categories-page .subcategory-text {
+    min-width: 0;
+}
+
+.categories-page .subcategory-text h3 {
+    margin: 0 0 4px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-main, #0f172a);
+    overflow-wrap: anywhere;
+}
+
+.categories-page .subcategory-text p {
+    margin: 0;
+    font-size: 0.73rem;
+    color: var(--text-muted, #64748b);
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+/* =========================================
+   SUBCATEGORY PASTEL COLORS
+========================================= */
+
+.categories-page .buy-group .subcategory-icon {
+    background: #e6f0ec;
+    color: #00462a;
+}
+
+.categories-page .rent-group .subcategory-icon {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.categories-page .services-group .subcategory-icon {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.categories-page .notes-group .subcategory-icon {
+    background: #ede9fe;
+    color: #6d28d9;
+}
+
+/* =========================================
+   CATEGORIES PAGE - FEATURED HEADER
+========================================= */
+
+.categories-page .featured-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.categories-page .featured-header .category-section-title {
+    margin-bottom: 0;
+}
+
+.categories-page .view-all {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--ewha-green, #00462a);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.categories-page .view-all svg {
+    width: 16px;
+    height: 16px;
+}
+
+.categories-page .view-all:hover {
+    text-decoration: underline;
+}
+
+/* =========================================
+   CATEGORIES PAGE - FEATURED LISTINGS
+========================================= */
+
+.categories-page .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.categories-page .featured-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: var(--card-bg, #ffffff);
+    border: 1px solid var(--border, #e2e8f0);
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: var(--shadow-sm);
+}
+
+.categories-page .featured-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--ewha-green, #00462a);
+}
+
+.categories-page .featured-image-wrap {
+    position: relative;
+    height: 165px;
+    background: var(--bg-sidebar, #f1f5f9);
+    overflow: hidden;
+}
+
+.categories-page .featured-image {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.categories-page .featured-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 700;
+}
+
+.categories-page .featured-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 12px;
+}
+
+.categories-page .featured-price {
+    font-size: 1.05rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+    color: var(--ewha-green, #00462a);
+}
+
+.categories-page .featured-info h3 {
+    font-size: 0.92rem;
+    line-height: 1.4;
+    font-weight: 600;
+    margin: 0 0 10px;
+    color: var(--text-main, #0f172a);
+    overflow-wrap: anywhere;
+}
+
+.categories-page .featured-meta {
+    font-size: 0.75rem;
+    margin-top: auto;
+    padding-top: 8px;
+    border-top: 1px solid var(--border, #e2e8f0);
+    color: var(--text-muted, #64748b);
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+.discovery-page a:focus-visible,
+.discovery-page button:focus-visible,
+.discovery-page select:focus-visible,
+.discovery-page input:focus-visible,
+.discovery-page summary:focus-visible {
+    outline: 2px solid var(--ewha-green, #00462a);
+    outline-offset: 3px;
+}
+
+/* =========================================
+   RESPONSIVE - LARGE TABLETS
+========================================= */
+
+@media (max-width: 1200px) {
+
+    .discovery-page .filter-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .discovery-page .filter-actions {
+        grid-column: 1 / -1;
+        justify-content: flex-end;
+    }
+
+    .categories-page .subcategory-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+}
+
+/* =========================================
+   RESPONSIVE - TABLETS
+========================================= */
+
+@media (max-width: 1100px) {
+
+    .discovery-page #searchResults {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .categories-page .featured-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .categories-page .category-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width: 950px) {
+
+    .discovery-page .filter-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .discovery-page #searchResults {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .categories-page .subcategory-grid,
+    .categories-page .featured-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width: 800px) {
+
+    .discovery-page .extra-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .categories-page .category-section {
+        padding: 14px;
+    }
+
+}
+
+/* =========================================
+   RESPONSIVE - MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+    .discovery-page .main-wrapper {
+        width: 100%;
+    }
+
+    .discovery-page .topbar {
+        flex-wrap: wrap;
+    }
+
+    .discovery-page .search-bar {
+        flex-basis: 100%;
+    }
+
+    .discovery-page .topbar-actions {
+        flex-wrap: wrap;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .discovery-page .filter-grid,
+    .discovery-page .extra-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .discovery-page #searchResults {
+        grid-template-columns: 1fr;
+    }
+
+    .discovery-page .filter-actions button {
+        flex: 1;
+    }
+
+    .discovery-page #searchResults .item-img-wrap img {
+        height: 200px;
+    }
+
+    .categories-page .category-grid,
+    .categories-page .featured-grid,
+    .categories-page .subcategory-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .categories-page .category-image {
+        height: 180px;
+    }
+
+    .categories-page .featured-image-wrap {
+        height: 200px;
+    }
+
+    .categories-page .category-section {
+        padding: 12px;
+    }
+
+}
+
+/* =========================================
+   END OF DISCOVERY STYLESHEET
+========================================= */
