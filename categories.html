@@ -1,608 +1,95 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Categories - Ewha Market</title>
 
-    <!-- Shared stylesheet from the team -->
+    <!-- Shared team stylesheet -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- Lucide outline icons -->
-    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+    <!-- Discovery stylesheet -->
+    <link rel="stylesheet" href="discovery.css">
 
-    <style>
-        /* =========================================
-           CATEGORIES PAGE - CUSTOM STYLING
-           Shared Ewha Design System
-        ========================================= */
+    <!-- Lucide icons -->
+    <script defer src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 
-        /* SIDEBAR */
-
-        .sidebar {
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            align-self: flex-start;
-            overflow-y: auto;
-        }
-
-        .brand-logo {
-            font-size: 1.3rem;
-        }
-
-        .side-link svg {
-            flex-shrink: 0;
-            width: 18px;
-            height: 18px;
-        }
-
-        .sidebar-banner {
-            padding: 12px;
-            font-size: 0.85rem;
-        }
-
-        .main-wrapper {
-            min-width: 0;
-        }
-
-        .page-content {
-            max-width: none;
-        }
-
-        /* TOPBAR */
-
-        .topbar {
-            margin-bottom: 22px;
-        }
-
-        .search-bar input {
-            min-width: 0;
-        }
-
-        .search-bar svg,
-        .filter-btn svg {
-            width: 18px;
-            height: 18px;
-            color: var(--text-muted, #64748b);
-            flex-shrink: 0;
-        }
-
-        .icon-btn svg {
-            width: 18px;
-            height: 18px;
-            color: var(--ewha-green, #00462a);
-        }
-
-        /* PAGE HEADER */
-
-        .page-header {
-            margin-bottom: 18px;
-        }
-
-        .page-header h1 {
-            font-size: 1.6rem;
-            margin-bottom: 4px;
-        }
-
-        .category-section {
-            margin-bottom: 20px;
-            padding: 18px;
-        }
-
-        .category-section-title {
-            margin-bottom: 14px;
-        }
-
-        .category-section-title h2 {
-            font-size: 1.15rem;
-            margin: 0 0 5px;
-            color: var(--text-main, #202820);
-        }
-
-        .category-section-title p {
-            margin: 0;
-            color: var(--text-muted, #64748b);
-            font-size: 0.85rem;
-        }
-
-        /* =========================================
-           MAIN CATEGORIES
-        ========================================= */
-
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 14px;
-        }
-
-        .category-card {
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            background: var(--card-bg, #ffffff);
-            border: 1px solid var(--border, #e7e7e7);
-            border-radius: 12px;
-            color: inherit;
-            text-decoration: none;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .category-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(
-                --shadow-md,
-                0 6px 18px rgba(0, 0, 0, 0.08)
-            );
-        }
-
-        .category-image {
-            width: 100%;
-            height: 135px;
-            object-fit: cover;
-            display: block;
-            background: var(--bg-sidebar, #f1f5f3);
-        }
-
-        .category-details {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            padding: 12px;
-        }
-
-        .category-details h3 {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            font-size: 1rem;
-            margin: 0 0 7px;
-            color: var(--ewha-green, #00462a);
-        }
-
-        .category-details h3 svg {
-            width: 18px;
-            height: 18px;
-            flex-shrink: 0;
-        }
-
-        .category-details p {
-            font-size: 0.8rem;
-            color: var(--text-muted, #64748b);
-            line-height: 1.5;
-            margin: 0 0 12px;
-        }
-
-        .category-count {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 6px;
-            margin-top: auto;
-            padding-top: 10px;
-            border-top: 1px solid var(--border, #e7e7e7);
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--ewha-green, #00462a);
-        }
-
-        .category-count svg {
-            width: 15px;
-            height: 15px;
-        }
-
-        /* =========================================
-           SUBCATEGORIES
-        ========================================= */
-
-        .subcategory-group {
-            margin-bottom: 24px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border, #e7e7e7);
-        }
-
-        .subcategory-group:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-
-        .subcategory-group-title {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-
-        .subcategory-group-title h3 {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            font-size: 1rem;
-            margin: 0;
-            color: var(--ewha-green, #00462a);
-        }
-
-        .subcategory-group-title h3 svg {
-            width: 18px;
-            height: 18px;
-        }
-
-        .group-label {
-            font-size: 0.75rem;
-            color: var(--text-muted, #64748b);
-        }
-
-        .subcategory-grid {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 10px;
-        }
-
-        .subcategory-card {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px;
-            min-width: 0;
-            background: var(--card-bg, #ffffff);
-            border: 1px solid var(--border, #e7e7e7);
-            border-radius: 10px;
-            text-decoration: none;
-            color: inherit;
-            transition:
-                background 0.2s,
-                transform 0.2s,
-                border-color 0.2s;
-        }
-
-        .subcategory-card:hover {
-            background: var(--ewha-green-light, #e6f0ec);
-            border-color: var(--ewha-green, #00462a);
-            transform: translateY(-2px);
-        }
-
-        /* Unified green icon style */
-
-        .subcategory-icon {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 38px;
-            height: 38px;
-            flex-shrink: 0;
-            border-radius: 8px;
-            background: var(--ewha-green-light, #e6f0ec);
-            color: var(--ewha-green, #00462a);
-        }
-
-        .subcategory-icon svg {
-            width: 21px;
-            height: 21px;
-            stroke-width: 1.7;
-        }
-
-        .subcategory-text {
-            min-width: 0;
-        }
-
-        .subcategory-text h3 {
-            margin: 0 0 4px;
-            font-size: 0.82rem;
-            font-weight: 600;
-            color: var(--text-main, #202820);
-            overflow-wrap: anywhere;
-        }
-
-        .subcategory-text p {
-            margin: 0;
-            font-size: 0.73rem;
-            color: var(--text-muted, #64748b);
-            line-height: 1.4;
-            overflow-wrap: anywhere;
-        }
-
-        /* =========================================
-           FEATURED LISTINGS
-        ========================================= */
-
-        .featured-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 14px;
-        }
-
-        .featured-header .category-section-title {
-            margin-bottom: 0;
-        }
-
-        .view-all {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: var(--ewha-green, #00462a);
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .view-all svg {
-            width: 16px;
-            height: 16px;
-        }
-
-        .view-all:hover {
-            text-decoration: underline;
-        }
-
-        .featured-grid {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 14px;
-        }
-
-        .featured-card {
-            display: flex;
-            flex-direction: column;
-            background: var(--card-bg, #ffffff);
-            border: 1px solid var(--border, #e7e7e7);
-            border-radius: 12px;
-            overflow: hidden;
-            text-decoration: none;
-            color: inherit;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: var(--shadow-sm, none);
-        }
-
-        .featured-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(
-                --shadow-md,
-                0 6px 18px rgba(0, 0, 0, 0.08)
-            );
-        }
-
-        .featured-image-wrap {
-            position: relative;
-            height: 165px;
-            background: var(--bg-sidebar, #f1f5f3);
-            overflow: hidden;
-        }
-
-        .featured-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .featured-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            padding: 4px 10px;
-            border-radius: 999px;
-            font-size: 0.68rem;
-            font-weight: 700;
-        }
-
-        /* Shared green badges matching search.html */
-
-        .featured-card .badge-buy,
-        .featured-card .badge-services {
-            background: var(--ewha-green, #00462a);
-            color: white;
-        }
-
-        .featured-card .badge-rent,
-        .featured-card .badge-notes {
-            background: var(--ewha-green-light, #e6f0ec);
-            color: var(--ewha-green, #00462a);
-            border: 1px solid var(--ewha-green, #00462a);
-        }
-
-        .featured-info {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            padding: 12px;
-        }
-
-        .featured-price {
-            font-size: 1.05rem;
-            font-weight: 800;
-            margin-bottom: 6px;
-            color: var(--ewha-green, #00462a);
-        }
-
-        .featured-info h3 {
-            font-size: 0.92rem;
-            line-height: 1.4;
-            font-weight: 600;
-            margin: 0 0 10px;
-            color: var(--text-main, #202820);
-        }
-
-        .featured-meta {
-            font-size: 0.75rem;
-            margin-top: auto;
-            padding-top: 8px;
-            border-top: 1px solid var(--border, #e7e7e7);
-            color: var(--text-muted, #64748b);
-        }
-
-        .demo-note {
-            margin-top: 16px;
-            font-size: 0.75rem;
-            color: var(--text-muted, #64748b);
-        }
-
-        /* =========================================
-           ACCESSIBILITY
-        ========================================= */
-
-        a:focus-visible,
-        button:focus-visible,
-        input:focus-visible {
-            outline: 2px solid var(--ewha-green, #00462a);
-            outline-offset: 3px;
-        }
-
-        /* =========================================
-           RESPONSIVE DESIGN
-        ========================================= */
-
-        @media (max-width: 1200px) {
-            .subcategory-grid {
-                grid-template-columns: repeat(3, minmax(0, 1fr));
-            }
-        }
-
-        @media (max-width: 1100px) {
-            .featured-grid {
-                grid-template-columns: repeat(3, minmax(0, 1fr));
-            }
-
-            .category-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-        }
-
-        @media (max-width: 950px) {
-            .subcategory-grid,
-            .featured-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-        }
-
-        @media (max-width: 800px) {
-            .app-layout {
-                display: block;
-            }
-
-            .sidebar {
-                position: static;
-                width: 100%;
-                height: auto;
-                padding: 12px;
-                border-right: none;
-                border-bottom: 1px solid var(--border, #e7e7e7);
-            }
-
-            .brand-logo {
-                margin-bottom: 10px;
-            }
-
-            .side-nav {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                gap: 4px;
-            }
-
-            .side-link {
-                padding: 8px 10px;
-                font-size: 0.85rem;
-            }
-
-            .sidebar-banner {
-                display: none;
-            }
-
-            .main-wrapper {
-                padding: 14px;
-            }
-
-            .topbar {
-                flex-wrap: wrap;
-            }
-
-            .search-bar {
-                max-width: none;
-            }
-
-            .category-section {
-                padding: 14px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .search-bar {
-                flex-basis: 100%;
-            }
-
-            .category-grid,
-            .featured-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .subcategory-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .category-image {
-                height: 180px;
-            }
-
-            .featured-image-wrap {
-                height: 200px;
-            }
-
-            .page-header h1 {
-                font-size: 1.4rem;
-            }
-        }
-    </style>
+    <!-- Discovery JavaScript -->
+    <script src="discovery.js" defer></script>
 </head>
 
-<body>
+<body class="discovery-page categories-page">
 
     <div class="app-layout">
 
-        <!-- =====================================
+        <!-- ==============================
              SIDEBAR
-        ====================================== -->
+        =============================== -->
 
         <aside class="sidebar">
 
-            <a href="index.html" class="brand-logo">
-                Ewha Market
+            <a href="index.html" class="brand-logo discovery-brand">
+
+                <svg class="ewha-flower"
+                     viewBox="0 0 50 50"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.6"
+                     aria-hidden="true">
+
+                    <ellipse cx="25" cy="14" rx="6" ry="11"/>
+
+                    <ellipse cx="25" cy="14" rx="6" ry="11"
+                             transform="rotate(72 25 25)"/>
+
+                    <ellipse cx="25" cy="14" rx="6" ry="11"
+                             transform="rotate(144 25 25)"/>
+
+                    <ellipse cx="25" cy="14" rx="6" ry="11"
+                             transform="rotate(216 25 25)"/>
+
+                    <ellipse cx="25" cy="14" rx="6" ry="11"
+                             transform="rotate(288 25 25)"/>
+
+                    <circle cx="25" cy="25" r="4"/>
+
+                </svg>
+
+                <span>Ewha<br>Market</span>
+
             </a>
 
             <nav class="side-nav" aria-label="Main navigation">
 
                 <a href="index.html" class="side-link">
-                    <i data-lucide="house" aria-hidden="true"></i>
+                    <span class="nav-emoji">🏠</span>
                     Home
                 </a>
 
                 <a href="categories.html"
                    class="side-link active"
                    aria-current="page">
-
-                    <i data-lucide="layout-grid" aria-hidden="true"></i>
+                    <span class="nav-emoji">🗂️</span>
                     Categories
-
                 </a>
 
                 <a href="messages.html" class="side-link">
-                    <i data-lucide="message-circle" aria-hidden="true"></i>
+                    <span class="nav-emoji">💬</span>
                     Chat
                 </a>
 
                 <a href="profile.html" class="side-link">
-                    <i data-lucide="user-round" aria-hidden="true"></i>
+                    <span class="nav-emoji">👤</span>
                     My Profile
                 </a>
 
             </nav>
 
             <div class="sidebar-banner">
+
+                <div class="campus-icon">🎓</div>
 
                 <p><strong>Ewha Campus Hub</strong></p>
 
@@ -615,9 +102,9 @@
 
         </aside>
 
-        <!-- =====================================
+        <!-- ==============================
              MAIN WRAPPER
-        ====================================== -->
+        =============================== -->
 
         <div class="main-wrapper">
 
@@ -629,64 +116,51 @@
                       method="GET"
                       class="search-bar">
 
-                    <i data-lucide="search" aria-hidden="true"></i>
+                    <span class="search-icon">🔍</span>
 
-                    <input
-                        type="text"
-                        name="q"
-                        placeholder="Enter item title, course code, or keyword..."
-                        aria-label="Search listings"
-                    >
+                    <input type="text"
+                           name="q"
+                           placeholder="Enter item title, course code, or keyword..."
+                           aria-label="Search listings">
 
                     <a href="search.html#filters"
                        class="filter-btn"
                        title="Search filters"
                        aria-label="Open search filters">
-
-                        <i data-lucide="sliders-horizontal"
-                           aria-hidden="true"></i>
-
+                        🎛️
                     </a>
 
                 </form>
 
                 <div class="topbar-actions">
 
-                    <button
-                        id="langToggle"
-                        class="lang-btn"
-                        type="button"
-                        title="Language support coming soon"
-                        disabled
-                    >
-                        EN ▾
+                    <button id="langToggle"
+                            class="lang-btn"
+                            type="button"
+                            disabled>
+                        🌐 EN ▾
                     </button>
 
                     <a href="messages.html"
                        class="icon-btn"
-                       title="Chat"
-                       aria-label="Chat">
-
-                        <i data-lucide="message-circle"
-                           aria-hidden="true"></i>
-
+                       title="Chat">
+                        💬
                     </a>
 
                     <a href="login.html"
-                       class="login-pill"
-                       title="Log In">
-                        Log In
+                       class="login-pill">
+                        👤 Log In
                     </a>
 
                 </div>
 
             </header>
 
-            <!-- PAGE CONTENT -->
+            <!-- ==============================
+                 PAGE CONTENT
+            =============================== -->
 
             <main class="page-content">
-
-                <!-- PAGE HEADER -->
 
                 <div class="page-header">
 
@@ -700,9 +174,9 @@
 
                 </div>
 
-                <!-- =================================
-                     1. MAIN CATEGORIES
-                ================================== -->
+                <!-- ==========================
+                     MAIN CATEGORIES
+                =========================== -->
 
                 <section class="content-card category-section">
 
@@ -722,19 +196,17 @@
                         <!-- BUY -->
 
                         <a href="search.html?type=buy"
-                           class="category-card">
+                           class="category-card buy-category">
 
-                            <img
-                                src="images/cat-electronics.jpg"
-                                alt="Secondhand items"
-                                class="category-image"
-                            >
+                            <img src="images/cat-electronics.jpg"
+                                 alt="Buy and sell items"
+                                 class="category-image"
+                                 loading="lazy">
 
                             <div class="category-details">
 
                                 <h3>
-                                    <i data-lucide="shopping-bag"
-                                       aria-hidden="true"></i>
+                                    <i data-lucide="shopping-bag"></i>
                                     Buy
                                 </h3>
 
@@ -745,8 +217,7 @@
 
                                 <span class="category-count">
                                     17 sample listings
-                                    <i data-lucide="arrow-right"
-                                       aria-hidden="true"></i>
+                                    <i data-lucide="arrow-right"></i>
                                 </span>
 
                             </div>
@@ -756,19 +227,17 @@
                         <!-- RENT -->
 
                         <a href="search.html?type=rent"
-                           class="category-card">
+                           class="category-card rent-category">
 
-                            <img
-                                src="images/cat-rent.jpg"
-                                alt="Items available for rent"
-                                class="category-image"
-                            >
+                            <img src="images/cat-rent.jpg"
+                                 alt="Rent and lend items"
+                                 class="category-image"
+                                 loading="lazy">
 
                             <div class="category-details">
 
                                 <h3>
-                                    <i data-lucide="repeat"
-                                       aria-hidden="true"></i>
+                                    <i data-lucide="repeat"></i>
                                     Rent
                                 </h3>
 
@@ -779,8 +248,7 @@
 
                                 <span class="category-count">
                                     7 sample listings
-                                    <i data-lucide="arrow-right"
-                                       aria-hidden="true"></i>
+                                    <i data-lucide="arrow-right"></i>
                                 </span>
 
                             </div>
@@ -790,19 +258,17 @@
                         <!-- SERVICES -->
 
                         <a href="search.html?type=services"
-                           class="category-card">
+                           class="category-card services-category">
 
-                            <img
-                                src="images/cat-services.jpg"
-                                alt="Student services"
-                                class="category-image"
-                            >
+                            <img src="images/cat-services.jpg"
+                                 alt="Student services"
+                                 class="category-image"
+                                 loading="lazy">
 
                             <div class="category-details">
 
                                 <h3>
-                                    <i data-lucide="handshake"
-                                       aria-hidden="true"></i>
+                                    <i data-lucide="handshake"></i>
                                     Services
                                 </h3>
 
@@ -813,8 +279,7 @@
 
                                 <span class="category-count">
                                     6 sample listings
-                                    <i data-lucide="arrow-right"
-                                       aria-hidden="true"></i>
+                                    <i data-lucide="arrow-right"></i>
                                 </span>
 
                             </div>
@@ -824,19 +289,17 @@
                         <!-- STUDY MATERIALS -->
 
                         <a href="search.html?type=notes"
-                           class="category-card">
+                           class="category-card notes-category">
 
-                            <img
-                                src="images/cat-notes.jpg"
-                                alt="Study notes and textbooks"
-                                class="category-image"
-                            >
+                            <img src="images/cat-notes.jpg"
+                                 alt="Study materials"
+                                 class="category-image"
+                                 loading="lazy">
 
                             <div class="category-details">
 
                                 <h3>
-                                    <i data-lucide="book-open"
-                                       aria-hidden="true"></i>
+                                    <i data-lucide="book-open"></i>
                                     Study Materials
                                 </h3>
 
@@ -847,8 +310,7 @@
 
                                 <span class="category-count">
                                     7 sample listings
-                                    <i data-lucide="arrow-right"
-                                       aria-hidden="true"></i>
+                                    <i data-lucide="arrow-right"></i>
                                 </span>
 
                             </div>
@@ -859,37 +321,38 @@
 
                 </section>
 
-                <!-- =================================
-                     2. POPULAR SUBCATEGORIES
-                ================================== -->
+                <!-- ==========================
+                     SUBCATEGORIES
+                =========================== -->
 
                 <section class="content-card category-section">
 
                     <div class="category-section-title">
 
-                        <h2>Popular Subcategories</h2>
+                        <h2>Browse Subcategories</h2>
 
                         <p>
-                            Browse by the type of item
-                            or service you need.
+                            Find exactly what you need
+                            for your campus life.
                         </p>
 
                     </div>
 
-                    <!-- BUY & SELL -->
+                    <!-- ======================
+                         BUY & SELL
+                    ======================= -->
 
                     <div class="subcategory-group buy-group">
 
                         <div class="subcategory-group-title">
 
                             <h3>
-                                <i data-lucide="shopping-bag"
-                                   aria-hidden="true"></i>
+                                <i data-lucide="shopping-bag"></i>
                                 Buy &amp; Sell
                             </h3>
 
                             <span class="group-label">
-                                12 categories
+                                Everyday essentials
                             </span>
 
                         </div>
@@ -902,12 +365,12 @@
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="shirt" aria-hidden="true"></i>
+                                    <i data-lucide="shirt"></i>
                                 </span>
 
                                 <div class="subcategory-text">
                                     <h3>Clothes</h3>
-                                    <p>Hoodies, jackets, skirts, cardigans</p>
+                                    <p>Hoodies, jackets, skirts and cardigans</p>
                                 </div>
 
                             </a>
@@ -918,7 +381,7 @@
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="footprints" aria-hidden="true"></i>
+                                    <i data-lucide="footprints"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -934,7 +397,7 @@
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="shopping-bag" aria-hidden="true"></i>
+                                    <i data-lucide="shopping-bag"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -950,7 +413,7 @@
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="sparkles" aria-hidden="true"></i>
+                                    <i data-lucide="sparkles"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -966,7 +429,7 @@
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="laptop" aria-hidden="true"></i>
+                                    <i data-lucide="laptop"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -976,18 +439,18 @@
 
                             </a>
 
-                            <!-- Home & Living -->
+                            <!-- Home and Living -->
 
                             <a href="search.html?type=buy&amp;category=furniture"
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="armchair" aria-hidden="true"></i>
+                                    <i data-lucide="armchair"></i>
                                 </span>
 
                                 <div class="subcategory-text">
                                     <h3>Home &amp; Living</h3>
-                                    <p>Desk lamps, storage and room essentials</p>
+                                    <p>Desk lamps and room essentials</p>
                                 </div>
 
                             </a>
@@ -998,7 +461,7 @@
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="book-open" aria-hidden="true"></i>
+                                    <i data-lucide="book-open"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -1008,13 +471,13 @@
 
                             </a>
 
-                            <!-- Toys & Hobbies -->
+                            <!-- Toys and Hobbies -->
 
                             <a href="search.html?type=buy&amp;category=hobbies"
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="gamepad-2" aria-hidden="true"></i>
+                                    <i data-lucide="gamepad-2"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -1030,7 +493,7 @@
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="dumbbell" aria-hidden="true"></i>
+                                    <i data-lucide="dumbbell"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -1046,7 +509,7 @@
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="pencil" aria-hidden="true"></i>
+                                    <i data-lucide="pencil"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -1062,7 +525,7 @@
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="gift" aria-hidden="true"></i>
+                                    <i data-lucide="gift"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -1078,7 +541,7 @@
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="package" aria-hidden="true"></i>
+                                    <i data-lucide="package"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -1092,20 +555,21 @@
 
                     </div>
 
-                    <!-- RENT & LEND -->
+                    <!-- ======================
+                         RENT & LEND
+                    ======================= -->
 
                     <div class="subcategory-group rent-group">
 
                         <div class="subcategory-group-title">
 
                             <h3>
-                                <i data-lucide="repeat"
-                                   aria-hidden="true"></i>
+                                <i data-lucide="repeat"></i>
                                 Rent &amp; Lend
                             </h3>
 
                             <span class="group-label">
-                                5 categories
+                                Borrow instead of buying
                             </span>
 
                         </div>
@@ -1118,7 +582,7 @@
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="calculator" aria-hidden="true"></i>
+                                    <i data-lucide="calculator"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -1134,7 +598,7 @@
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="camera" aria-hidden="true"></i>
+                                    <i data-lucide="camera"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -1150,7 +614,7 @@
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="library" aria-hidden="true"></i>
+                                    <i data-lucide="library"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -1160,13 +624,13 @@
 
                             </a>
 
-                            <!-- Equipment -->
+                            <!-- Event Equipment -->
 
                             <a href="search.html?type=rent&amp;category=event-equipment"
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="mic" aria-hidden="true"></i>
+                                    <i data-lucide="mic"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -1182,7 +646,7 @@
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="package" aria-hidden="true"></i>
+                                    <i data-lucide="package"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -1196,20 +660,21 @@
 
                     </div>
 
-                    <!-- STUDENT SERVICES -->
+                    <!-- ======================
+                         STUDENT SERVICES
+                    ======================= -->
 
                     <div class="subcategory-group services-group">
 
                         <div class="subcategory-group-title">
 
                             <h3>
-                                <i data-lucide="handshake"
-                                   aria-hidden="true"></i>
+                                <i data-lucide="handshake"></i>
                                 Student Services
                             </h3>
 
                             <span class="group-label">
-                                5 categories
+                                Connect and learn together
                             </span>
 
                         </div>
@@ -1222,7 +687,7 @@
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="graduation-cap" aria-hidden="true"></i>
+                                    <i data-lucide="graduation-cap"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -1238,7 +703,7 @@
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="globe" aria-hidden="true"></i>
+                                    <i data-lucide="globe"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -1254,7 +719,7 @@
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="languages" aria-hidden="true"></i>
+                                    <i data-lucide="languages"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -1270,7 +735,7 @@
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="briefcase-business" aria-hidden="true"></i>
+                                    <i data-lucide="briefcase-business"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -1286,7 +751,7 @@
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="users" aria-hidden="true"></i>
+                                    <i data-lucide="users"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -1300,20 +765,21 @@
 
                     </div>
 
-                    <!-- STUDY MATERIALS -->
+                    <!-- ======================
+                         STUDY MATERIALS
+                    ======================= -->
 
                     <div class="subcategory-group notes-group">
 
                         <div class="subcategory-group-title">
 
                             <h3>
-                                <i data-lucide="book-open"
-                                   aria-hidden="true"></i>
+                                <i data-lucide="book-open"></i>
                                 Study Materials
                             </h3>
 
                             <span class="group-label">
-                                5 categories
+                                Academic resources
                             </span>
 
                         </div>
@@ -1326,7 +792,7 @@
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="notebook-pen" aria-hidden="true"></i>
+                                    <i data-lucide="notebook-pen"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -1342,7 +808,7 @@
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="book-marked" aria-hidden="true"></i>
+                                    <i data-lucide="book-marked"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -1352,13 +818,13 @@
 
                             </a>
 
-                            <!-- Past Papers / Jokbo -->
+                            <!-- Past Papers -->
 
                             <a href="search.html?type=notes&amp;category=past-papers"
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="files" aria-hidden="true"></i>
+                                    <i data-lucide="files"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -1374,7 +840,7 @@
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="clipboard-list" aria-hidden="true"></i>
+                                    <i data-lucide="clipboard-list"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -1390,7 +856,7 @@
                                class="subcategory-card">
 
                                 <span class="subcategory-icon">
-                                    <i data-lucide="flask-conical" aria-hidden="true"></i>
+                                    <i data-lucide="flask-conical"></i>
                                 </span>
 
                                 <div class="subcategory-text">
@@ -1406,9 +872,9 @@
 
                 </section>
 
-                <!-- =================================
-                     3. FEATURED LISTINGS
-                ================================== -->
+                <!-- ==========================
+                     FEATURED LISTINGS
+                =========================== -->
 
                 <section class="content-card category-section">
 
@@ -1419,37 +885,34 @@
                             <h2>Featured Listings</h2>
 
                             <p>
-                                Two selected listings
-                                from each main category.
+                                Discover useful items and services
+                                from the Ewha community.
                             </p>
 
                         </div>
 
                         <a href="search.html" class="view-all">
-                            View All Listings
-                            <i data-lucide="arrow-right"
-                               aria-hidden="true"></i>
+                            View all
+                            <i data-lucide="arrow-right"></i>
                         </a>
 
                     </div>
 
                     <div class="featured-grid">
 
-                        <!-- BUY 1: EWHA HOODIE -->
+                        <!-- ITEM 1: HOODIE -->
 
                         <a href="search.html?type=buy&amp;q=Ewha%20University%20Hoodie"
                            class="featured-card">
 
                             <div class="featured-image-wrap">
 
-                                <img
-                                    src="images/hoodie.jpeg"
-                                    alt="Ewha University Hoodie"
-                                    class="featured-image"
-                                    loading="lazy"
-                                >
+                                <img src="images/hoodie.jpeg"
+                                     alt="Ewha University Hoodie"
+                                     class="featured-image"
+                                     loading="lazy">
 
-                                <span class="featured-badge badge-buy">
+                                <span class="featured-badge item-badge badge-buy">
                                     BUY
                                 </span>
 
@@ -1458,34 +921,32 @@
                             <div class="featured-info">
 
                                 <div class="featured-price">
-                                    ₩12,000
+                                    &#8361;12,000
                                 </div>
 
                                 <h3>Ewha University Hoodie</h3>
 
                                 <div class="featured-meta">
-                                    Clothes · Like New
+                                    Clothes &bull; Like New
                                 </div>
 
                             </div>
 
                         </a>
 
-                        <!-- BUY 2: HEADPHONES -->
+                        <!-- ITEM 2: HEADPHONES -->
 
                         <a href="search.html?type=buy&amp;q=Wireless%20Headphones"
                            class="featured-card">
 
                             <div class="featured-image-wrap">
 
-                                <img
-                                    src="images/headphones.jpeg"
-                                    alt="Wireless Headphones"
-                                    class="featured-image"
-                                    loading="lazy"
-                                >
+                                <img src="images/headphones.jpeg"
+                                     alt="Wireless Headphones"
+                                     class="featured-image"
+                                     loading="lazy">
 
-                                <span class="featured-badge badge-buy">
+                                <span class="featured-badge item-badge badge-buy">
                                     BUY
                                 </span>
 
@@ -1494,34 +955,32 @@
                             <div class="featured-info">
 
                                 <div class="featured-price">
-                                    ₩15,000
+                                    &#8361;15,000
                                 </div>
 
                                 <h3>Wireless Headphones</h3>
 
                                 <div class="featured-meta">
-                                    Electronics · Good
+                                    Electronics &bull; Good
                                 </div>
 
                             </div>
 
                         </a>
 
-                        <!-- RENT 1: CALCULATOR -->
+                        <!-- ITEM 3: CALCULATOR -->
 
                         <a href="search.html?type=rent&amp;q=Engineering%20Calculator"
                            class="featured-card">
 
                             <div class="featured-image-wrap">
 
-                                <img
-                                    src="images/engineering-calculator.jpeg"
-                                    alt="Engineering Calculator"
-                                    class="featured-image"
-                                    loading="lazy"
-                                >
+                                <img src="images/engineering-calculator.jpeg"
+                                     alt="Engineering Calculator"
+                                     class="featured-image"
+                                     loading="lazy">
 
-                                <span class="featured-badge badge-rent">
+                                <span class="featured-badge item-badge badge-rent">
                                     RENT
                                 </span>
 
@@ -1530,34 +989,32 @@
                             <div class="featured-info">
 
                                 <div class="featured-price">
-                                    ₩2,000 / day
+                                    &#8361;2,000 / day
                                 </div>
 
                                 <h3>Engineering Calculator</h3>
 
                                 <div class="featured-meta">
-                                    Calculators · Like New
+                                    Calculators &bull; Like New
                                 </div>
 
                             </div>
 
                         </a>
 
-                        <!-- RENT 2: CAMERA -->
+                        <!-- ITEM 4: CAMERA -->
 
                         <a href="search.html?type=rent&amp;q=Digital%20Camera"
                            class="featured-card">
 
                             <div class="featured-image-wrap">
 
-                                <img
-                                    src="images/camera.jpeg"
-                                    alt="Digital Camera"
-                                    class="featured-image"
-                                    loading="lazy"
-                                >
+                                <img src="images/camera.jpeg"
+                                     alt="Digital Camera"
+                                     class="featured-image"
+                                     loading="lazy">
 
-                                <span class="featured-badge badge-rent">
+                                <span class="featured-badge item-badge badge-rent">
                                     RENT
                                 </span>
 
@@ -1566,34 +1023,32 @@
                             <div class="featured-info">
 
                                 <div class="featured-price">
-                                    ₩8,000 / day
+                                    &#8361;8,000 / day
                                 </div>
 
                                 <h3>Digital Camera</h3>
 
                                 <div class="featured-meta">
-                                    Cameras &amp; Electronics · Good
+                                    Cameras &bull; Good
                                 </div>
 
                             </div>
 
                         </a>
 
-                        <!-- SERVICE 1: PYTHON TUTORING -->
+                        <!-- ITEM 5: PYTHON TUTORING -->
 
                         <a href="search.html?type=services&amp;q=Python%20Tutoring"
                            class="featured-card">
 
                             <div class="featured-image-wrap">
 
-                                <img
-                                    src="images/python-tutoring.jpeg"
-                                    alt="Python Tutoring"
-                                    class="featured-image"
-                                    loading="lazy"
-                                >
+                                <img src="images/python-tutoring.jpeg"
+                                     alt="Python Tutoring"
+                                     class="featured-image"
+                                     loading="lazy">
 
-                                <span class="featured-badge badge-services">
+                                <span class="featured-badge item-badge badge-service">
                                     SERVICE
                                 </span>
 
@@ -1602,34 +1057,32 @@
                             <div class="featured-info">
 
                                 <div class="featured-price">
-                                    ₩15,000 / hour
+                                    &#8361;15,000 / hour
                                 </div>
 
                                 <h3>Python Tutoring</h3>
 
                                 <div class="featured-meta">
-                                    Tutoring · Programming
+                                    Tutoring &bull; Programming
                                 </div>
 
                             </div>
 
                         </a>
 
-                        <!-- SERVICE 2: JAVA TUTORING -->
+                        <!-- ITEM 6: JAVA TUTORING -->
 
                         <a href="search.html?type=services&amp;q=Java%20Programming%20Tutoring"
                            class="featured-card">
 
                             <div class="featured-image-wrap">
 
-                                <img
-                                    src="images/java-tutoring.jpg"
-                                    alt="Java Programming Tutoring"
-                                    class="featured-image"
-                                    loading="lazy"
-                                >
+                                <img src="images/java-tutoring.jpg"
+                                     alt="Java Programming Tutoring"
+                                     class="featured-image"
+                                     loading="lazy">
 
-                                <span class="featured-badge badge-services">
+                                <span class="featured-badge item-badge badge-service">
                                     SERVICE
                                 </span>
 
@@ -1638,34 +1091,32 @@
                             <div class="featured-info">
 
                                 <div class="featured-price">
-                                    ₩15,000 / hour
+                                    &#8361;15,000 / hour
                                 </div>
 
                                 <h3>Java Programming Tutoring</h3>
 
                                 <div class="featured-meta">
-                                    Tutoring · Computer Science
+                                    Tutoring &bull; Computer Science
                                 </div>
 
                             </div>
 
                         </a>
 
-                        <!-- NOTES 1: DATA STRUCTURES -->
+                        <!-- ITEM 7: DATA STRUCTURES -->
 
                         <a href="search.html?type=notes&amp;q=Data%20Structures%20Notes"
                            class="featured-card">
 
                             <div class="featured-image-wrap">
 
-                                <img
-                                    src="images/data-structure.jpeg"
-                                    alt="Data Structures Notes"
-                                    class="featured-image"
-                                    loading="lazy"
-                                >
+                                <img src="images/data-structure.jpeg"
+                                     alt="Data Structures Notes"
+                                     class="featured-image"
+                                     loading="lazy">
 
-                                <span class="featured-badge badge-notes">
+                                <span class="featured-badge item-badge badge-notes">
                                     STUDY MATERIALS
                                 </span>
 
@@ -1674,34 +1125,32 @@
                             <div class="featured-info">
 
                                 <div class="featured-price">
-                                    ₩5,000
+                                    &#8361;5,000
                                 </div>
 
                                 <h3>Data Structures Notes</h3>
 
                                 <div class="featured-meta">
-                                    Lecture Notes · Computer Science
+                                    Lecture Notes &bull; Computer Science
                                 </div>
 
                             </div>
 
                         </a>
 
-                        <!-- NOTES 2: COMPUTER ARCHITECTURE -->
+                        <!-- ITEM 8: COMPUTER ARCHITECTURE -->
 
                         <a href="search.html?type=notes&amp;q=Computer%20Architecture%20Notes"
                            class="featured-card">
 
                             <div class="featured-image-wrap">
 
-                                <img
-                                    src="images/comp-architecture.jpeg"
-                                    alt="Computer Architecture Notes"
-                                    class="featured-image"
-                                    loading="lazy"
-                                >
+                                <img src="images/comp-architecture.jpeg"
+                                     alt="Computer Architecture Notes"
+                                     class="featured-image"
+                                     loading="lazy">
 
-                                <span class="featured-badge badge-notes">
+                                <span class="featured-badge item-badge badge-notes">
                                     STUDY MATERIALS
                                 </span>
 
@@ -1710,13 +1159,13 @@
                             <div class="featured-info">
 
                                 <div class="featured-price">
-                                    ₩5,000
+                                    &#8361;5,000
                                 </div>
 
                                 <h3>Computer Architecture Notes</h3>
 
                                 <div class="featured-meta">
-                                    Lecture Notes · Computer Science
+                                    Lecture Notes &bull; Computer Science
                                 </div>
 
                             </div>
@@ -1726,9 +1175,9 @@
                     </div>
 
                     <p class="demo-note">
-                        These are sample listings for the Ewha Market
-                        prototype. Real student listings will be
-                        connected through Firebase later.
+                        Note: These are sample listings for the
+                        Ewha Market prototype. Real listings will
+                        be connected through Firebase later.
                     </p>
 
                 </section>
@@ -1739,47 +1188,6 @@
 
     </div>
 
-    <!-- =========================================
-         JAVASCRIPT
-    ========================================== -->
-
-    <script>
-
-        // Initialize Lucide outline icons.
-
-        if (typeof lucide !== "undefined") {
-
-            lucide.createIcons({
-                attrs: {
-                    "stroke-width": 1.7,
-                    "aria-hidden": "true"
-                }
-            });
-
-        }
-
-        // Display a fallback if an image cannot be loaded.
-
-        const images = document.querySelectorAll(
-            ".category-image, .featured-image"
-        );
-
-        images.forEach(image => {
-
-            function showFallback() {
-                image.removeEventListener("error", showFallback);
-                image.src = "images/cat-books.jpg";
-            }
-
-            image.addEventListener("error", showFallback);
-
-            if (image.complete && image.naturalWidth === 0) {
-                showFallback();
-            }
-
-        });
-
-    </script>
-
 </body>
+
 </html>

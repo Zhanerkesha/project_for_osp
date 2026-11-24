@@ -1,567 +1,118 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search & Discovery - Ewha Market</title>
 
+    <title>Search - Ewha Market</title>
+
+    <!-- Shared team stylesheet -->
     <link rel="stylesheet" href="style.css">
 
-    <style>
-        /* =========================================
-           SEARCH & DISCOVERY PAGE
-           Uses the shared Ewha design system
-        ========================================= */
+    <!-- Discovery stylesheet -->
+    <link rel="stylesheet" href="discovery.css">
 
-        /* Sticky sidebar */
-        .sidebar {
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            align-self: flex-start;
-            overflow-y: auto;
-        }
+    <!-- Discovery JavaScript -->
+    <script src="discovery.js" defer></script>
 
-        .brand-logo {
-            font-size: 1.3rem;
-        }
-
-        .side-link svg {
-            flex-shrink: 0;
-        }
-
-        .sidebar-banner {
-            padding: 12px;
-            font-size: 0.85rem;
-        }
-
-        .main-wrapper {
-            min-width: 0;
-        }
-
-        .page-content {
-            max-width: none;
-        }
-
-        /* Top navigation */
-        .topbar {
-            margin-bottom: 22px;
-        }
-
-        .search-bar input {
-            min-width: 0;
-        }
-
-        .search-bar svg,
-        .filter-btn svg {
-            color: var(--text-muted);
-            flex-shrink: 0;
-        }
-
-        .icon-btn svg {
-            color: var(--ewha-green);
-        }
-
-        .page-header {
-            margin-bottom: 18px;
-        }
-
-        .page-header h1 {
-            font-size: 1.6rem;
-            margin-bottom: 4px;
-        }
-
-        /* =========================================
-           COMPACT FILTER PANEL
-        ========================================= */
-
-        #filters {
-            padding: 14px;
-            margin-bottom: 20px;
-            border-radius: 12px;
-        }
-
-        .filter-grid {
-            display: grid;
-            grid-template-columns:
-                minmax(105px, 1fr)
-                minmax(115px, 1.1fr)
-                minmax(160px, 1.4fr)
-                minmax(130px, 1.2fr)
-                auto;
-            gap: 10px;
-            align-items: end;
-        }
-
-        #filters .form-group {
-            margin-bottom: 0;
-            min-width: 0;
-        }
-
-        #filters .form-label {
-            display: block;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        #filters .form-control {
-            width: 100%;
-            min-width: 0;
-            height: 38px;
-            padding: 8px;
-            font-size: 0.85rem;
-            border-radius: 8px;
-            background: var(--card-bg);
-            color: var(--text-main);
-        }
-
-        .price-range {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .price-range input {
-            flex: 1;
-            width: 0;
-            min-width: 0;
-        }
-
-        .price-range span {
-            color: var(--text-muted);
-        }
-
-        .filter-actions {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-        }
-
-        .filter-actions button {
-            height: 38px;
-            padding: 8px 12px;
-            border-radius: 8px;
-            white-space: nowrap;
-            font-size: 0.8rem;
-        }
-
-        /* Expandable additional filters */
-        .more-filters {
-            margin-top: 12px;
-        }
-
-        .more-filters summary {
-            cursor: pointer;
-            color: var(--ewha-green);
-            font-size: 0.85rem;
-            font-weight: 600;
-            width: fit-content;
-        }
-
-        .extra-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 12px;
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid var(--border);
-        }
-
-        .filter-error {
-            color: var(--text-main);
-            font-size: 0.8rem;
-            margin-top: 10px;
-        }
-
-        /* =========================================
-           SEARCH RESULTS
-        ========================================= */
-
-        .results-panel {
-            margin-bottom: 24px;
-        }
-
-        .results-heading {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 14px;
-        }
-
-        .results-heading h2 {
-            font-size: 1.15rem;
-            font-weight: 700;
-        }
-
-        #resultCount {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
-        #searchResults {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 16px;
-        }
-
-        .result-card-link {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            min-width: 0;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        #searchResults .item-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        #searchResults .item-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
-        }
-
-        /* Product images */
-        #searchResults .item-img-wrap {
-            position: relative;
-            overflow: hidden;
-            background: var(--bg-sidebar);
-        }
-
-        #searchResults .item-img-wrap img {
-            width: 100%;
-            height: 165px;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* =========================================
-           UNIFIED EWHA GREEN BADGES
-        ========================================= */
-
-        #searchResults .item-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            padding: 4px 10px;
-            border-radius: 999px;
-            font-size: 0.68rem;
-            font-weight: 700;
-            background: var(--ewha-green);
-            color: white;
-        }
-
-        #searchResults .badge-buy,
-        #searchResults .badge-service {
-            background: var(--ewha-green);
-            color: white;
-        }
-
-        #searchResults .badge-rent,
-        #searchResults .badge-notes {
-            background: var(--ewha-green-light);
-            color: var(--ewha-green);
-            border: 1px solid var(--ewha-green);
-        }
-
-        /* Product information */
-        #searchResults .item-info {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            padding: 12px;
-        }
-
-        #searchResults .item-price {
-            color: var(--ewha-green);
-            font-size: 1.05rem;
-            font-weight: 800;
-            margin-bottom: 4px;
-        }
-
-        #searchResults .item-title {
-            color: var(--text-main);
-            font-size: 0.92rem;
-            font-weight: 600;
-            margin: 4px 0 6px;
-            overflow-wrap: anywhere;
-        }
-
-        .item-description {
-            font-size: 0.8rem;
-            line-height: 1.5;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-        }
-
-        .item-course {
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--ewha-green);
-            margin-bottom: 8px;
-        }
-
-        #searchResults .item-meta {
-            display: block;
-            margin-top: auto;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            padding-top: 8px;
-            border-top: 1px solid var(--border);
-        }
-
-        /* Empty state */
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-        }
-
-        .empty-state h3 {
-            margin-bottom: 8px;
-            color: var(--ewha-green);
-        }
-
-        .empty-state p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .demo-note {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-top: 16px;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        /* Keyboard accessibility */
-        a:focus-visible,
-        button:focus-visible,
-        select:focus-visible,
-        input:focus-visible,
-        summary:focus-visible {
-            outline: 2px solid var(--ewha-green);
-            outline-offset: 3px;
-        }
-
-        /* =========================================
-           RESPONSIVE DESIGN
-        ========================================= */
-
-        @media (max-width: 1200px) {
-            .filter-grid {
-                grid-template-columns: repeat(4, minmax(0, 1fr));
-            }
-
-            .filter-actions {
-                grid-column: 1 / -1;
-                justify-content: flex-end;
-            }
-        }
-
-        @media (max-width: 1100px) {
-            #searchResults {
-                grid-template-columns: repeat(3, minmax(0, 1fr));
-            }
-        }
-
-        @media (max-width: 950px) {
-            .filter-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
-            #searchResults {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-        }
-
-        @media (max-width: 800px) {
-            .app-layout {
-                display: block;
-            }
-
-            .sidebar {
-                position: static;
-                width: 100%;
-                height: auto;
-                padding: 12px;
-                border-right: none;
-                border-bottom: 1px solid var(--border);
-            }
-
-            .brand-logo {
-                margin-bottom: 10px;
-            }
-
-            .side-nav {
-                flex-direction: row;
-                flex-wrap: wrap;
-                gap: 4px;
-            }
-
-            .side-link {
-                padding: 8px 10px;
-                font-size: 0.85rem;
-            }
-
-            .sidebar-banner {
-                display: none;
-            }
-
-            .main-wrapper {
-                padding: 14px;
-            }
-
-            .topbar {
-                flex-wrap: wrap;
-            }
-
-            .search-bar {
-                max-width: none;
-            }
-
-            .extra-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-        }
-
-        @media (max-width: 480px) {
-            .filter-grid,
-            .extra-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .search-bar {
-                flex-basis: 100%;
-            }
-
-            #searchResults {
-                grid-template-columns: 1fr;
-            }
-
-            .filter-actions button {
-                flex: 1;
-            }
-
-            #searchResults .item-img-wrap img {
-                height: 200px;
-            }
-        }
-    </style>
 </head>
 
-<body>
+<body class="discovery-page search-page">
 
     <div class="app-layout">
 
-        <!-- =====================================
+        <!-- ==============================
              SIDEBAR
-        ====================================== -->
+        =============================== -->
 
         <aside class="sidebar">
 
-            <a href="index.html" class="brand-logo">
-                Ewha Market
+            <a href="index.html"
+               class="brand-logo discovery-brand">
+
+                <svg class="ewha-flower"
+                     viewBox="0 0 50 50"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.6"
+                     aria-hidden="true">
+
+                    <ellipse cx="25" cy="14"
+                             rx="6" ry="11"/>
+
+                    <ellipse cx="25" cy="14"
+                             rx="6" ry="11"
+                             transform="rotate(72 25 25)"/>
+
+                    <ellipse cx="25" cy="14"
+                             rx="6" ry="11"
+                             transform="rotate(144 25 25)"/>
+
+                    <ellipse cx="25" cy="14"
+                             rx="6" ry="11"
+                             transform="rotate(216 25 25)"/>
+
+                    <ellipse cx="25" cy="14"
+                             rx="6" ry="11"
+                             transform="rotate(288 25 25)"/>
+
+                    <circle cx="25" cy="25" r="4"/>
+
+                </svg>
+
+                <span>Ewha<br>Market</span>
+
             </a>
 
-            <nav class="side-nav" aria-label="Main navigation">
+            <!-- SIDEBAR NAVIGATION -->
 
-                <a href="index.html" class="side-link">
+            <nav class="side-nav"
+                 aria-label="Main navigation">
 
-                    <svg width="18" height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        aria-hidden="true">
-                        <path d="M3 10L12 3L21 10V21H3Z"/>
-                        <path d="M9 21V13H15V21"/>
-                    </svg>
+                <a href="index.html"
+                   class="side-link">
 
+                    <span class="nav-emoji">🏠</span>
                     Home
 
                 </a>
 
-                <a href="categories.html" class="side-link active">
+                <a href="categories.html"
+                   class="side-link">
 
-                    <svg width="18" height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                        aria-hidden="true">
-                        <rect x="3" y="3"
-                            width="7" height="7" rx="1"/>
-                        <rect x="14" y="3"
-                            width="7" height="7" rx="1"/>
-                        <rect x="3" y="14"
-                            width="7" height="7" rx="1"/>
-                        <rect x="14" y="14"
-                            width="7" height="7" rx="1"/>
-                    </svg>
-
+                    <span class="nav-emoji">🗂️</span>
                     Categories
 
                 </a>
 
-                <a href="messages.html" class="side-link">
+                <a href="messages.html"
+                   class="side-link">
 
-                    <svg width="18" height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                        stroke-linejoin="round"
-                        aria-hidden="true">
-                        <path d="M21 11.5A9 9 0 0 1 12 20.5
-                            A10 10 0 0 1 8 19.5
-                            L3 21L4.5 16
-                            A9 9 0 1 1 21 11.5Z"/>
-                    </svg>
-
+                    <span class="nav-emoji">💬</span>
                     Chat
 
                 </a>
 
-                <a href="profile.html" class="side-link">
+                <a href="profile.html"
+                   class="side-link">
 
-                    <svg width="18" height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                        aria-hidden="true">
-                        <circle cx="12" cy="8" r="4"/>
-                        <path d="M4 21V19
-                            A8 8 0 0 1 20 19V21"/>
-                    </svg>
-
+                    <span class="nav-emoji">👤</span>
                     My Profile
 
                 </a>
 
             </nav>
 
+            <!-- CAMPUS BANNER -->
+
             <div class="sidebar-banner">
 
-                <p><strong>Ewha Campus Hub</strong></p>
+                <div class="campus-icon">🎓</div>
+
+                <p>
+                    <strong>Ewha Campus Hub</strong>
+                </p>
 
                 <small>
                     Verified students only<br>
@@ -572,113 +123,95 @@
 
         </aside>
 
-        <!-- =====================================
+        <!-- ==============================
              MAIN WRAPPER
-        ====================================== -->
+        =============================== -->
 
         <div class="main-wrapper">
 
-            <!-- TOPBAR -->
+            <!-- ==========================
+                 TOPBAR
+            =========================== -->
 
             <header class="topbar">
 
-                <form
-                    id="searchForm"
-                    action="search.html"
-                    method="GET"
-                    class="search-bar"
-                >
+                <!-- SEARCH FORM -->
 
-                    <svg width="18" height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        aria-hidden="true">
-                        <circle cx="11" cy="11" r="7"/>
-                        <path d="M16 16L21 21"/>
-                    </svg>
+                <form id="searchForm"
+                      class="search-bar"
+                      action="search.html"
+                      method="GET"
+                      role="search">
 
-                    <input
-                        type="text"
-                        id="searchInput"
-                        name="q"
-                        placeholder="Enter item title, course code, or keyword..."
-                        aria-label="Search listings"
-                    >
+                    <span class="search-icon"
+                          aria-hidden="true">
+                        🔍
+                    </span>
 
-                    <a
-                        href="#filters"
-                        class="filter-btn"
-                        title="Filters"
-                        aria-label="Go to search filters"
-                    >
-                        <svg width="18" height="18"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            aria-hidden="true">
-                            <path d="M4 6H20M4 12H20M4 18H20"/>
-                            <circle cx="8" cy="6" r="2" fill="white"/>
-                            <circle cx="15" cy="12" r="2" fill="white"/>
-                            <circle cx="10" cy="18" r="2" fill="white"/>
-                        </svg>
+                    <input type="search"
+                           id="searchInput"
+                           name="q"
+                           placeholder="Enter item title, course code, or keyword..."
+                           aria-label="Search listings"
+                           autocomplete="off">
+
+                    <a href="#filters"
+                       class="filter-btn"
+                       title="Search filters"
+                       aria-label="Go to search filters">
+
+                        🎛️
+
                     </a>
 
                 </form>
 
+                <!-- TOPBAR ACTIONS -->
+
                 <div class="topbar-actions">
 
-                    <button
-                        id="langToggle"
-                        class="lang-btn"
-                        type="button"
-                        title="Language support coming soon"
-                        disabled
-                    >
-                        EN ▾
+                    <button id="langToggle"
+                            class="lang-btn"
+                            type="button"
+                            title="Language support coming soon"
+                            disabled>
+
+                        🌐 EN ▾
+
                     </button>
 
-                    <a
-                        href="messages.html"
-                        class="icon-btn"
-                        title="Chat"
-                        aria-label="Chat"
-                    >
-                        <svg width="18" height="18"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.7"
-                            aria-hidden="true">
-                            <path d="M21 11.5A9 9 0 0 1 12 20.5
-                                A10 10 0 0 1 8 19.5
-                                L3 21L4.5 16
-                                A9 9 0 1 1 21 11.5Z"/>
-                        </svg>
+                    <a href="messages.html"
+                       class="icon-btn"
+                       title="Chat"
+                       aria-label="Chat">
+
+                        💬
+
                     </a>
 
-                    <a
-                        href="login.html"
-                        class="login-pill"
-                        title="Log In"
-                    >
-                        Log In
+                    <a href="login.html"
+                       class="login-pill"
+                       title="Log In">
+
+                        👤 Log In
+
                     </a>
 
                 </div>
 
             </header>
 
-            <!-- PAGE CONTENT -->
+            <!-- ==========================
+                 PAGE CONTENT
+            =========================== -->
 
             <main class="page-content">
 
+                <!-- PAGE HEADER -->
+
                 <div class="page-header">
 
-                    <h1>Search & Discovery</h1>
+                    <h1>Search Listings</h1>
 
                     <p class="text-muted">
                         Find secondhand items, rentals,
@@ -688,15 +221,13 @@
 
                 </div>
 
-                <!-- =================================
-                     COMPACT FILTERS
-                ================================== -->
+                <!-- ======================
+                     SEARCH FILTERS
+                ======================= -->
 
-                <section
-                    class="content-card"
-                    id="filters"
-                    aria-label="Listing filters"
-                >
+                <section id="filters"
+                         class="content-card"
+                         aria-label="Search filters">
 
                     <div class="filter-grid">
 
@@ -705,19 +236,31 @@
                         <div class="form-group">
 
                             <label for="listingType"
-                                class="form-label">
+                                   class="form-label">
+
                                 Listing Type
+
                             </label>
 
                             <select id="listingType"
-                                class="form-control">
+                                    class="form-control">
 
-                                <option value="all">All Types</option>
-                                <option value="buy">Buy & Sell</option>
-                                <option value="rent">Rent & Lend</option>
+                                <option value="all">
+                                    All Types
+                                </option>
+
+                                <option value="buy">
+                                    Buy &amp; Sell
+                                </option>
+
+                                <option value="rent">
+                                    Rent &amp; Lend
+                                </option>
+
                                 <option value="services">
                                     Student Services
                                 </option>
+
                                 <option value="notes">
                                     Study Materials
                                 </option>
@@ -726,104 +269,142 @@
 
                         </div>
 
-                        <!-- CATEGORY -->
+                        <!-- CATEGORY FILTER -->
 
                         <div class="form-group">
 
                             <label for="categoryFilter"
-                                class="form-label">
+                                   class="form-label">
+
                                 Category
+
                             </label>
 
                             <select id="categoryFilter"
-                                class="form-control">
+                                    class="form-control">
 
                                 <option value="all">
                                     All Categories
                                 </option>
 
-                                <optgroup label="Buy & Sell">
+                                <!-- BUY & SELL -->
+
+                                <optgroup label="Buy &amp; Sell">
+
                                     <option value="fashion">
                                         Clothes
                                     </option>
+
                                     <option value="shoes">
                                         Shoes
                                     </option>
+
                                     <option value="accessories">
-                                        Bags & Accessories
+                                        Bags &amp; Accessories
                                     </option>
+
                                     <option value="beauty">
-                                        Beauty & Makeup
+                                        Beauty &amp; Makeup
                                     </option>
+
                                     <option value="electronics">
                                         Electronics
                                     </option>
+
                                     <option value="furniture">
-                                        Home & Living
+                                        Home &amp; Living
                                     </option>
+
                                     <option value="books">
-                                        Books
+                                        Books &amp; Textbooks
                                     </option>
+
                                     <option value="hobbies">
-                                        Toys & Hobbies
+                                        Toys &amp; Hobbies
                                     </option>
+
                                     <option value="sports">
-                                        Sports & Fitness
+                                        Sports &amp; Fitness
                                     </option>
+
                                     <option value="stationery">
                                         Stationery
                                     </option>
+
                                     <option value="free-items">
                                         Free Items
                                     </option>
+
                                     <option value="other">
                                         Other
                                     </option>
+
                                 </optgroup>
 
-                                <optgroup label="Rent & Lend">
+                                <!-- RENT & LEND -->
+
+                                <optgroup label="Rent &amp; Lend">
+
                                     <option value="calculators">
                                         Calculators
                                     </option>
+
                                     <option value="cameras">
-                                        Cameras & Electronics
+                                        Cameras &amp; Electronics
                                     </option>
+
                                     <option value="event-equipment">
                                         Event Equipment
                                     </option>
+
                                 </optgroup>
 
+                                <!-- STUDENT SERVICES -->
+
                                 <optgroup label="Student Services">
+
                                     <option value="tutoring">
                                         Tutoring
                                     </option>
+
                                     <option value="language">
                                         Language Exchange
                                     </option>
+
                                     <option value="translation">
                                         Translation
                                     </option>
+
                                     <option value="career">
-                                        Career & Portfolio Help
+                                        Career &amp; Portfolio Help
                                     </option>
+
                                     <option value="study-groups">
                                         Study Groups
                                     </option>
+
                                 </optgroup>
 
+                                <!-- STUDY MATERIALS -->
+
                                 <optgroup label="Study Materials">
+
                                     <option value="study">
                                         Lecture Notes
                                     </option>
+
                                     <option value="past-papers">
                                         Past Papers / Jokbo
                                     </option>
+
                                     <option value="study-guides">
                                         Study Guides
                                     </option>
+
                                     <option value="lab-supplies">
-                                        Lab & Engineering Supplies
+                                        Lab &amp; Engineering Supplies
                                     </option>
+
                                 </optgroup>
 
                             </select>
@@ -835,163 +416,191 @@
                         <div class="form-group">
 
                             <label for="minPrice"
-                                class="form-label">
-                                Price (₩)
+                                   class="form-label">
+
+                                Price Range (&#8361;)
+
                             </label>
 
                             <div class="price-range">
 
-                                <input
-                                    type="number"
-                                    id="minPrice"
-                                    class="form-control"
-                                    min="0"
-                                    placeholder="Min"
-                                    aria-label="Minimum price"
-                                >
+                                <input type="number"
+                                       id="minPrice"
+                                       class="form-control"
+                                       placeholder="Min"
+                                       aria-label="Minimum price"
+                                       min="0"
+                                       step="1">
 
-                                <span>–</span>
+                                <span aria-hidden="true">
+                                    -
+                                </span>
 
-                                <input
-                                    type="number"
-                                    id="maxPrice"
-                                    class="form-control"
-                                    min="0"
-                                    placeholder="Max"
-                                    aria-label="Maximum price"
-                                >
+                                <input type="number"
+                                       id="maxPrice"
+                                       class="form-control"
+                                       placeholder="Max"
+                                       aria-label="Maximum price"
+                                       min="0"
+                                       step="1">
 
                             </div>
 
                         </div>
 
-                        <!-- COURSE SEARCH -->
+                        <!-- SORT FILTER -->
 
                         <div class="form-group">
 
-                            <label for="courseSearch"
-                                class="form-label">
-                                Course Code / Name
+                            <label for="sortFilter"
+                                   class="form-label">
+
+                                Sort By
+
                             </label>
 
-                            <input
-                                type="text"
-                                id="courseSearch"
-                                class="form-control"
-                                placeholder="e.g. 38403, Python"
-                            >
+                            <select id="sortFilter"
+                                    class="form-control">
+
+                                <option value="newest">
+                                    Newest First
+                                </option>
+
+                                <option value="price-low">
+                                    Price: Low to High
+                                </option>
+
+                                <option value="price-high">
+                                    Price: High to Low
+                                </option>
+
+                                <option value="name">
+                                    Name: A to Z
+                                </option>
+
+                            </select>
 
                         </div>
 
-                        <!-- APPLY AND RESET -->
+                        <!-- FILTER BUTTONS -->
 
                         <div class="filter-actions">
 
-                            <button
-                                type="button"
-                                id="applyFilters"
-                                class="btn-ewha"
-                            >
-                                Apply Filters
+                            <button id="applyFilters"
+                                    type="button"
+                                    class="btn-ewha">
+
+                                Apply
+
                             </button>
 
-                            <button
-                                type="button"
-                                id="resetFilters"
-                                class="btn-outline-ewha"
-                            >
+                            <button id="resetFilters"
+                                    type="button"
+                                    class="btn-outline-ewha">
+
                                 Reset
+
                             </button>
 
                         </div>
 
                     </div>
 
-                    <!-- ADDITIONAL FILTERS -->
+                    <!-- ==================
+                         ADVANCED FILTERS
+                    =================== -->
 
                     <details class="more-filters">
 
-                        <summary>More filters</summary>
+                        <summary>
+                            More Filters
+                        </summary>
 
                         <div class="extra-grid">
 
-                            <!-- CONDITION -->
+                            <!-- CONDITION FILTER -->
 
-                            <div class="form-group"
-                                id="conditionGroup">
+                            <div id="conditionGroup"
+                                 class="form-group">
 
                                 <label for="conditionFilter"
-                                    class="form-label">
+                                       class="form-label">
+
                                     Condition
+
                                 </label>
 
                                 <select id="conditionFilter"
-                                    class="form-control">
+                                        class="form-control">
 
                                     <option value="all">
-                                        Any Condition
+                                        All Conditions
                                     </option>
-                                    <option value="new">New</option>
+
+                                    <option value="new">
+                                        New
+                                    </option>
+
                                     <option value="like-new">
                                         Like New
                                     </option>
-                                    <option value="good">Good</option>
-                                    <option value="used">Used</option>
+
+                                    <option value="good">
+                                        Good
+                                    </option>
+
+                                    <option value="used">
+                                        Used
+                                    </option>
 
                                 </select>
 
                             </div>
 
-                            <!-- SERVICE PAYMENT -->
+                            <!-- COURSE SEARCH -->
 
-                            <div class="form-group"
-                                id="paymentGroup">
+                            <div class="form-group">
+
+                                <label for="courseSearch"
+                                       class="form-label">
+
+                                    Course Name / Code
+
+                                </label>
+
+                                <input type="search"
+                                       id="courseSearch"
+                                       class="form-control"
+                                       placeholder="e.g. Python, 38403"
+                                       autocomplete="off">
+
+                            </div>
+
+                            <!-- FREE OR PAID -->
+
+                            <div id="paymentGroup"
+                                 class="form-group">
 
                                 <label for="paymentFilter"
-                                    class="form-label">
+                                       class="form-label">
+
                                     Service Payment
+
                                 </label>
 
                                 <select id="paymentFilter"
-                                    class="form-control">
+                                        class="form-control">
 
                                     <option value="all">
                                         All Services
                                     </option>
+
                                     <option value="free">
-                                        Free Services
+                                        Free
                                     </option>
+
                                     <option value="paid">
-                                        Paid Services
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-                            <!-- SORT -->
-
-                            <div class="form-group">
-
-                                <label for="sortFilter"
-                                    class="form-label">
-                                    Sort By
-                                </label>
-
-                                <select id="sortFilter"
-                                    class="form-control">
-
-                                    <option value="newest">
-                                        Newest First
-                                    </option>
-                                    <option value="price-low">
-                                        Price: Low to High
-                                    </option>
-                                    <option value="price-high">
-                                        Price: High to Low
-                                    </option>
-                                    <option value="name">
-                                        Name: A to Z
+                                        Paid
                                     </option>
 
                                 </select>
@@ -1002,51 +611,102 @@
 
                     </details>
 
+                    <!-- FILTER VALIDATION ERROR -->
+
                     <p id="filterError"
-                        class="filter-error hidden"
-                        role="alert">
+                       class="filter-error hidden"
+                       role="alert">
                     </p>
 
                 </section>
 
-                <!-- =================================
+                <!-- ======================
                      SEARCH RESULTS
-                ================================== -->
+                ======================= -->
 
-                <section class="results-panel">
+                <section class="results-panel"
+                         aria-label="Search results">
 
                     <div class="results-heading">
 
-                        <h2>Available Listings</h2>
+                        <h2>Search Results</h2>
 
                         <span id="resultCount"
-                            aria-live="polite">
-                            0 listings found
+                              role="status"
+                              aria-live="polite">
+
+                            Loading listings...
+
                         </span>
 
                     </div>
 
+                    <!--
+                        Listings are generated dynamically
+                        by discovery.js.
+                    -->
+
                     <div id="searchResults"
-                        class="items-grid">
+                         class="items-grid">
                     </div>
 
-                    <!-- EMPTY STATE -->
+                    <!-- ==================
+                         NO RESULTS
+                    =================== -->
 
                     <div id="emptyState"
-                        class="empty-state hidden">
+                         class="empty-state hidden">
+
+                        <svg width="48"
+                             height="48"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="#64748b"
+                             stroke-width="1.5"
+                             stroke-linecap="round"
+                             aria-hidden="true">
+
+                            <circle cx="10.5"
+                                    cy="10.5"
+                                    r="6.5"/>
+
+                            <path d="M16 16L21 21"/>
+
+                            <path d="M8 10.5H13"/>
+
+                        </svg>
 
                         <h3>No results found</h3>
 
                         <p>
-                            Try another keyword or change your filters.
+                            Try a different keyword,
+                            change your filters, or
+                            broaden your search.
                         </p>
 
                     </div>
 
+                    <!-- JAVASCRIPT DISABLED MESSAGE -->
+
+                    <noscript>
+
+                        <p>
+                            Please enable JavaScript
+                            to use the search and
+                            filtering features.
+                        </p>
+
+                    </noscript>
+
+                    <!-- PROTOTYPE NOTE -->
+
                     <p class="demo-note">
-                        Note: These are sample listings for the
-                        Ewha Market prototype. Real listings will
-                        be connected through Firebase later.
+
+                        Note: These are sample listings for
+                        the Ewha Market prototype.
+                        Real listings will be connected
+                        through Firebase later.
+
                     </p>
 
                 </section>
@@ -1057,1214 +717,6 @@
 
     </div>
 
-    <script>
-
-        // =========================================
-        // SAMPLE LISTINGS
-        // 37 DEMONSTRATION LISTINGS
-        // =========================================
-
-        function createListing(
-            id, title, type, category, condition,
-            price, priceUnit, description, image,
-            courseName = "", courseCode = "",
-            subject = "", date = "2026-11-17"
-        ) {
-            return {
-                id,
-                title,
-                type,
-                category,
-                condition,
-                price,
-                priceUnit,
-                courseName,
-                courseCode,
-                subject,
-                description,
-                image,
-                date
-            };
-        }
-
-        const listings = [
-
-            // =====================================
-            // BUY & SELL
-            // =====================================
-
-            createListing(
-                "demo-1", "Used Desk Lamp",
-                "buy", "furniture", "used",
-                8000, "",
-                "Affordable desk lamp for studying.",
-                "images/desk-lamp.jpeg",
-                "", "", "", "2026-11-13"
-            ),
-
-            createListing(
-                "demo-2", "Wireless Headphones",
-                "buy", "electronics", "good",
-                15000, "",
-                "Wireless headphones in good condition.",
-                "images/headphones.jpeg",
-                "", "", "", "2026-11-15"
-            ),
-
-            createListing(
-                "demo-3", "Ewha University Hoodie",
-                "buy", "fashion", "like-new",
-                12000, "",
-                "Comfortable Ewha hoodie, barely worn.",
-                "images/hoodie.jpeg"
-            ),
-
-            createListing(
-                "demo-4", "Mini Desk Fan",
-                "buy", "electronics", "good",
-                8000, "",
-                "Compact desk fan for dorm or study room.",
-                "images/desk-fan.jpeg"
-            ),
-
-            createListing(
-                "demo-18", "Cream Knit Cardigan",
-                "buy", "fashion", "like-new",
-                12000, "",
-                "Soft cream cardigan, perfect for autumn.",
-                "images/cream-cardigan.jpeg"
-            ),
-
-            createListing(
-                "demo-19", "Oversized Denim Jacket",
-                "buy", "fashion", "good",
-                18000, "",
-                "Casual oversized denim jacket.",
-                "images/denim-jacket.jpeg"
-            ),
-
-            createListing(
-                "demo-20", "Black Pleated Skirt",
-                "buy", "fashion", "like-new",
-                9000, "",
-                "Black pleated skirt, barely worn.",
-                "images/skirt-pleated.jpeg"
-            ),
-
-            createListing(
-                "demo-21", "Grey Zip-Up Hoodie",
-                "buy", "fashion", "good",
-                10000, "",
-                "Comfortable grey zip-up hoodie.",
-                "images/grey-hoodie.jpg"
-            ),
-
-            createListing(
-                "demo-22", "White Sneakers",
-                "buy", "shoes", "good",
-                12000, "",
-                "Comfortable white sneakers for campus.",
-                "images/white-sneakers.jpeg"
-            ),
-
-            createListing(
-                "demo-23", "Canvas Tote Bag",
-                "buy", "accessories", "like-new",
-                6000, "",
-                "Reusable canvas tote bag for daily use.",
-                "images/canvas-tote.jpeg"
-            ),
-
-            createListing(
-                "demo-24", "Makeup Organizer",
-                "buy", "beauty", "new",
-                4500, "",
-                "Organizer for cosmetics and makeup.",
-                "images/makeup-organizer.jpeg"
-            ),
-
-            createListing(
-                "demo-25", "English Novel",
-                "buy", "books", "good",
-                3500, "",
-                "Secondhand English novel.",
-                "images/english-novel.jpeg"
-            ),
-
-            createListing(
-                "demo-26", "Puzzle Set",
-                "buy", "hobbies", "good",
-                4000, "",
-                "Complete puzzle set for students.",
-                "images/puzzle-set.jpeg"
-            ),
-
-            createListing(
-                "demo-27", "Yoga Mat",
-                "buy", "sports", "good",
-                7000, "",
-                "Exercise and stretching mat.",
-                "images/yoga-mat.jpeg"
-            ),
-
-            createListing(
-                "demo-28", "Notebook and Pen Set",
-                "buy", "stationery", "new",
-                3000, "",
-                "Stationery for the new semester.",
-                "images/stationary-set.jpeg"
-            ),
-
-            createListing(
-                "demo-29", "Free Folder Set",
-                "buy", "free-items", "good",
-                0, "",
-                "Free folders for Ewha students.",
-                "images/folder-set.jpeg"
-            ),
-
-            createListing(
-                "demo-30", "Compact Umbrella",
-                "buy", "other", "good",
-                4000, "",
-                "Foldable umbrella in good condition.",
-                "images/umbrella.jpeg"
-            ),
-
-            // =====================================
-            // RENT & LEND
-            // =====================================
-
-            createListing(
-                "demo-5", "Scientific Calculator",
-                "rent", "calculators", "good",
-                2000, "day",
-                "Rent a scientific calculator for exams.",
-                "images/calculator.jpeg",
-                "", "", "Mathematics", "2026-11-16"
-            ),
-
-            createListing(
-                "demo-6", "Portable Projector",
-                "rent", "cameras", "like-new",
-                5000, "day",
-                "Portable projector for presentations.",
-                "images/projector.jpeg",
-                "", "", "", "2026-11-15"
-            ),
-
-            createListing(
-                "demo-7", "Digital Camera",
-                "rent", "cameras", "good",
-                8000, "day",
-                "Rent a digital camera for projects and events.",
-                "images/camera.jpeg",
-                "", "", "Photography", "2026-11-14"
-            ),
-
-            createListing(
-                "demo-8", "Engineering Calculator",
-                "rent", "calculators", "like-new",
-                2000, "day",
-                "Engineering calculator available for rent.",
-                "images/engineering-calculator.jpeg",
-                "", "", "Engineering"
-            ),
-
-            createListing(
-                "demo-31", "Calculus Textbook Rental",
-                "rent", "books", "good",
-                1500, "day",
-                "Rent a calculus textbook.",
-                "images/calculus-book.jpeg",
-                "Calculus", "", "Mathematics"
-            ),
-
-            createListing(
-                "demo-32", "Tripod Rental",
-                "rent", "event-equipment", "good",
-                3000, "day",
-                "Tripod for campus events.",
-                "images/tripod.jpeg"
-            ),
-
-            createListing(
-                "demo-33", "Board Game Rental",
-                "rent", "other", "good",
-                2000, "day",
-                "Borrow a board game for a day.",
-                "images/board-game.jpeg"
-            ),
-
-            // =====================================
-            // STUDENT SERVICES
-            // =====================================
-
-            createListing(
-                "demo-9", "Python Tutoring",
-                "services", "tutoring", "",
-                15000, "hour",
-                "One-to-one Python tutoring for beginners.",
-                "images/python-tutoring.jpeg",
-                "Python Programming", "38403",
-                "Programming", "2026-11-14"
-            ),
-
-            createListing(
-                "demo-10", "English-Korean Language Exchange",
-                "services", "language", "",
-                0, "",
-                "Free language exchange between Ewha students.",
-                "images/language-exchange.jpeg",
-                "", "", "Languages", "2026-11-11"
-            ),
-
-            createListing(
-                "demo-11", "Java Programming Tutoring",
-                "services", "tutoring", "",
-                15000, "hour",
-                "Java tutoring for programming assignments.",
-                "images/java-tutoring.jpg",
-                "Java Programming", "",
-                "Computer Science"
-            ),
-
-            createListing(
-                "demo-12", "Resume and Portfolio Review",
-                "services", "career", "",
-                5000, "session",
-                "Student resume and portfolio feedback.",
-                "images/resume-portfolio.jpeg",
-                "", "", "Career Development"
-            ),
-
-            createListing(
-                "demo-13", "Korean-English Translation Help",
-                "services", "translation", "",
-                5000, "session",
-                "Translation support for Korean and English.",
-                "images/cat-services.jpg",
-                "", "", "Languages"
-            ),
-
-            createListing(
-                "demo-34", "Data Structures Study Group",
-                "services", "study-groups", "",
-                0, "",
-                "Free peer study group for Data Structures.",
-                "images/data-structure.jpeg",
-                "Data Structures", "",
-                "Computer Science"
-            ),
-
-            // =====================================
-            // STUDY MATERIALS
-            // =====================================
-
-            createListing(
-                "demo-14", "Data Structures Notes",
-                "notes", "study", "good",
-                5000, "",
-                "Organized notes for Data Structures.",
-                "images/data-structure.jpeg",
-                "Data Structures", "CSE",
-                "Computer Science", "2026-11-15"
-            ),
-
-            createListing(
-                "demo-15", "Linear Algebra Notebook",
-                "notes", "study", "like-new",
-                4000, "",
-                "Handwritten Linear Algebra notebook.",
-                "images/linear-algebra.jpg",
-                "Linear Algebra", "",
-                "Mathematics", "2026-11-12"
-            ),
-
-            createListing(
-                "demo-16", "Computer Architecture Notes",
-                "notes", "study", "good",
-                5000, "",
-                "Computer Architecture study notes.",
-                "images/comp-architecture.jpeg",
-                "Computer Architecture", "",
-                "Computer Science", "2026-11-16"
-            ),
-
-            createListing(
-                "demo-17", "Python Programming Textbook",
-                "notes", "books", "good",
-                7000, "",
-                "Python Programming textbook for beginners.",
-                "images/revision-guide.jpeg",
-                "Python Programming", "38403",
-                "Programming"
-            ),
-
-            createListing(
-                "demo-35", "Student-Created Practice Questions",
-                "notes", "past-papers", "good",
-                0, "",
-                "Original student-written practice questions.",
-                "images/practice-question.jpeg"
-            ),
-
-            createListing(
-                "demo-36", "Linear Algebra Revision Guide",
-                "notes", "study-guides", "good",
-                3500, "",
-                "Student-written revision guide.",
-                "images/linear.jpeg",
-                "Linear Algebra", "", "Mathematics"
-            ),
-
-            createListing(
-                "demo-37", "Breadboard and Jumper Wires",
-                "notes", "lab-supplies", "good",
-                6000, "",
-                "Reusable lab and engineering supplies.",
-                "images/breadboard.jpeg",
-                "", "", "Engineering"
-            )
-
-        ];
-
-        // =========================================
-        // GET HTML ELEMENTS
-        // =========================================
-
-        const searchForm =
-            document.getElementById("searchForm");
-
-        const searchInput =
-            document.getElementById("searchInput");
-
-        const listingType =
-            document.getElementById("listingType");
-
-        const categoryFilter =
-            document.getElementById("categoryFilter");
-
-        const conditionFilter =
-            document.getElementById("conditionFilter");
-
-        const minPrice =
-            document.getElementById("minPrice");
-
-        const maxPrice =
-            document.getElementById("maxPrice");
-
-        const courseSearch =
-            document.getElementById("courseSearch");
-
-        const paymentFilter =
-            document.getElementById("paymentFilter");
-
-        const sortFilter =
-            document.getElementById("sortFilter");
-
-        const applyFilters =
-            document.getElementById("applyFilters");
-
-        const resetFilters =
-            document.getElementById("resetFilters");
-
-        const searchResults =
-            document.getElementById("searchResults");
-
-        const resultCount =
-            document.getElementById("resultCount");
-
-        const emptyState =
-            document.getElementById("emptyState");
-
-        const filterError =
-            document.getElementById("filterError");
-
-        const conditionGroup =
-            document.getElementById("conditionGroup");
-
-        const paymentGroup =
-            document.getElementById("paymentGroup");
-
-        const moreFilters =
-            document.querySelector(".more-filters");
-
-        const originalCategoryOptions =
-            categoryFilter.innerHTML;
-
-        // =========================================
-        // CATEGORY LABELS
-        // =========================================
-
-        function formatCategory(category) {
-
-            const labels = {
-                fashion: "Clothes",
-                shoes: "Shoes",
-                accessories: "Bags & Accessories",
-                beauty: "Beauty & Makeup",
-                electronics: "Electronics",
-                furniture: "Home & Living",
-                books: "Books & Textbooks",
-                hobbies: "Toys & Hobbies",
-                sports: "Sports & Fitness",
-                stationery: "Stationery",
-                "free-items": "Free Items",
-                other: "Other",
-                calculators: "Calculators",
-                cameras: "Cameras & Electronics",
-                "event-equipment": "Event Equipment",
-                tutoring: "Tutoring",
-                language: "Language Exchange",
-                translation: "Translation",
-                career: "Career & Portfolio Help",
-                "study-groups": "Study Groups",
-                study: "Lecture Notes",
-                "past-papers": "Practice Questions / Jokbo",
-                "study-guides": "Study Guides",
-                "lab-supplies": "Lab & Engineering Supplies"
-            };
-
-            return labels[category] || category;
-        }
-
-        // =========================================
-        // DYNAMIC CATEGORY FILTERS
-        // =========================================
-
-        const categoriesByType = {
-
-            buy: [
-                "fashion",
-                "shoes",
-                "accessories",
-                "beauty",
-                "electronics",
-                "furniture",
-                "books",
-                "hobbies",
-                "sports",
-                "stationery",
-                "free-items",
-                "other"
-            ],
-
-            rent: [
-                "calculators",
-                "cameras",
-                "books",
-                "event-equipment",
-                "other"
-            ],
-
-            services: [
-                "tutoring",
-                "language",
-                "translation",
-                "career",
-                "study-groups"
-            ],
-
-            notes: [
-                "study",
-                "books",
-                "past-papers",
-                "study-guides",
-                "lab-supplies"
-            ]
-
-        };
-
-        function updateCategoryOptions() {
-
-            const selectedType = listingType.value;
-            const previousCategory = categoryFilter.value;
-
-            if (selectedType === "all") {
-
-                categoryFilter.innerHTML =
-                    originalCategoryOptions;
-
-            } else {
-
-                categoryFilter.innerHTML =
-                    '<option value="all">All Categories</option>';
-
-                const categories =
-                    categoriesByType[selectedType] || [];
-
-                categories.forEach(category => {
-
-                    const option =
-                        document.createElement("option");
-
-                    option.value = category;
-
-                    option.textContent =
-                        formatCategory(category);
-
-                    categoryFilter.appendChild(option);
-
-                });
-
-            }
-
-            const categoryExists =
-                Array.from(categoryFilter.options)
-                    .some(option =>
-                        option.value === previousCategory
-                    );
-
-            categoryFilter.value =
-                categoryExists ? previousCategory : "all";
-
-        }
-
-        // =========================================
-        // DISPLAY RELEVANT FILTERS
-        // =========================================
-
-        function updateFilterVisibility() {
-
-            const selectedType = listingType.value;
-
-            const showCondition =
-                selectedType === "all" ||
-                selectedType === "buy" ||
-                selectedType === "rent" ||
-                selectedType === "notes";
-
-            const showPayment =
-                selectedType === "all" ||
-                selectedType === "services";
-
-            conditionGroup.classList.toggle(
-                "hidden", !showCondition
-            );
-
-            paymentGroup.classList.toggle(
-                "hidden", !showPayment
-            );
-
-            // Reset filters that are not relevant.
-
-            if (!showCondition) {
-                conditionFilter.value = "all";
-            }
-
-            if (!showPayment) {
-                paymentFilter.value = "all";
-            }
-
-        }
-
-        // =========================================
-        // FORMAT PRICE
-        // =========================================
-
-        function formatPrice(item) {
-
-            if (item.price === 0) {
-                return "Free";
-            }
-
-            const priceText =
-                "₩" + item.price.toLocaleString("ko-KR");
-
-            if (item.priceUnit) {
-                return priceText + " / " + item.priceUnit;
-            }
-
-            return priceText;
-        }
-
-        // =========================================
-        // RENDER LISTINGS
-        // =========================================
-
-        function renderListings(items) {
-
-            searchResults.innerHTML = "";
-
-            resultCount.textContent =
-                items.length +
-                (items.length === 1
-                    ? " listing found"
-                    : " listings found");
-
-            if (items.length === 0) {
-
-                emptyState.classList.remove("hidden");
-
-                return;
-            }
-
-            emptyState.classList.add("hidden");
-
-            items.forEach(item => {
-
-                // Create clickable product card.
-
-                const card = document.createElement("a");
-
-                card.className =
-                    "item-card result-card-link";
-
-                card.href =
-                    "item-detail.html?id=" +
-                    encodeURIComponent(item.id);
-
-                // IMAGE
-
-                const imageWrap =
-                    document.createElement("div");
-
-                imageWrap.className = "item-img-wrap";
-
-                const image =
-                    document.createElement("img");
-
-                image.src = item.image;
-                image.alt = item.title;
-                image.loading = "lazy";
-
-                image.onerror = function () {
-
-                    this.onerror = null;
-                    this.src = "images/cat-books.jpg";
-
-                };
-
-                // TYPE BADGE
-
-                const badge =
-                    document.createElement("span");
-
-                badge.className = "item-badge";
-
-                const badgeLabels = {
-                    buy: "BUY",
-                    rent: "RENT",
-                    services: "SERVICE",
-                    notes: "STUDY MATERIALS"
-                };
-
-                const badgeClasses = {
-                    buy: "badge-buy",
-                    rent: "badge-rent",
-                    services: "badge-service",
-                    notes: "badge-notes"
-                };
-
-                badge.textContent =
-                    badgeLabels[item.type];
-
-                badge.classList.add(
-                    badgeClasses[item.type]
-                );
-
-                imageWrap.appendChild(image);
-                imageWrap.appendChild(badge);
-
-                // ITEM INFORMATION
-
-                const info =
-                    document.createElement("div");
-
-                info.className = "item-info";
-
-                const price =
-                    document.createElement("div");
-
-                price.className = "item-price";
-                price.textContent = formatPrice(item);
-
-                const title =
-                    document.createElement("h3");
-
-                title.className = "item-title";
-                title.textContent = item.title;
-
-                const description =
-                    document.createElement("p");
-
-                description.className =
-                    "item-description";
-
-                description.textContent =
-                    item.description;
-
-                info.appendChild(price);
-                info.appendChild(title);
-                info.appendChild(description);
-
-                // COURSE INFORMATION
-
-                if (item.courseName) {
-
-                    const course =
-                        document.createElement("div");
-
-                    course.className = "item-course";
-
-                    course.textContent =
-                        item.courseName +
-                        (item.courseCode
-                            ? " (" + item.courseCode + ")"
-                            : "");
-
-                    info.appendChild(course);
-
-                }
-
-                // CATEGORY AND CONDITION
-
-                const meta =
-                    document.createElement("div");
-
-                meta.className = "item-meta";
-
-                meta.textContent =
-                    formatCategory(item.category) +
-                    (item.condition
-                        ? " • " +
-                          item.condition.replace("-", " ")
-                        : "");
-
-                info.appendChild(meta);
-
-                card.appendChild(imageWrap);
-                card.appendChild(info);
-
-                searchResults.appendChild(card);
-
-            });
-
-        }
-
-        // =========================================
-        // FILTER LISTINGS
-        // =========================================
-
-        function filterListings() {
-
-            const keyword =
-                searchInput.value.trim().toLowerCase();
-
-            const selectedType =
-                listingType.value;
-
-            const selectedCategory =
-                categoryFilter.value;
-
-            const selectedCondition =
-                conditionFilter.value;
-
-            const minimum =
-                minPrice.value === ""
-                    ? null
-                    : Number(minPrice.value);
-
-            const maximum =
-                maxPrice.value === ""
-                    ? null
-                    : Number(maxPrice.value);
-
-            const courseKeyword =
-                courseSearch.value.trim().toLowerCase();
-
-            const selectedPayment =
-                paymentFilter.value;
-
-            const selectedSort =
-                sortFilter.value;
-
-            // Validate price input.
-
-            if (
-                !minPrice.validity.valid ||
-                !maxPrice.validity.valid ||
-                (minimum !== null && minimum < 0) ||
-                (maximum !== null && maximum < 0)
-            ) {
-
-                filterError.textContent =
-                    "Please enter a valid non-negative price.";
-
-                filterError.classList.remove("hidden");
-
-                return false;
-
-            }
-
-            if (
-                minimum !== null &&
-                maximum !== null &&
-                minimum > maximum
-            ) {
-
-                filterError.textContent =
-                    "Minimum price cannot be greater than maximum price.";
-
-                filterError.classList.remove("hidden");
-
-                return false;
-
-            }
-
-            filterError.classList.add("hidden");
-
-            let filtered = listings.filter(item => {
-
-                // Search title, description, course,
-                // course code, subject and category.
-
-                const searchableText = [
-                    item.title,
-                    item.description,
-                    item.courseName,
-                    item.courseCode,
-                    item.subject,
-                    item.category,
-                    formatCategory(item.category)
-                ].join(" ").toLowerCase();
-
-                const matchesKeyword =
-                    keyword === "" ||
-                    searchableText.includes(keyword);
-
-                // Listing type
-
-                const matchesType =
-                    selectedType === "all" ||
-                    item.type === selectedType;
-
-                // Category
-
-                const matchesCategory =
-                    selectedCategory === "all" ||
-                    item.category === selectedCategory;
-
-                // Condition
-
-                const matchesCondition =
-                    selectedCondition === "all" ||
-                    item.condition === selectedCondition;
-
-                // Minimum price
-
-                const matchesMinimum =
-                    minimum === null ||
-                    item.price >= minimum;
-
-                // Maximum price
-
-                const matchesMaximum =
-                    maximum === null ||
-                    item.price <= maximum;
-
-                // Course-specific search
-
-                const courseText = [
-                    item.courseName,
-                    item.courseCode,
-                    item.subject
-                ].join(" ").toLowerCase();
-
-                const matchesCourse =
-                    courseKeyword === "" ||
-                    courseText.includes(courseKeyword);
-
-                // Free or paid service filter
-
-                let matchesPayment = true;
-
-                if (selectedPayment !== "all") {
-
-                    if (item.type !== "services") {
-
-                        matchesPayment = false;
-
-                    } else if (
-                        selectedPayment === "free"
-                    ) {
-
-                        matchesPayment =
-                            item.price === 0;
-
-                    } else if (
-                        selectedPayment === "paid"
-                    ) {
-
-                        matchesPayment =
-                            item.price > 0;
-
-                    }
-
-                }
-
-                return (
-                    matchesKeyword &&
-                    matchesType &&
-                    matchesCategory &&
-                    matchesCondition &&
-                    matchesMinimum &&
-                    matchesMaximum &&
-                    matchesCourse &&
-                    matchesPayment
-                );
-
-            });
-
-            // =====================================
-            // SORT RESULTS
-            // =====================================
-
-            if (selectedSort === "newest") {
-
-                filtered.sort((a, b) =>
-                    b.date.localeCompare(a.date)
-                );
-
-            }
-
-            if (selectedSort === "price-low") {
-
-                filtered.sort((a, b) =>
-                    a.price - b.price
-                );
-
-            }
-
-            if (selectedSort === "price-high") {
-
-                filtered.sort((a, b) =>
-                    b.price - a.price
-                );
-
-            }
-
-            if (selectedSort === "name") {
-
-                filtered.sort((a, b) =>
-                    a.title.localeCompare(b.title)
-                );
-
-            }
-
-            renderListings(filtered);
-
-            return true;
-
-        }
-
-        // =========================================
-        // URL PARAMETERS
-        // Supports navigation from categories.html
-        // =========================================
-
-        const params =
-            new URLSearchParams(window.location.search);
-
-        const urlQuery = params.get("q");
-        const urlType = params.get("type");
-        const urlCategory = params.get("category");
-
-        if (urlQuery) {
-
-            searchInput.value = urlQuery;
-
-        }
-
-        if (
-            urlType &&
-            Array.from(listingType.options)
-                .some(option => option.value === urlType)
-        ) {
-
-            listingType.value = urlType;
-
-        }
-
-        updateCategoryOptions();
-        updateFilterVisibility();
-
-        if (
-            urlCategory &&
-            Array.from(categoryFilter.options)
-                .some(option => option.value === urlCategory)
-        ) {
-
-            categoryFilter.value = urlCategory;
-
-        }
-
-        // =========================================
-        // UPDATE SEARCH URL
-        // =========================================
-
-        function updateSearchURL() {
-
-            const url =
-                new URL(window.location.href);
-
-            const keyword =
-                searchInput.value.trim();
-
-            if (keyword) {
-
-                url.searchParams.set("q", keyword);
-
-            } else {
-
-                url.searchParams.delete("q");
-
-            }
-
-            if (listingType.value !== "all") {
-
-                url.searchParams.set(
-                    "type",
-                    listingType.value
-                );
-
-            } else {
-
-                url.searchParams.delete("type");
-
-            }
-
-            if (categoryFilter.value !== "all") {
-
-                url.searchParams.set(
-                    "category",
-                    categoryFilter.value
-                );
-
-            } else {
-
-                url.searchParams.delete("category");
-
-            }
-
-            window.history.replaceState({}, "", url);
-
-        }
-
-        // =========================================
-        // APPLY SEARCH AND FILTERS
-        // =========================================
-
-        function applySearch() {
-
-            if (filterListings()) {
-
-                updateSearchURL();
-
-            }
-
-        }
-
-        // Search form
-
-        searchForm.addEventListener(
-            "submit",
-            function (event) {
-
-                event.preventDefault();
-
-                applySearch();
-
-            }
-        );
-
-        // Listing type change
-
-        listingType.addEventListener(
-            "change",
-            function () {
-
-                updateCategoryOptions();
-                updateFilterVisibility();
-
-            }
-        );
-
-        // Apply filters button
-
-        applyFilters.addEventListener(
-            "click",
-            applySearch
-        );
-
-        // Allow Enter key for filter inputs.
-
-        [
-            minPrice,
-            maxPrice,
-            courseSearch
-        ].forEach(input => {
-
-            input.addEventListener(
-                "keydown",
-                function (event) {
-
-                    if (event.key === "Enter") {
-
-                        event.preventDefault();
-
-                        applySearch();
-
-                    }
-
-                }
-            );
-
-        });
-
-        // =========================================
-        // RESET FILTERS
-        // =========================================
-
-        resetFilters.addEventListener(
-            "click",
-            function () {
-
-                searchInput.value = "";
-                listingType.value = "all";
-
-                updateCategoryOptions();
-
-                categoryFilter.value = "all";
-                conditionFilter.value = "all";
-
-                minPrice.value = "";
-                maxPrice.value = "";
-                courseSearch.value = "";
-
-                paymentFilter.value = "all";
-                sortFilter.value = "newest";
-
-                moreFilters.open = false;
-
-                filterError.classList.add("hidden");
-
-                updateFilterVisibility();
-
-                applySearch();
-
-            }
-        );
-
-        // =========================================
-        // INITIAL DISPLAY
-        // =========================================
-
-        filterListings();
-
-    </script>
-
 </body>
-</html>
 
+</html>
