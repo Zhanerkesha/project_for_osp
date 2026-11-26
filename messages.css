@@ -3,6 +3,17 @@
 /* Every class starts with .chat- so nothing overrides style.css.
     Colors come from the shared variables in style.css*/
 
+/*---------Top-bar without search---------*/
+.messages-topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: absolute;
+    top: 20px;
+    right: 100px;
+    margin: 0;
+}
+
 /*--------Tabs-------------*/
 .chat-tabs {
     display: flex;
@@ -12,11 +23,13 @@
 
 .chat-tab {
     padding: 8px 26px;
-    border: 1px solid var(--border);  /* thin light-grey line (color from style.css) */
+    border: 1px solid var(--border);
+    /* thin light-grey line (color from style.css) */
     border-radius: 10px;
-    background-color: var(--bg-sidebar); 
+    background-color: var(--bg-sidebar);
     color: var(--text-main);
-    font-weight: 600; /*bold*/
+    font-weight: 600;
+    /*bold*/
     cursor: pointer;
 }
 
@@ -29,20 +42,23 @@
 /* -------- Two colomns --------- */
 .chat-layout {
     display: grid;
-    grid-template-columns: 1fr 2fr; /*list 1/3 and chat 2/3*/
+    grid-template-columns: 1fr 2fr;
+    /*list 1/3 and chat 2/3*/
     height: 600px;
     background-color: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: 16px;
     box-shadow: var(--shadow-sm);
-    overflow: hidden; /*keeps children inside the rounded corners */
+    overflow: hidden;
+    /*keeps children inside the rounded corners */
 }
 
 .chat-sidebar {
     display: flex;
     flex-direction: column;
     border-right: 1px solid var(--border);
-    min-height: 0; /*needed so the list can scroll inside */
+    min-height: 0;
+    /*needed so the list can scroll inside */
 }
 
 .chat-window {
@@ -72,7 +88,8 @@
 
 .chat-list {
     list-style: none;
-    overflow-y: auto; /*only the list scrolls*/
+    overflow-y: auto;
+    /*only the list scrolls*/
     flex: 1;
 }
 
@@ -80,15 +97,19 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    width: 100%; /* takes all the space in the div possible */
-    padding: 12px 14px; /*air between border and text */
-    border: none; /* no border */
-    border-bottom: 1px solid var(--border); 
+    width: 100%;
+    /* takes all the space in the div possible */
+    padding: 12px 14px;
+    /*air between border and text */
+    border: none;
+    /* no border */
+    border-bottom: 1px solid var(--border);
     border-left: 3px solid transparent;
-    background: none; /*no background */
+    background: none;
+    /*no background */
     text-align: left;
     cursor: pointer;
-    font: inherit; 
+    font: inherit;
 }
 
 .chat-list-item:hover {
@@ -107,7 +128,8 @@
     justify-content: center;
     width: 44px;
     height: 44px;
-    border-radius: 50%; /* circle */
+    border-radius: 50%;
+    /* circle */
     background-color: var(--ewha-green);
     color: #fff;
     font-weight: 700;
@@ -115,7 +137,8 @@
 
 .chat-list-body {
     flex: 1;
-    min-width: 0; /* long text is cut with ... */
+    min-width: 0;
+    /* long text is cut with ... */
 }
 
 .chat-list-top {
@@ -124,7 +147,8 @@
     gap: 8px;
 }
 
-.chat-list-name { /* username of the chatting person */
+.chat-list-name {
+    /* username of the chatting person */
     font-weight: 700;
     color: var(--text-main);
 }
@@ -135,7 +159,7 @@
     color: var(--text-muted);
 }
 
-.chat-list-listing, 
+.chat-list-listing,
 .chat-list-preview {
     font-size: 0.8rem;
     color: var(--text-muted);
@@ -174,7 +198,8 @@
 .chat-active {
     flex: 1;
     display: flex;
-    flex-direction: column;              /* header / messages / input stacked */
+    flex-direction: column;
+    /* header / messages / input stacked */
     min-height: 0;
 }
 
@@ -219,7 +244,8 @@
     width: 48px;
     height: 48px;
     border-radius: 8px;
-    object-fit: cover;                   /* fills the square without stretching */
+    object-fit: cover;
+    /* fills the square without stretching */
 }
 
 .chat-item-title {
@@ -235,7 +261,8 @@
 }
 
 .chat-messages {
-    flex: 1;                             /* takes all the space between header and input */
+    flex: 1;
+    /* takes all the space between header and input */
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -286,21 +313,26 @@
 }
 
 .chat-bubble.is-theirs {
-    align-self: flex-start;              /* left */
+    align-self: flex-start;
+    /* left */
     background-color: #e9ecef;
-    border-bottom-left-radius: 4px;      /* small "tail" corner */
+    border-bottom-left-radius: 4px;
+    /* small "tail" corner */
 }
 
 .chat-bubble.is-mine {
-    align-self: flex-end;                /* right */
+    align-self: flex-end;
+    /* right */
     background-color: var(--ewha-green);
     color: #fff;
     border-bottom-right-radius: 4px;
 }
 
 .chat-bubble-text {
-    white-space: pre-wrap;               /* keeps line breaks */
-    word-break: break-word;              /* very long words don't overflow */
+    white-space: pre-wrap;
+    /* keeps line breaks */
+    word-break: break-word;
+    /* very long words don't overflow */
 }
 
 .chat-bubble-time {
