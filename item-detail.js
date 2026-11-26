@@ -1,11 +1,11 @@
+
 // Item Detail
 // Owner: Sara
+
 import './listings-data.js';
 
 (function () {
     'use strict';
-
-    const store = window.EwhaListings.store;
 
     const params = new URLSearchParams(window.location.search);
     const listingId = params.get('id');
@@ -14,6 +14,28 @@ import './listings-data.js';
     const error = document.getElementById('itemError');
     const details = document.getElementById('itemDetails');
 
+    // Show an error message
+    function showError(message) {
+        if (loading) loading.hidden = true;
+        if (details) details.hidden = true;
+
+        if (error) {
+            error.textContent = message;
+            error.hidden = false;
+        }
+
+        console.error(message);
+    }
+
+    // Make category codes readable
+    function formatText(value) {
+        if (!value) return 'Not specified';
+
+        return String(value)
+            .replace(/_/g, ' ')
+            .replace(/\b\w/g, letter => letter.toUpperCase());
+    }
+
     // Format the price
     function formatPrice(listing) {
         if (listing.isFree || listing.priceUnit === 'free') {
@@ -21,115 +43,84 @@ import './listings-data.js';
         }
 
         const price = Number(listing.price || 0).toLocaleString('ko-KR');
-        const unit = {
+
+        const units = {
             per_day: '/ day',
             per_week: '/ week',
             per_hour: '/ hour',
             once: ''
-        }[listing.priceUnit] || '';
+        };
 
-        return '₩' + price + unit;
-    }
-
-    // Make category codes readable
-    function formatText(value) {
-        if (!value) return 'Not specified';
-
-        return value
-            .replace(/_/g, ' ')
-            .replace(/\b\w/g, function (letter) {
-                return letter.toUpperCase();
-            });
+        return '₩' + price + (units[listing.priceUnit] || '');
     }
 
     // Display listing information
-
     function renderListing(listing) {
+        const title = listing.title || 'Untitled listing';
 
-        // Title
-        document.getElementById('itemTitle').textContent =
-            listing.title || 'Untitled listing';
+        // Listing title
+        document.getElementById('itemTitle').textContent = title;
 
-        // Buy / Rent / Service
-        document.getElementById('itemType').textContent =
-            formatText(listing.listingType);
+        // Listing type badge
+        const typeBadge = document.getElementById('itemTypeBadge');
+        if (typeBadge) {
+            typeBadge.textContent = '◇ ' + formatText(listing.listingType);
+        }
+
+        // Listing type in metadata
+        const typeElement = document.getElementById('itemType');
+        if (typeElement) {
+            typeElement.textContent = formatText(listing.listingType);
+        }
 
         // Price
         document.getElementById('itemPrice').textContent =
             formatPrice(listing);
 
-        // Category
-        document.getElementById('itemCategory').textContent =
-            formatText(listing.category);
-
         // Condition
         document.getElementById('itemCondition').textContent =
-            listing.condition || 'Not specified';
+            '✦ ' + (listing.condition || 'Not specified');
 
-        // Description
-        document.getElementById('itemFullDescription').textContent =
-            listing.description || 'No description provided.';
-
-        // Seller
-        document.getElementById('itemSeller').textContent =
-            listing.ownerNickname || 'Unknown seller';
-
-        // Location
-        document.getElementById('itemLocation').textContent =
-            listing.location || 'Not specified';
-
-        // Availability
-        const availabilityElement =
-            document.getElementById('itemAvailability');
-
-        if (availabilityElement) {
-            availabilityElement.textContent =
-                listing.availability || 'Not specified';
-        }
+        // Category
+        document.getElementById('itemCategory').textContent =
+            '▤ ' + formatText(listing.category);
 
         // Course information
-        const courseRow = document.getElementById('courseRow');
         const courseElement = document.getElementById('itemCourse');
 
-        if (listing.courseName || listing.courseCode || listing.subject) {
-
-            if (courseRow) courseRow.hidden = false;
-
-            courseElement.textContent = [
+        if (courseElement) {
+            const courseInfo = [
                 listing.courseName,
                 listing.courseCode,
                 listing.subject
-            ].filter(Boolean).join(' | ');
+            ].filter(Boolean).join(' / ');
 
-        } else if (courseRow) {
-            courseRow.hidden = true;
+            courseElement.textContent = courseInfo || '';
         }
 
-        // Condition visibility
-        const conditionRow = document.getElementById('conditionRow');
+        // Location
+        const locationElement = document.getElementById('itemLocation');
 
-        if (conditionRow) {
-            conditionRow.hidden =
-                !(listing.listingType === 'buy' ||
-                    listing.listingType === 'rent');
+        if (locationElement) {
+            locationElement.textContent =
+                '⌖ ' + (listing.location || 'Location not specified');
         }
 
-        // Availability visibility
-        const availabilityRow =
-            document.getElementById('availabilityRow');
+        // Description
+        const descriptionElement =
+            document.querySelector('#itemFullDescription p');
 
-        if (availabilityRow) {
-            availabilityRow.hidden =
-                listing.listingType === 'buy';
+        if (descriptionElement) {
+            descriptionElement.textContent =
+                listing.description || 'No description provided.';
         }
 
-        // Status
-        const status = listing.status || 'active';
+        // Seller
+        const sellerElement = document.getElementById('itemSeller');
 
-        const statusElement = document.getElementById('itemStatus');
-
-        if (statusElement) {
-            statusElement.textContent = formatText(status);
+        if (sellerElement) {
+            sellerElement.textContent =
+                listing.ownerNickname || 'Unknown seller';
         }
 
         // Main image
@@ -137,35 +128,30 @@ import './listings-data.js';
 
         if (image) {
             image.src = listing.imageUrl || 'images/ewha.jpg';
-            image.alt = listing.title || 'Listing image';
+            image.alt = title;
         }
 
-        // Edit listing link
-        const editButton = document.getElementById('editListingBtn');
+        // Update page title
+        document.title = title + ' - Ewha Market';
 
-        if (editButton) {
-            editButton.href =
-                'add-item.html?id=' +
-                encodeURIComponent(listing.listingId);
-        }
-
-        // Page title
-        document.title =
-            (listing.title || 'Item Details') + ' - Ewha Market';
-
-        // Display the listing
-        loading.hidden = true;
-        details.hidden = false;
+        // Show the completed listing
+        if (loading) loading.hidden = true;
+        if (error) error.hidden = true;
+        if (details) details.hidden = false;
     }
 
-
-    // Load listing from Firestore
+    // Load listing from the data store
     async function loadListing() {
-
         if (!listingId) {
-            loading.hidden = true;
-            error.hidden = false;
-            error.textContent = 'No listing ID was provided.';
+            showError('No listing ID was provided. Please open this page by selecting a listing.');
+            return;
+        }
+
+        // Check whether the listing store exists
+        const store = window.EwhaListings?.store;
+
+        if (!store || typeof store.getListing !== 'function') {
+            showError('The listing data store could not be found. Check listings-data.js.');
             return;
         }
 
@@ -173,9 +159,7 @@ import './listings-data.js';
             const listing = await store.getListing(listingId);
 
             if (!listing) {
-                loading.hidden = true;
-                error.hidden = false;
-                error.textContent = 'This listing could not be found.';
+                showError('This listing could not be found.');
                 return;
             }
 
@@ -183,10 +167,7 @@ import './listings-data.js';
 
         } catch (err) {
             console.error('Error loading listing:', err);
-
-            loading.hidden = true;
-            error.hidden = false;
-            error.textContent = 'Could not load listing. Please try again.';
+            showError('Could not load listing. Please check your database connection.');
         }
     }
 

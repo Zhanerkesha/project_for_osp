@@ -12,7 +12,7 @@ import {
     getDoc
 } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
 
-
+const t = window.EwhaI18n.t;
 const nicknameElement = document.getElementById('profileNickname');
 const emailElement = document.getElementById('profileEmail');
 const avatarElement = document.getElementById('profileAvatar');

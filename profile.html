@@ -43,15 +43,15 @@
                 <span>Ewha<br>Market</span>
             </a>
             <nav class="side-nav" aria-label="Main navigation">
-                <a href="index.html" class="side-link">🏠 Home</a>
-                <a href="categories.html" class="side-link">🗂️ Categories</a>
-                <a href="messages.html" class="side-link">💬 Chat</a>
-                <a href="profile.html" class="side-link active">👤 My Profile</a>
+                <a data-i18n="sidebar.home" href="index.html" class="side-link">🏠 Home</a>
+                <a data-i18n="sidebar.categories" href="categories.html" class="side-link">🗂️ Categories</a>
+                <a data-i18n="sidebar.chat" href="messages.html" class="side-link">💬 Chat</a>
+                <a data-i18n="sidebar.profile" href="profile.html" class="side-link active">👤 My Profile</a>
             </nav>
             <div class="sidebar-banner">
                 <div class="banner-emoji">🎓</div>
-                <p><strong>Ewha Campus Hub</strong></p>
-                <small>Verified students only<br>(@ewha.ac.kr / @ewhain.net)</small>
+                <p><strong data-i18n="sidebar.campusHub">Ewha Campus Hub</strong></p>
+                <small data-i18n="sidebar.verifiedOnly">Verified students only<br>(@ewha.ac.kr / @ewhain.net)</small>
             </div>
         </aside>
 
@@ -62,14 +62,14 @@
                 <!-- Page heading -->
                 <header class="topbar">
                     <div class="page-header">
-                        <h1>My Profile</h1>
-                        <p class="text-muted">
+                        <h1 data-i18n="profile.title">My Profile</h1>
+                        <p class="text-muted" data-i18n="profile.subtitle">
                             View your verified student badge, active listings, and saved favorites
                         </p>
                     </div>
 
                     <div class="topbar-actions">
-                        <button id="langToggle" class="lang-btn" type="button">🌐 EN ▾</button>
+                        <button id="languageToggle" class="lang-btn" type="button">🌐 EN ▾</button>
                         <a href="messages.html" class="icon-btn" title="Chat">💬</a>
                     </div>
                 </header>
@@ -96,7 +96,8 @@
                     </div>
 
                     <a href="add-item.html" class="post-listing-btn">
-                        <span>＋</span> Post New Listing
+                        <span>＋</span>
+                        <span data-i18n="profile.post">Post New Listing</span>
                     </a>
 
                 </section>
@@ -108,8 +109,8 @@
                     <a href="my-listings.html" class="profile-shortcut">
                         <div class="shortcut-icon">▤</div>
                         <div class="shortcut-text">
-                            <h3>My Listings</h3>
-                            <p>Manage your items</p>
+                            <h3 data-i18n="profile.myListings">My Listings</h3>
+                            <p data-i18n="profile.manageItems">Manage your items</p>
                         </div>
                         <span class="shortcut-arrow">›</span>
                     </a>
@@ -117,8 +118,8 @@
                     <a href="favorites.html" class="profile-shortcut">
                         <div class="shortcut-icon">♡</div>
                         <div class="shortcut-text">
-                            <h3>Favorites</h3>
-                            <p>Saved items</p>
+                            <h3 data-i18n="profile.favorites">Favorites</h3>
+                            <p data-i18n="profile.savedItems">Saved items</p>
                         </div>
                         <span class="shortcut-arrow">›</span>
                     </a>
@@ -126,8 +127,8 @@
                     <a href="orders.html" class="profile-shortcut">
                         <div class="shortcut-icon">◇</div>
                         <div class="shortcut-text">
-                            <h3>Orders</h3>
-                            <p>Your current orders</p>
+                            <h3 data-i18n="profile.orders">Orders</h3>
+                            <p data-i18n="profile.currentOrders">Your current orders</p>
                         </div>
                         <span class="shortcut-arrow">›</span>
                     </a>
@@ -135,8 +136,8 @@
                     <a href="history.html" class="profile-shortcut">
                         <div class="shortcut-icon">◷</div>
                         <div class="shortcut-text">
-                            <h3>History</h3>
-                            <p>Recently viewed</p>
+                            <h3 data-i18n="profile.history">History</h3>
+                            <p data-i18n="profile.recentlyViewed">Recently viewed</p>
                         </div>
                         <span class="shortcut-arrow">›</span>
                     </a>
@@ -148,8 +149,10 @@
                 <section class="active-listings-section">
 
                     <div class="section-heading">
-                        <h2>Active Listings</h2>
-                        <a href="my-listings.html">View All ›</a>
+                        <h2 data-i18n="profile.activeListings">Active Listings</h2>
+                        <a href="my-listings.html">
+                            <span data-i18n="profile.viewAll">View All</span> ›
+                        </a>
                     </div>
 
                     <div class="active-listings-grid">
@@ -168,7 +171,7 @@
                                 </div>
                             </div>
 
-                            <a href="my-listings.html" class="edit-listing-btn">Edit</a>
+                            <a href="my-listings.html" class="edit-listing-btn" data-i18n="profile.edit">Edit</a>
                         </article>
 
 
@@ -215,7 +218,7 @@
                 <!-- Logout -->
                 <div class="profile-footer">
                     <button id="logoutBtn" class="logout-btn" type="button">
-                        ↪ Log Out
+                        ↪ <span data-i18n="profile.logout">Log Out</span>
                     </button>
                 </div>
 
@@ -226,7 +229,12 @@
 
         </div>
     </div>
+    <script src="listings-i18n.js"></script>
     <script type="module" src="profile.js"></script>
+    <script src="lang-toggle.js"></script>
+</body>
+
+</html>
 </body>
 
 </html>
