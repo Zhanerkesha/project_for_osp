@@ -3,6 +3,7 @@
 //
 // This file only handles the page: the list, the bubbles, clicks and typing.
 // Everything about the database and login is in messages-data.js.
+// All words come from messages-i18n.js (EN / KO) through t("key").
 //
 // Two kinds of conversations are shown in ONE list:
 //   - "listing": started from a listing (Contact Seller). Depends on the Buying / Selling tab.
@@ -16,7 +17,7 @@ import {
     watchMyChats,
     findUserByEmail,
     addContact,
-    watchMyContacts, 
+    watchMyContacts,
     saveMyLookup
 } from "./messages-data.js";
 
@@ -29,6 +30,7 @@ const listEl = document.getElementById("chatList");
 const listEmpty = document.getElementById("chatListEmpty");
 const placeholder = document.getElementById("chatPlaceholder");
 const activeBox = document.getElementById("chatActive");
+const backButton = document.getElementById("chatBack");
 const userAvatar = document.getElementById("chatUserAvatar");
 const userName = document.getElementById("chatUserName");
 const userRole = document.getElementById("chatUserRole");
@@ -39,9 +41,8 @@ const itemPrice = document.getElementById("chatItemPrice");
 const messagesEl = document.getElementById("chatMessages");
 const form = document.getElementById("chatForm");
 const input = document.getElementById("chatInput");
-const backButton = document.getElementById("chatBack");
 
-// NEW: "Add by email"
+// "Add by email"
 const addToggle = document.getElementById("chatAddToggle");
 const addForm = document.getElementById("chatAddForm");
 const addEmail = document.getElementById("chatAddEmail");
@@ -60,6 +61,12 @@ let pendingOpenId = null;    // open this one as soon as it appears in the list
 let stopChats = null;        // stops the listing chats listener
 let stopContacts = null;     // stops the contacts listener
 
+// The status box and the add-form message remember their KEY (not the text),
+// so they can be re-translated when the language changes.
+let statusKey = "";
+let addMessageKey = "";
+let addMessageType = "info";
+
 // Messages typed on this page: { conversationId: [ {mine, text, time}, ... ] }
 // Only in memory -> they disappear after a refresh (sample chat).
 const typedMessages = {};
@@ -68,9 +75,21 @@ const typedMessages = {};
 const PAGE_OPENED_AT = Date.now();
 
 // ---------- 3. Helpers ----------
-function showStatus(text) {
-    statusBox.textContent = text;
-    statusBox.hidden = !text;
+// Translation: t("chat.send") -> "Send" or "보내기"
+function t(key, params) {
+    return window.EwhaI18n ? window.EwhaI18n.t(key, params) : key;
+}
+
+// Date/time format follows the language: "3:38 PM" (en-US) or "오후 3:38" (ko-KR)
+function locale() {
+    const lang = window.EwhaI18n ? window.EwhaI18n.currentLang() : "en";
+    return lang === "ko" ? "ko-KR" : "en-US";
+}
+
+function showStatus(key) {
+    statusKey = key || "";
+    statusBox.textContent = statusKey ? t(statusKey) : "";
+    statusBox.hidden = !statusKey;
 }
 
 function findConversation(id) {
@@ -78,11 +97,12 @@ function findConversation(id) {
 }
 
 // In a listing chat: the person I'm talking to (not me).
+// roleKey (not the word) -> translated when drawn.
 function otherPerson(chat) {
     if (chat.buyerId === me.uid) {
-        return { name: chat.sellerNickname, role: "Seller" };
+        return { name: chat.sellerNickname, roleKey: "chat.role.seller" };
     }
-    return { name: chat.buyerNickname, role: "Buyer" };
+    return { name: chat.buyerNickname, roleKey: "chat.role.buyer" };
 }
 
 function firstLetter(name) {
@@ -90,7 +110,7 @@ function firstLetter(name) {
 }
 
 function formatPrice(chat) {
-    if (chat.listingIsFree) return "Free";
+    if (chat.listingIsFree) return t("chat.free");
     return "₩" + Number(chat.listingPrice || 0).toLocaleString("ko-KR");
 }
 
@@ -107,17 +127,17 @@ function formatListTime(time) {
     const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
 
     if (date.getTime() >= startOfToday) {
-        return date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+        return date.toLocaleTimeString(locale(), { hour: "numeric", minute: "2-digit" });
     }
-    if (date.getTime() >= startOfToday - dayMs) return "Yesterday";
+    if (date.getTime() >= startOfToday - dayMs) return t("chat.yesterday");
     if (date.getTime() >= startOfToday - 6 * dayMs) {
-        return date.toLocaleDateString("en-US", { weekday: "short" });
+        return date.toLocaleDateString(locale(), { weekday: "short" });
     }
     return (date.getMonth() + 1) + "/" + date.getDate();
 }
 
 function formatBubbleTime(time) {
-    return toDate(time).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+    return toDate(time).toLocaleTimeString(locale(), { hour: "numeric", minute: "2-digit" });
 }
 
 // Creates an element with a class and (optional) text.
@@ -137,7 +157,7 @@ function fromListingChat(chat) {
         type: "listing",
         name: person.name,
         subtitle: chat.listingTitle + " · " + formatPrice(chat),
-        headerInfo: person.role,
+        headerInfo: t(person.roleKey),
         time: chat.lastMessageAt,
         listing: {
             listingId: chat.listingId,
@@ -160,7 +180,7 @@ function fromContact(contact) {
     };
 }
 
-// Called whenever listingChats or contacts change.
+// Called whenever listingChats or contacts change (and when the language changes).
 function rebuildConversations() {
     conversations = listingChats.map(fromListingChat)
         .concat(contacts.map(fromContact))
@@ -247,7 +267,7 @@ function startWatchingChats() {
         rebuildConversations();
     }, (err) => {
         console.error(err);
-        showStatus("Could not load conversations. Open the console (F12) for details.");
+        showStatus("chat.status.loadChats");
     });
 }
 
@@ -258,11 +278,11 @@ function startWatchingContacts() {
         rebuildConversations();
     }, (err) => {
         console.error(err);
-        showStatus("Could not load the people you added. Open the console (F12) for details.");
+        showStatus("chat.status.loadContacts");
     });
 }
 
-// ---------- 8. Tabs + search ----------
+// ---------- 8. Tabs + search + back button ----------
 tabs.forEach((tab) => {
     tab.addEventListener("click", () => {
         if (tab.dataset.role === currentRole) return;
@@ -278,6 +298,7 @@ tabs.forEach((tab) => {
 });
 
 searchInput.addEventListener("input", renderChatList);
+
 // Phone: "←" goes back to the conversation list
 backButton.addEventListener("click", closeChat);
 
@@ -328,7 +349,7 @@ function renderMessages() {
     if (!conversation) return;
 
     messagesEl.replaceChildren();
-    messagesEl.appendChild(el("p", "chat-sample-note", "Sample chat · messages are not saved"));
+    messagesEl.appendChild(el("p", "chat-sample-note", t("chat.sampleNote")));
 
     allMessages(conversation).forEach((msg) => {
         const bubble = el("div", "chat-bubble " + (msg.mine ? "is-mine" : "is-theirs"));
@@ -358,10 +379,12 @@ form.addEventListener("submit", (event) => {
 });
 
 // ---------- 12. Add a person by email ----------
-function showAddMessage(text, type) {
-    addMessage.textContent = text;
-    addMessage.className = "chat-add-message is-" + type;
-    addMessage.hidden = !text;
+function showAddMessage(key, type) {
+    addMessageKey = key || "";
+    addMessageType = type || "info";
+    addMessage.textContent = addMessageKey ? t(addMessageKey) : "";
+    addMessage.className = "chat-add-message is-" + addMessageType;
+    addMessage.hidden = !addMessageKey;
 }
 
 function setAddFormOpen(open) {
@@ -384,17 +407,17 @@ addForm.addEventListener("submit", async (event) => {
     const email = addEmail.value.trim().toLowerCase();
     if (!email) return;
     if (email === me.email) {
-        showAddMessage("That's your own email 🙂", "error");
+        showAddMessage("chat.add.self", "error");
         return;
     }
 
     addSubmit.disabled = true;
-    showAddMessage("Searching...", "info");
+    showAddMessage("chat.add.searching", "info");
 
     try {
         const person = await findUserByEmail(email);
         if (!person) {
-            showAddMessage("No user found. They may need to open the Chat page once first.", "error");
+            showAddMessage("chat.add.notFound", "error");
             return;
         }
 
@@ -409,11 +432,7 @@ addForm.addEventListener("submit", async (event) => {
         setAddFormOpen(false);
     } catch (err) {
         console.error(err);
-        if (err.code === "permission-denied") {
-            showAddMessage("Searching users is not allowed yet (Firestore rules).", "error");
-        } else {
-            showAddMessage("Something went wrong. Please try again.", "error");
-        }
+        showAddMessage(err.code === "permission-denied" ? "chat.add.denied" : "chat.add.error", "error");
     } finally {
         addSubmit.disabled = false;
     }
@@ -430,11 +449,11 @@ async function handleContactSeller() {
     try {
         const listing = await getListing(listingId);
         if (!listing) {
-            showStatus("This listing doesn't exist anymore.");
+            showStatus("chat.status.noListing");
             return;
         }
         if (listing.ownerId === me.uid) {
-            showStatus("This is your own listing. Check the Selling tab for buyers' messages.");
+            showStatus("chat.status.ownListing");
             return;
         }
 
@@ -445,11 +464,23 @@ async function handleContactSeller() {
         }
     } catch (err) {
         console.error(err);
-        showStatus("Could not start the chat. Please try again.");
+        showStatus("chat.status.startError");
     }
 }
 
-// ---------- 14. Start: wait for the login ----------
+// ---------- 14. Language changed (🌐 button) -> redraw everything made in JS ----------
+// Static HTML (data-i18n) is translated by listings-i18n.js by itself.
+document.addEventListener("ewha:langchange", () => {
+    document.title = t("chat.pageTitle");
+    showStatus(statusKey);                         // same message, new language
+    showAddMessage(addMessageKey, addMessageType);
+    if (me) {
+        rebuildConversations();                    // list: roles, "Free", times, previews
+        renderMessages();                          // bubbles: sample text, times
+    }
+});
+
+// ---------- 15. Start: wait for the login ----------
 onUserChanged((user) => {
     if (!user) {
         if (stopChats) stopChats();
@@ -458,7 +489,7 @@ onUserChanged((user) => {
         stopContacts = null;
         closeChat();
         layout.hidden = true;
-        showStatus("Please log in to see your messages.");
+        showStatus("chat.status.login");
         return;
     }
 
