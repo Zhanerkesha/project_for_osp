@@ -374,3 +374,126 @@
 .chat-status[hidden] {
     display: none;
 }
+
+/* ---------- Add a person by email ---------- */
+.chat-sidebar-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 12px;
+}
+
+.chat-sidebar-top .chat-search {
+    flex: 1;
+    margin: 0;                           /* the wrapper has the margin now */
+}
+
+.chat-add-toggle {
+    flex-shrink: 0;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 999px;
+    background-color: var(--ewha-green);
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.chat-add-toggle:hover {
+    background-color: var(--ewha-green-hover);
+}
+
+.chat-add-form {
+    margin: 0 12px 12px;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background-color: var(--bg-page);
+}
+
+.chat-add-label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.chat-add-row {
+    display: flex;
+    gap: 6px;
+}
+
+.chat-add-row input {
+    flex: 1;
+    min-width: 0;                        /* lets the input shrink in the narrow column */
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    outline: none;
+    font-size: 0.85rem;
+}
+
+.chat-add-row input:focus {
+    border-color: var(--ewha-green);
+}
+
+.chat-add-submit {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 999px;
+    background-color: var(--ewha-green);
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.chat-add-submit:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.chat-add-cancel {
+    padding: 8px 10px;
+    border: none;
+    background: none;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.chat-add-message {
+    margin-top: 6px;
+    font-size: 0.8rem;
+}
+
+.chat-add-message.is-error {
+    color: #b91c1c;                      /* same red as listings.css */
+}
+
+.chat-add-message.is-info {
+    color: var(--text-muted);
+}
+
+/* Direct (email) chats: light avatar */
+.chat-avatar.is-direct {
+    background-color: var(--ewha-green-light);
+    color: var(--ewha-green);
+}
+
+/* Small note above the sample bubbles */
+.chat-sample-note {
+    align-self: center;
+    padding: 4px 12px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background-color: var(--card-bg);
+    color: var(--text-muted);
+    font-size: 0.75rem;
+}
+
+/* "hidden" must win over display: flex */
+.chat-add-form[hidden],
+.chat-add-message[hidden],
+.chat-item[hidden] {
+    display: none;
+}

@@ -1,17 +1,23 @@
 // Ewha Market - Messages page logic (messages.html)
 // Owner: Zhansaya
 //
-// This file only handles the page: drawing the list and bubbles, clicks, typing.
+// This file only handles the page: the list, the bubbles, clicks and typing.
 // Everything about the database and login is in messages-data.js.
+//
+// Two kinds of conversations are shown in ONE list:
+//   - "listing": started from a listing (Contact Seller). Depends on the Buying / Selling tab.
+//   - "direct":  a person I added by email. Shown in both tabs.
+// Messages are a SAMPLE: typed messages appear on the page but are not saved.
 
 import {
     onUserChanged,
     getListing,
     getOrCreateChat,
     watchMyChats,
-    watchMessages,
-    sendMessage,
-    markChatRead
+    findUserByEmail,
+    addContact,
+    watchMyContacts, 
+    saveMyLookup
 } from "./messages-data.js";
 
 // ---------- 1. Page elements ----------
@@ -34,33 +40,48 @@ const messagesEl = document.getElementById("chatMessages");
 const form = document.getElementById("chatForm");
 const input = document.getElementById("chatInput");
 
+// NEW: "Add by email"
+const addToggle = document.getElementById("chatAddToggle");
+const addForm = document.getElementById("chatAddForm");
+const addEmail = document.getElementById("chatAddEmail");
+const addSubmit = document.getElementById("chatAddSubmit");
+const addCancel = document.getElementById("chatAddCancel");
+const addMessage = document.getElementById("chatAddMessage");
+
 // ---------- 2. State ----------
-let me = null;               // { uid, nickname } of the logged-in user
+let me = null;               // { uid, nickname, email } of the logged-in user
 let currentRole = "buyer";   // "buyer" = Buying tab, "seller" = Selling tab
-let chats = [];              // chats of the current tab, newest first
-let openChatId = null;       // the chat shown on the right
-let currentMessages = [];    // messages of the open chat
-let messagesLoaded = false;  // true after the first answer for the open chat
-let pendingChatId = null;    // chat to open as soon as it appears (Contact Seller)
-let stopChats = null;        // function that stops the chat list listener
-let stopMessages = null;     // function that stops the messages listener
+let listingChats = [];       // listing chats of the current tab (from Firestore)
+let contacts = [];           // people I added by email (from Firestore)
+let conversations = [];      // both lists together, newest first (what the list shows)
+let openId = null;           // the conversation shown on the right
+let pendingOpenId = null;    // open this one as soon as it appears in the list
+let stopChats = null;        // stops the listing chats listener
+let stopContacts = null;     // stops the contacts listener
+
+// Messages typed on this page: { conversationId: [ {mine, text, time}, ... ] }
+// Only in memory -> they disappear after a refresh (sample chat).
+const typedMessages = {};
+
+// The sample bubbles use times relative to when the page was opened.
+const PAGE_OPENED_AT = Date.now();
 
 // ---------- 3. Helpers ----------
 function showStatus(text) {
     statusBox.textContent = text;
-    statusBox.hidden = !text;        // empty text -> hide the box
+    statusBox.hidden = !text;
 }
 
-function findChat(chatId) {
-    return chats.find((c) => c.chatId === chatId);
+function findConversation(id) {
+    return conversations.find((c) => c.id === id);
 }
 
-// The person I'm talking to (not me).
+// In a listing chat: the person I'm talking to (not me).
 function otherPerson(chat) {
     if (chat.buyerId === me.uid) {
-        return { uid: chat.sellerId, name: chat.sellerNickname, role: "Seller" };
+        return { name: chat.sellerNickname, role: "Seller" };
     }
-    return { uid: chat.buyerId, name: chat.buyerNickname, role: "Buyer" };
+    return { name: chat.buyerNickname, role: "Buyer" };
 }
 
 function firstLetter(name) {
@@ -69,17 +90,17 @@ function firstLetter(name) {
 
 function formatPrice(chat) {
     if (chat.listingIsFree) return "Free";
-    return "₩" + Number(chat.listingPrice || 0).toLocaleString("ko-KR");   // 350000 -> 350,000
+    return "₩" + Number(chat.listingPrice || 0).toLocaleString("ko-KR");
 }
 
-// Firestore gives a Timestamp; .toDate() turns it into a normal JS Date.
-function toDate(ts) {
-    return ts ? ts.toDate() : new Date();
+// Works for Firestore Timestamps AND normal JS Dates.
+function toDate(time) {
+    if (!time) return new Date();
+    return typeof time.toDate === "function" ? time.toDate() : time;
 }
 
-// List time: "10:24 AM" today, "Yesterday", weekday this week, otherwise "11/3".
-function formatListTime(ts) {
-    const date = toDate(ts);
+function formatListTime(time) {
+    const date = toDate(time);
     const now = new Date();
     const dayMs = 24 * 60 * 60 * 1000;
     const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
@@ -94,14 +115,12 @@ function formatListTime(ts) {
     return (date.getMonth() + 1) + "/" + date.getDate();
 }
 
-// Bubble time: always like "10:24 AM".
-function formatBubbleTime(ts) {
-    return toDate(ts).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+function formatBubbleTime(time) {
+    return toDate(time).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
 }
 
 // Creates an element with a class and (optional) text.
-// IMPORTANT: textContent, never innerHTML, for anything a user typed.
-// Otherwise someone could send "<img src=x onerror=...>" and run code in your browser.
+// textContent, never innerHTML, for anything a user typed.
 function el(tag, className, text) {
     const node = document.createElement(tag);
     if (className) node.className = className;
@@ -109,212 +128,298 @@ function el(tag, className, text) {
     return node;
 }
 
-// ---------- 4. Left side: conversation list ----------
+// ---------- 4. One shape for both kinds of conversations ----------
+function fromListingChat(chat) {
+    const person = otherPerson(chat);
+    return {
+        id: chat.chatId,
+        type: "listing",
+        name: person.name,
+        subtitle: chat.listingTitle + " · " + formatPrice(chat),
+        headerInfo: person.role,
+        time: chat.lastMessageAt,
+        listing: {
+            listingId: chat.listingId,
+            title: chat.listingTitle,
+            price: formatPrice(chat),
+            imageUrl: chat.listingImageUrl
+        }
+    };
+}
+
+function fromContact(contact) {
+    return {
+        id: "direct_" + contact.uid,
+        type: "direct",
+        name: contact.nickname,
+        subtitle: contact.email,
+        headerInfo: contact.email,
+        time: contact.addedAt,
+        listing: null
+    };
+}
+
+// Called whenever listingChats or contacts change.
+function rebuildConversations() {
+    conversations = listingChats.map(fromListingChat)
+        .concat(contacts.map(fromContact))
+        .sort((a, b) => toDate(b.time).getTime() - toDate(a.time).getTime());
+
+    renderChatList();
+
+    // Open a conversation we were waiting for (new contact / Contact Seller)
+    if (pendingOpenId && findConversation(pendingOpenId)) {
+        openChat(pendingOpenId);
+        pendingOpenId = null;
+    }
+
+    // Keep the header up to date (e.g. a nickname changed)
+    const open = findConversation(openId);
+    if (open) fillHeader(open);
+}
+
+// ---------- 5. Sample messages ----------
+// Same short conversation for everyone, with the other person's nickname.
+function sampleMessages(conversation) {
+    const minute = 60 * 1000;
+    return [
+        { mine: false, text: "Hi! 👋", time: new Date(PAGE_OPENED_AT - 30 * minute) },
+        { mine: true, text: "Hi " + conversation.name + "! How can I help you?", time: new Date(PAGE_OPENED_AT - 28 * minute) },
+        { mine: false, text: "Can we meet at ECC tomorrow?", time: new Date(PAGE_OPENED_AT - 25 * minute) },
+        { mine: true, text: "Sure, see you at 3 PM!", time: new Date(PAGE_OPENED_AT - 20 * minute) }
+    ];
+}
+
+function allMessages(conversation) {
+    return sampleMessages(conversation).concat(typedMessages[conversation.id] || []);
+}
+
+function lastMessage(conversation) {
+    const messages = allMessages(conversation);
+    return messages[messages.length - 1];
+}
+
+// ---------- 6. Left side: conversation list ----------
 function renderChatList() {
     const term = searchInput.value.trim().toLowerCase();
 
-    // search by the other person's name or the item title
-    const visible = chats.filter((chat) => {
-        const searchable = (otherPerson(chat).name + " " + chat.listingTitle).toLowerCase();
-        return searchable.includes(term);
-    });
+    const visible = conversations.filter((c) =>
+        (c.name + " " + c.subtitle).toLowerCase().includes(term)
+    );
 
-    listEl.replaceChildren();                  // remove the old items
-    listEmpty.hidden = visible.length > 0;     // "No conversations yet" only if empty
-    visible.forEach((chat) => listEl.appendChild(buildChatItem(chat)));
+    listEl.replaceChildren();
+    listEmpty.hidden = visible.length > 0;
+    visible.forEach((c) => listEl.appendChild(buildChatItem(c)));
 }
 
-// Builds one <li> - the same structure you wrote by hand in Phase 1, step 7.
-function buildChatItem(chat) {
-    const person = otherPerson(chat);
-    const unread = (chat.unread && chat.unread[me.uid]) || 0;
-
+function buildChatItem(conversation) {
     const li = el("li");
     const button = el("button", "chat-list-item");
     button.type = "button";
-    if (chat.chatId === openChatId) button.classList.add("is-active");
+    if (conversation.id === openId) button.classList.add("is-active");
 
-    const avatar = el("div", "chat-avatar", firstLetter(person.name));
+    // Direct chats get a light avatar, so they're easy to tell apart
+    const avatarClass = conversation.type === "direct" ? "chat-avatar is-direct" : "chat-avatar";
+    const avatar = el("div", avatarClass, firstLetter(conversation.name));
 
     const body = el("div", "chat-list-body");
     const top = el("div", "chat-list-top");
     top.append(
-        el("span", "chat-list-name", person.name),
-        el("span", "chat-list-time", formatListTime(chat.lastMessageAt))
+        el("span", "chat-list-name", conversation.name),
+        el("span", "chat-list-time", formatListTime(conversation.time))
     );
+    const subtitle = el("p", "chat-list-listing", conversation.subtitle);
+    const preview = el("p", "chat-list-preview", lastMessage(conversation).text);
+    body.append(top, subtitle, preview);
 
-    const item = el("p", "chat-list-listing", chat.listingTitle + " · " + formatPrice(chat));
-    const preview = el("p", "chat-list-preview", chat.lastMessage || "No messages yet");
-
-    body.append(top, item, preview);
     button.append(avatar, body);
-
-    if (unread > 0) {
-        button.appendChild(el("span", "chat-badge", String(unread)));
-    }
-
-    button.addEventListener("click", () => openChat(chat.chatId));
+    button.addEventListener("click", () => openChat(conversation.id));
     li.appendChild(button);
     return li;
 }
 
-// ---------- 5. Listen to the chat list of the current tab ----------
+// ---------- 7. Listen to Firestore ----------
 function startWatchingChats() {
-    if (stopChats) stopChats();                // stop the previous tab's listener first
-
+    if (stopChats) stopChats();
     stopChats = watchMyChats(me.uid, currentRole, (list) => {
-        chats = list;
-        renderChatList();
-
-        // Coming from "Contact Seller": open that chat once it shows up.
-        if (pendingChatId && findChat(pendingChatId)) {
-            openChat(pendingChatId);
-            pendingChatId = null;
-        }
-
-        // The open chat changed (new message, other person read it...) -> refresh the right side.
-        const open = findChat(openChatId);
-        if (open) {
-            fillHeader(open);
-            renderMessages();                  // redraw so ✓ can become ✓✓
-            if ((open.unread && open.unread[me.uid]) > 0) {
-                markChatRead(open.chatId, me.uid);   // a message arrived while I'm looking
-            }
-        }
+        listingChats = list;
+        rebuildConversations();
     }, (err) => {
         console.error(err);
-        // Usually a missing index (see Part 1, step 12d) or the security rules.
         showStatus("Could not load conversations. Open the console (F12) for details.");
     });
 }
 
-// ---------- 6. Tabs + search ----------
+function startWatchingContacts() {
+    if (stopContacts) stopContacts();
+    stopContacts = watchMyContacts(me.uid, (list) => {
+        contacts = list;
+        rebuildConversations();
+    }, (err) => {
+        console.error(err);
+        showStatus("Could not load the people you added. Open the console (F12) for details.");
+    });
+}
+
+// ---------- 8. Tabs + search ----------
 tabs.forEach((tab) => {
     tab.addEventListener("click", () => {
-        if (tab.dataset.role === currentRole) return;      // already on this tab
-        currentRole = tab.dataset.role;                    // reads data-role="buyer"/"seller"
+        if (tab.dataset.role === currentRole) return;
+        currentRole = tab.dataset.role;
         tabs.forEach((t) => t.classList.toggle("is-active", t === tab));
-        closeChat();
+
+        // A listing chat belongs to one tab -> close it. A direct chat is in both tabs -> keep it open.
+        const open = findConversation(openId);
+        if (open && open.type === "listing") closeChat();
+
         startWatchingChats();
     });
 });
 
-searchInput.addEventListener("input", renderChatList);    // redraw on every keystroke
+searchInput.addEventListener("input", renderChatList);
 
-// ---------- 7. Right side: open / close a chat ----------
-function openChat(chatId) {
-    const chat = findChat(chatId);
-    if (!chat) return;
+// ---------- 9. Right side: open / close ----------
+function openChat(id) {
+    const conversation = findConversation(id);
+    if (!conversation) return;
 
-    openChatId = chatId;
+    openId = id;
     placeholder.hidden = true;
     activeBox.hidden = false;
-    fillHeader(chat);
-    renderChatList();                          // moves the green highlight
-
-    if (stopMessages) stopMessages();          // stop listening to the previous chat
-    currentMessages = [];
-    messagesLoaded = false;
-    messagesEl.replaceChildren();
-
-    stopMessages = watchMessages(chatId, (messages) => {
-        currentMessages = messages;
-        messagesLoaded = true;
-        renderMessages();
-    }, (err) => {
-        console.error(err);
-        showStatus("Could not load messages.");
-    });
-
-    markChatRead(chatId, me.uid);
-    input.focus();                             // ready to type
+    fillHeader(conversation);
+    renderChatList();          // move the green highlight
+    renderMessages();
+    input.focus();
 }
 
 function closeChat() {
-    if (stopMessages) stopMessages();
-    stopMessages = null;
-    openChatId = null;
-    currentMessages = [];
-    messagesLoaded = false;
+    openId = null;
     activeBox.hidden = true;
     placeholder.hidden = false;
+    renderChatList();
 }
 
-function fillHeader(chat) {
-    const person = otherPerson(chat);
-    userAvatar.textContent = firstLetter(person.name);
-    userName.textContent = person.name;
-    userRole.textContent = person.role;
-    itemTitle.textContent = chat.listingTitle;
-    itemPrice.textContent = formatPrice(chat);
-    itemImg.hidden = !chat.listingImageUrl;    // no photo -> hide the <img>
-    if (chat.listingImageUrl) itemImg.src = chat.listingImageUrl;
+function fillHeader(conversation) {
+    userAvatar.textContent = firstLetter(conversation.name);
+    userAvatar.className = conversation.type === "direct" ? "chat-avatar is-direct" : "chat-avatar";
+    userName.textContent = conversation.name;
+    userRole.textContent = conversation.headerInfo;
+
+    // Item card only for listing chats
+    itemLink.hidden = !conversation.listing;
+    if (!conversation.listing) return;
+
+    itemTitle.textContent = conversation.listing.title;
+    itemPrice.textContent = conversation.listing.price;
+    itemImg.hidden = !conversation.listing.imageUrl;
+    if (conversation.listing.imageUrl) itemImg.src = conversation.listing.imageUrl;
     // TODO: ask Sara which URL item-detail.html expects. "?id=" is a guess.
-    itemLink.href = "item-detail.html?id=" + encodeURIComponent(chat.listingId);
+    itemLink.href = "item-detail.html?id=" + encodeURIComponent(conversation.listing.listingId);
 }
 
-// ---------- 8. Message bubbles ----------
+// ---------- 10. Message bubbles ----------
 function renderMessages() {
-    const chat = findChat(openChatId);
-    if (!chat || !messagesLoaded) return;
+    const conversation = findConversation(openId);
+    if (!conversation) return;
 
-    // When did the OTHER person last open this chat? (for ✓✓)
-    const otherReadAt = chat.lastReadAt ? chat.lastReadAt[otherPerson(chat).uid] : null;
     messagesEl.replaceChildren();
+    messagesEl.appendChild(el("p", "chat-sample-note", "Sample chat · messages are not saved"));
 
-    if (currentMessages.length === 0) {
-        messagesEl.appendChild(el("p", "chat-empty", "No messages yet. Say hi 👋"));
-        return;
-    }
-
-    currentMessages.forEach((msg) => {
-        const mine = msg.senderId === me.uid;
-
-        const bubble = el("div", "chat-bubble " + (mine ? "is-mine" : "is-theirs"));
-        const text = el("p", "chat-bubble-text", msg.text);
-        let timeText = formatBubbleTime(msg.createdAt);
-
-        // ✓ = sent, ✓✓ = the other person opened the chat after this message
-        if (mine) {
-            const isRead = otherReadAt && msg.createdAt &&
-                otherReadAt.toMillis() >= msg.createdAt.toMillis();
-            timeText += isRead ? " ✓✓" : " ✓";
-        }
-
-        bubble.append(text, el("span", "chat-bubble-time", timeText));
+    allMessages(conversation).forEach((msg) => {
+        const bubble = el("div", "chat-bubble " + (msg.mine ? "is-mine" : "is-theirs"));
+        bubble.append(
+            el("p", "chat-bubble-text", msg.text),
+            el("span", "chat-bubble-time", formatBubbleTime(msg.time))
+        );
         messagesEl.appendChild(bubble);
     });
 
-    messagesEl.scrollTop = messagesEl.scrollHeight;    // jump to the newest message
+    messagesEl.scrollTop = messagesEl.scrollHeight;
 }
 
-// ---------- 9. Sending ----------
-// The input is inside a <form>, so pressing Enter also fires "submit".
-form.addEventListener("submit", async (event) => {
-    event.preventDefault();                    // stop the browser from reloading the page
+// ---------- 11. Sending (sample: only on this page) ----------
+form.addEventListener("submit", (event) => {
+    event.preventDefault();
 
     const text = input.value.trim();
-    const chat = findChat(openChatId);
-    if (!text || !chat) return;                // ignore empty messages
+    if (!text || !openId) return;
 
-    input.value = "";                          // clear right away so it feels fast
+    if (!typedMessages[openId]) typedMessages[openId] = [];
+    typedMessages[openId].push({ mine: true, text: text, time: new Date() });
+
+    input.value = "";
+    renderMessages();
+    renderChatList();          // update the preview text in the list
+});
+
+// ---------- 12. Add a person by email ----------
+function showAddMessage(text, type) {
+    addMessage.textContent = text;
+    addMessage.className = "chat-add-message is-" + type;
+    addMessage.hidden = !text;
+}
+
+function setAddFormOpen(open) {
+    addForm.hidden = !open;
+    addToggle.setAttribute("aria-expanded", String(open));
+    showAddMessage("", "info");
+    if (open) {
+        addEmail.focus();
+    } else {
+        addForm.reset();
+    }
+}
+
+addToggle.addEventListener("click", () => setAddFormOpen(addForm.hidden));
+addCancel.addEventListener("click", () => setAddFormOpen(false));
+
+addForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const email = addEmail.value.trim().toLowerCase();
+    if (!email) return;
+    if (email === me.email) {
+        showAddMessage("That's your own email 🙂", "error");
+        return;
+    }
+
+    addSubmit.disabled = true;
+    showAddMessage("Searching...", "info");
+
     try {
-        await sendMessage(chat, me.uid, text);
-        // No drawing here! The listeners see the new data and redraw by themselves.
+        const person = await findUserByEmail(email);
+        if (!person) {
+            showAddMessage("No user found. They may need to open the Chat page once first.", "error");
+            return;
+        }
+
+        await addContact(me.uid, person);
+
+        // The contacts listener will add them to the list -> open the chat when they appear
+        pendingOpenId = "direct_" + person.uid;
+        if (findConversation(pendingOpenId)) {
+            openChat(pendingOpenId);
+            pendingOpenId = null;
+        }
+        setAddFormOpen(false);
     } catch (err) {
         console.error(err);
-        input.value = text;                    // give the text back so it isn't lost
-        showStatus("Message not sent. Please try again.");
+        if (err.code === "permission-denied") {
+            showAddMessage("Searching users is not allowed yet (Firestore rules).", "error");
+        } else {
+            showAddMessage("Something went wrong. Please try again.", "error");
+        }
+    } finally {
+        addSubmit.disabled = false;
     }
 });
 
-// ---------- 10. "Contact Seller" ----------
+// ---------- 13. "Contact Seller" (messages.html?listingId=...) ----------
 async function handleContactSeller() {
     const params = new URLSearchParams(window.location.search);
     const listingId = params.get("listingId");
-    if (!listingId) return;                    // normal visit, nothing to do
+    if (!listingId) return;
 
-    // Remove ?listingId from the address bar, so refreshing doesn't repeat this.
     history.replaceState(null, "", "messages.html");
 
     try {
@@ -328,13 +433,10 @@ async function handleContactSeller() {
             return;
         }
 
-        pendingChatId = await getOrCreateChat(listing, me);
-
-        // If the chat is already in the list, open it now.
-        // If not (brand-new chat), the listener in step 6 opens it when it arrives.
-        if (findChat(pendingChatId)) {
-            openChat(pendingChatId);
-            pendingChatId = null;
+        pendingOpenId = await getOrCreateChat(listing, me);
+        if (findConversation(pendingOpenId)) {
+            openChat(pendingOpenId);
+            pendingOpenId = null;
         }
     } catch (err) {
         console.error(err);
@@ -342,12 +444,13 @@ async function handleContactSeller() {
     }
 }
 
-// ---------- 11. Start: wait for the login ----------
+// ---------- 14. Start: wait for the login ----------
 onUserChanged((user) => {
     if (!user) {
-        // Logged out: stop everything and ask to log in
         if (stopChats) stopChats();
+        if (stopContacts) stopContacts();
         stopChats = null;
+        stopContacts = null;
         closeChat();
         layout.hidden = true;
         showStatus("Please log in to see your messages.");
@@ -355,9 +458,11 @@ onUserChanged((user) => {
     }
 
     me = user;
+    // Make sure others can find me by email (doesn't block the page if it fails)
+    saveMyLookup(me).catch((err) => console.warn("Could not save my email lookup:", err));
     layout.hidden = false;
     showStatus("");
-    startWatchingChats();      // Buying tab first
+    startWatchingChats();      // listing chats of the Buying tab
+    startWatchingContacts();   // people added by email
     handleContactSeller();     // if the URL has ?listingId=...
 });
-

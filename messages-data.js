@@ -2,23 +2,22 @@
 // Owner: Zhansaya
 //
 // Why this file exists:
-//   messages.js (the page) never touches the data directly. It only calls the
-//   functions exported here. 
+//   messages.js (the page) never touches the database directly. It only calls the
+//   functions exported here. If the database changes, only this file changes.
 //
-//   if the database changes, only this file changes.
+// Messages are a SAMPLE for now (shown only on the page, never saved).
+// Firestore keeps only the list of conversations:
 //
-// Data structure in Firestore:
-//
-//   chats/{chatId}                  one chat per (listing + buyer) pair
+//   chats/{chatId}                      chat started from a listing ("Contact Seller")
 //     listingId, listingTitle, listingPrice, listingIsFree, listingImageUrl
-//     buyerId, buyerNickname
-//     sellerId, sellerNickname
-//     lastMessage, lastSenderId, lastMessageAt
-//     unread:     { <uid>: number }   how many messages each person hasn't read
-//     lastReadAt: { <uid>: time }     when each person last opened the chat (for ✓✓)
+//     buyerId, buyerNickname, sellerId, sellerNickname
+//     lastMessage, lastMessageAt
 //
-//   chats/{chatId}/messages/{messageId}
-//     senderId, text, createdAt
+//   users/{myUid}/contacts/{theirUid}   person I added by email (only in MY list)
+//     nickname, email, addedAt
+//
+//   emailLookup/{email}                 public "email -> user" entry for "Add by email"
+//     uid, nickname                     (no private data; users/{uid} stays private)
 
 import { auth, db } from "./firebase-config.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
@@ -27,27 +26,22 @@ import {
     doc,
     getDoc,
     setDoc,
-    addDoc,
-    updateDoc,
     query,
     where,
     orderBy,
     onSnapshot,
-    serverTimestamp,
-    increment
+    serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 // ---------- Chat ID ----------
-// Same buyer + same listing  ->  always the same ID.
-// So pressing "Contact Seller" twice opens the old chat instead of making a duplicate.
+// Same buyer + same listing  ->  always the same ID (no duplicate chats).
 export function makeChatId(listingId, buyerId) {
     return listingId + "_" + buyerId;
 }
 
 // ---------- Current user ----------
 // callback(user) runs when the page opens AND whenever the user logs in / out.
-// user = { uid, nickname }  or  null when nobody is logged in.
-// Returns a function that stops listening.
+// user = { uid, nickname, email }  or  null when nobody is logged in.
 export function onUserChanged(callback) {
     return onAuthStateChanged(auth, (firebaseUser) => {
         if (!firebaseUser) {
@@ -56,24 +50,22 @@ export function onUserChanged(callback) {
         }
         callback({
             uid: firebaseUser.uid,
-            // TODO: ask Safiyya where the nickname is saved at sign up
-            // (displayName, or a "users" collection). For now: displayName,
-            // or the part of the email before "@".
-            nickname: firebaseUser.displayName || firebaseUser.email.split("@")[0]
+            // register.js saves the nickname as displayName
+            nickname: firebaseUser.displayName || firebaseUser.email.split("@")[0],
+            email: (firebaseUser.email || "").toLowerCase()
         });
     });
 }
 
 // ---------- Read one listing ----------
-// Used for "Contact Seller" (messages.html?listingId=...).
-// Returns the listing with its id, or null if it doesn't exist.
+// Used for "Contact Seller" (messages.html?listingId=...). Returns null if not found.
 export async function getListing(listingId) {
     const snap = await getDoc(doc(db, "listings", listingId));
     if (!snap.exists()) return null;
     return { listingId: snap.id, ...snap.data() };
 }
 
-// ---------- Get or create a chat ----------
+// ---------- Get or create a listing chat ----------
 // buyer = { uid, nickname }. Returns the chatId.
 export async function getOrCreateChat(listing, buyer) {
     const chatId = makeChatId(listing.listingId, buyer.uid);
@@ -86,85 +78,86 @@ export async function getOrCreateChat(listing, buyer) {
         listingId: listing.listingId,
         listingTitle: listing.title || "",
         listingPrice: listing.price || 0,
-        listingIsFree: !!listing.isFree,            // !! turns anything into true / false
+        listingIsFree: !!listing.isFree,
         listingImageUrl: listing.imageUrl || "",
         buyerId: buyer.uid,
         buyerNickname: buyer.nickname,
         sellerId: listing.ownerId,
         sellerNickname: listing.ownerNickname || "Seller",
         lastMessage: "",
-        lastSenderId: "",
-        lastMessageAt: serverTimestamp(),           // Google's clock, not the user's laptop
-        unread: { [buyer.uid]: 0, [listing.ownerId]: 0 },
-        lastReadAt: {}
+        lastMessageAt: serverTimestamp()
     });
     return chatId;
 }
 
-// ---------- Watch my chats (live) ----------
-// role = "buyer" (Buying tab) or "seller" (Selling tab).
-// onChange(chats) runs now AND every time one of my chats changes.
-// Returns a function that STOPS listening (call it before starting a new one).
+// ---------- Watch my listing chats (live) ----------
+// role = "buyer" (Buying tab) or "seller" (Selling tab). Returns a "stop" function.
 export function watchMyChats(uid, role, onChange, onError) {
     const field = role === "seller" ? "sellerId" : "buyerId";
-
     const q = query(
         collection(db, "chats"),
-        where(field, "==", uid),                    // only chats where I'm the buyer / seller
-        orderBy("lastMessageAt", "desc")            // newest conversation on top
+        where(field, "==", uid),
+        orderBy("lastMessageAt", "desc")
     );
 
     return onSnapshot(q, (snapshot) => {
         const chats = snapshot.docs.map((d) => ({
             chatId: d.id,
-            // "estimate": a message I just sent has no server time yet (it's on its way).
-            // Without this, the time would be null for a split second.
             ...d.data({ serverTimestamps: "estimate" })
         }));
         onChange(chats);
     }, onError);
 }
 
-export function watchMessages(chatId, onChange, onError) {
+// ---------- Put MY email in the lookup ----------
+// Called every time I open the chat page, so other people can find me by email.
+// (Register.js should also do this at sign-up - see the note for Safiyya.)
+export async function saveMyLookup(user) {
+    await setDoc(doc(db, "emailLookup", user.email), {
+        uid: user.uid,
+        nickname: user.nickname
+    });
+}
+
+// ---------- Find a user by email ----------
+// The email IS the document id, so this is one getDoc (no searching through users).
+// Returns { uid, nickname, email } or null if nobody with this email is in the lookup.
+export async function findUserByEmail(email) {
+    const cleanEmail = email.trim().toLowerCase();
+    const snap = await getDoc(doc(db, "emailLookup", cleanEmail));
+    if (!snap.exists()) return null;
+
+    const data = snap.data();
+    return {
+        uid: data.uid,
+        nickname: data.nickname,
+        email: cleanEmail
+    };
+}
+
+// ---------- Add a person to MY chat list ----------
+// Saved under my own user, so only I see it.
+// Adding the same person again just moves them to the top (addedAt = now).
+export async function addContact(myUid, person) {
+    await setDoc(doc(db, "users", myUid, "contacts", person.uid), {
+        nickname: person.nickname,
+        email: person.email,
+        addedAt: serverTimestamp()
+    });
+}
+
+// ---------- Watch the people I added (live) ----------
+export function watchMyContacts(myUid, onChange, onError) {
     const q = query(
-        collection(db, "chats", chatId, "messages"),
-        orderBy("createdAt", "asc")
+        collection(db, "users", myUid, "contacts"),
+        orderBy("addedAt", "desc")
     );
 
     return onSnapshot(q, (snapshot) => {
-        const messages = snapshot.docs.map((d) => ({
-            messageId: d.id,
+        const contacts = snapshot.docs.map((d) => ({
+            uid: d.id,
             ...d.data({ serverTimestamps: "estimate" })
         }));
-        onChange(messages);
+        onChange(contacts);
     }, onError);
-}
-
-// ---------- Send a message ----------
-// 1) add the message to the chat's "messages" subcollection
-// 2) update the chat summary: preview, time, +1 unread for the OTHER person
-export async function sendMessage(chat, senderId, text) {
-    const otherId = senderId === chat.buyerId ? chat.sellerId : chat.buyerId;
-
-    await addDoc(collection(db, "chats", chat.chatId, "messages"), {
-        senderId: senderId,
-        text: text,
-        createdAt: serverTimestamp()
-    });
-
-    await updateDoc(doc(db, "chats", chat.chatId), {
-        lastMessage: text,
-        lastSenderId: senderId,
-        lastMessageAt: serverTimestamp(),
-        // "unread.<uid>" changes only ONE key inside the unread map (dot = "inside").
-        // increment(1) adds 1 ON THE SERVER, so two quick messages never overwrite each other.
-        ["unread." + otherId]: increment(1)
-    });
-}
-
-export async function markChatRead(chatId, uid) {
-    await updateDoc(doc(db, "chats", chatId), {
-        ["unread." + uid]: 0,
-        ["lastReadAt." + uid]: serverTimestamp()
-    });
 }
