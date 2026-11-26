@@ -39,6 +39,7 @@ const itemPrice = document.getElementById("chatItemPrice");
 const messagesEl = document.getElementById("chatMessages");
 const form = document.getElementById("chatForm");
 const input = document.getElementById("chatInput");
+const backButton = document.getElementById("chatBack");
 
 // NEW: "Add by email"
 const addToggle = document.getElementById("chatAddToggle");
@@ -277,6 +278,8 @@ tabs.forEach((tab) => {
 });
 
 searchInput.addEventListener("input", renderChatList);
+// Phone: "←" goes back to the conversation list
+backButton.addEventListener("click", closeChat);
 
 // ---------- 9. Right side: open / close ----------
 function openChat(id) {
@@ -286,6 +289,7 @@ function openChat(id) {
     openId = id;
     placeholder.hidden = true;
     activeBox.hidden = false;
+    layout.classList.add("is-chat-open");      // phone: show only the chat
     fillHeader(conversation);
     renderChatList();          // move the green highlight
     renderMessages();
@@ -296,6 +300,7 @@ function closeChat() {
     openId = null;
     activeBox.hidden = true;
     placeholder.hidden = false;
+    layout.classList.remove("is-chat-open");   // phone: back to the list
     renderChatList();
 }
 
