@@ -41,6 +41,7 @@ body {
 
 /* Main frame: Left Sidebar + Right side */
 .app-layout {
+    position: relative;
     display: flex;
     flex-direction: column; /* added */
     min-height: 100vh;
@@ -57,7 +58,7 @@ body {
     /* border-right: 1px solid var(--border); changed */
     border-bottom: 1px solid var(--border);
     /* padding: 24px 16px; changed */
-    padding: 1rem;
+    padding: 0.75rem 1rem;
     display: flex;
     flex-direction: column;
     /* flex-shrink: 0; */
@@ -68,14 +69,17 @@ body {
 .brand-logo {
     display: flex;
     align-items: center;
-    gap: 0.625rem; /* before: 10px */
-    font-size: 1.35rem; /*before: 1.45rem */
+    gap: 0.5rem; /* before: 10px */
+    font-size: 1.2rem; /*before: 1.45rem */
     font-weight: 800;
     color: var(--ewha-green);
     text-decoration: none;
     /* margin-bottom: 28px; */
     line-height: 1.15;
     /* padding-left: 6px; */
+    width: fit-content;
+    /* Reserve space on the right for the top-right action buttons on mobile */
+    max-width: calc(100% - 11.5rem);
 }
 
 .brand-flower {
@@ -85,19 +89,22 @@ body {
     color: var(--ewha-green);
 }
 
+/* 4 equal shrinking columns so narrow screens never scroll sideways */
 .side-nav {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     /* flex-direction: column; */
-    gap: 0.35rem; /* before: 8px */
+    gap: 0.25rem; /* before: 8px */
 }
 
 .side-link {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.3rem;
-    /* gap: 0.625rem; /* before: 10px */ 
+    gap: 0.25rem; /* before: 10px */ 
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
     padding:  0.55rem 0.25rem; /* 0.65rem 0.875rem; /* before: 11px 14px */
     border-radius: 10px; /* 12px; */ 
     color: var(--text-main);
@@ -109,9 +116,23 @@ body {
     transition: background-color 0.2s ease, transform 0.15s ease;
 }
 
+/* add */
+@media (max-width: 359px) {
+    .side-link {
+        font-size: 0.7rem;
+    }
+}
+
 .side-link:hover {
     background-color: #e2e8f0;
     transform: translateX(2px);
+}
+
+/* No hover nudge on touch screens */
+@media (hover: none) {
+    .side-link:hover {
+        transform: none;
+    }
 }
 
 .side-link.active {
@@ -151,11 +172,10 @@ body {
     justify-content: space-between;
     align-items: center;
     gap: 0.75rem;/* before: 16px; */
-    margin-bottom: 1.5rem; /* before: 24px; */
+    margin-bottom: 1.25rem; /* before: 24px; */
 }
 
 .search-bar {
-    order: 1;/* added */
     width: 100%;/* added */
     display: flex;
     align-items: center;
@@ -197,24 +217,26 @@ body {
     transform: scale(1.1);
 }
 
+/* Mobile: align language, chat, and login buttons in the top-right corner next to the logo */
 .topbar-actions {
     /* added */
-    order: 2;
-    margin-left: 0;
-    /*  */
+    position: absolute;
+    top: 0.85rem;
+    right: 1rem;
+    z-index: 10;
     display: flex;
     align-items: center;
-    gap: 0.625rem; /* before: 12px; */
+    gap: 0.4rem; /* before: 12px; */
 }
 
 .lang-btn {
     background: #ffffff;
     border: 1px solid var(--border);
     border-radius: 999px;
-    padding: 0.45rem 0.875rem; /* before: 7px 14px; */
+    padding: 0.35rem 0.65rem; /* before: 7px 14px; */
     cursor: pointer;
     font-weight: 600;
-    font-size: 0.88rem;
+    font-size: 0.8rem;
     color: var(--text-main);
     box-shadow: var(--shadow-sm);
 }
@@ -225,11 +247,11 @@ body {
 
 .icon-btn {
     text-decoration: none;
-    font-size: 1.2rem;
+    font-size: 1rem;
     background: #ffffff;
     border: 1px solid var(--border);
-    width: 2.375rem; /* before: 38px; */
-    height: 2.375rem; /* before: 38px; */
+    width: 2rem; /* before: 38px; */
+    height: 2rem; /* before: 38px; */
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -241,10 +263,11 @@ body {
     text-decoration: none;
     background-color: var(--ewha-green);
     color: #ffffff;
-    padding: 0.5rem 1rem; /* before: 8px 16px; */
+    padding: 0.4rem 0.75rem; /* before: 8px 16px; */
     border-radius: 999px;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: 600;
+    white-space: nowrap;
     transition: background-color 0.2s ease;
 }
 
@@ -715,21 +738,43 @@ body {
 
 /* TABLET AND UP (>= 768px) */
 @media (min-width: 768px) {
+    /* add */
+    .brand-logo {
+        max-width: none;
+        font-size: 1.35rem;
+    }
+    .brand-flower {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
     /* add  */
     .main-wrapper {
         padding: 1.25rem 1.75rem;
     }
     .topbar {
         flex-wrap: nowrap;
+        margin-bottom: 1.5rem;
     }
     .search-bar {
-        order: 1;
         flex: 1;
         max-width: 620px;
     }
     .topbar-actions {
-        order: 2;
-        margin-left: 0;
+        position: static;
+        gap: 0.625rem;
+    }
+    .lang-btn {
+        padding: 0.45rem 0.875rem;
+        font-size: 0.88rem;
+    }
+    .icon-btn {
+        width: 2.375rem;
+        height: 2.375rem;
+        font-size: 1.2rem;
+    }
+    .login-pill {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
     }
     .hero-banner {
         padding: 2.25rem 2rem;
@@ -746,7 +791,6 @@ body {
     .content-card {
         padding: 1.5rem;
     }
-    /*  */
 
     /* delete  */
     /* .app-layout {
@@ -818,6 +862,5 @@ body {
     .items-grid {
         grid-template-columns: repeat(3, 1fr);
     }
-    /*  */
 }
 
