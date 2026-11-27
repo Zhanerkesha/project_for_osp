@@ -20,6 +20,11 @@ const actions = document.querySelector(".topbar-actions");
 let chip = null;
 let logoutButton = null;
 
+// Clicking "Log In" brings you back to this page afterwards (e.g. the item you were viewing)
+if (loginPill) {
+  loginPill.href = "login.html?next=" + encodeURIComponent(currentPage());
+}
+
 function currentPage() {
   const file = window.location.pathname.split("/").pop() || "index.html";
   return file + window.location.search;

@@ -50,7 +50,7 @@ const PROTECTED_FIELDS = ['listingId', 'ownerId', 'ownerNickname', 'createdAt'];
 // While ALLOW_TEST_USER is true and nobody is logged in, everyone posts as this
 // shared test account so the form can be tested end to end.
 // >>> Set ALLOW_TEST_USER to false as soon as Firebase login is merged into main. <<<
-const ALLOW_TEST_USER = true;
+const ALLOW_TEST_USER = false;
 const TEST_USER = { uid: 'test-user', nickname: 'Test User', isVerified: true };
 
 // Firebase needs a moment after page load to restore a logged-in session.

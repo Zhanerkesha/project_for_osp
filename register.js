@@ -26,6 +26,7 @@ import {
   submitLabel,
   afterLoginUrl,
   keepNextOnLinks,
+  keepNextOnBackLink,
 } from "./auth-common.js";
 
 // Student ID: letters and numbers, 4-15 characters (exchange students have letters too).
@@ -55,6 +56,7 @@ const setBusy = submitLabel(
 
 setupPasswordToggle($("togglePassword"), [passwordInput, confirmInput]);
 keepNextOnLinks('a[href^="login.html"]');
+keepNextOnBackLink();
 
 const fields = [
   nameInput,
@@ -178,6 +180,12 @@ async function saveProfile(
       major,
       studentIdVerified: false, // only an admin / Cloud Function may set this to true
       createdAt: serverTimestamp(),
+    });
+
+    // So other students can find me by email in Messages
+    tx.set(doc(db, "emailLookup", user.email.toLowerCase()), {
+      uid: user.uid,
+      nickname,
     });
   });
 }
