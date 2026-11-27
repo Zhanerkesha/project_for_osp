@@ -123,6 +123,15 @@ import './listings-data.js';
                 listing.ownerNickname || 'Unknown seller';
         }
 
+        // Contact Seller/Provider button
+        const contactButton = document.getElementById('contactSellerBtn');
+
+        if (contactButton) {
+            contactButton.href =
+                'messages.html?userId=' +
+                encodeURIComponent(listing.ownerId) + '&listingId=' + encodeURIComponent(listing.listingId);
+        }
+
         // Main image
         const image = document.getElementById('itemImage');
 

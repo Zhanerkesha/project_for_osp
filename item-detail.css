@@ -2,18 +2,18 @@
 Owner: Sara */
 
 .item-detail-page {
-    padding: 20px;
+    padding: 1.25rem;
 }
 
 /* page heading */
 
 .item-page-heading {
-    margin-bottom: 28px;
+    margin-bottom: 1.75rem;
 }
 
 .item-page-heading h1 {
-    font-size: 28px;
-    margin: 0 0 8px;
+    font-size: 1.75rem;
+    margin: 0 0 .5rem;
     color: var(--text-main);
 }
 
@@ -21,9 +21,9 @@ Owner: Sara */
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 10px;
+    gap: .625rem;
 
-    font-size: 13px;
+    font-size: .8125rem;
     color: var(--text-muted);
 }
 
@@ -41,15 +41,15 @@ Owner: Sara */
 
 .item-detail-card {
     background: #ffffff;
-    border-radius: 18px;
-    padding: 30px;
-    border: 1px solid #e8e8e8;
+    border-radius: 1.125rem;
+    padding: 1.875rem;
+    border: .0625rem solid #e8e8e8;
 }
 
 .item-detail-layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 32px;
+    gap: 2rem;
     align-items: start;
 }
 
@@ -58,7 +58,7 @@ Owner: Sara */
 .item-gallery {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: .875rem;
     min-width: 0;
 }
 
@@ -68,7 +68,7 @@ Owner: Sara */
 
     overflow: hidden;
     background: #eeeeee;
-    border-radius: 12px;
+    border-radius: .75rem;
 }
 
 .item-main-image img {
@@ -80,20 +80,20 @@ Owner: Sara */
 
 .item-image-thumbnails {
     display: flex;
-    gap: 12px;
+    gap: .75rem;
     flex-wrap: wrap;
 }
 
 .item-thumbnail {
-    width: 75px;
-    height: 75px;
+    width: 4.6875rem;
+    height: 4.6875rem;
 
     overflow: hidden;
     padding: 0;
 
     background: #eeeeee;
-    border: 2px solid transparent;
-    border-radius: 9px;
+    border: .125rem solid transparent;
+    border-radius: .5625rem;
 
     cursor: pointer;
     transition: border-color 0.2s;
@@ -131,35 +131,35 @@ Owner: Sara */
 
     width: fit-content;
 
-    padding: 5px 12px;
-    border-radius: 20px;
+    padding: .3125rem .75rem;
+    border-radius: 1.25rem;
 
     background: var(--ewha-green);
     color: #ffffff;
 
-    font-size: 12px;
+    font-size: .75rem;
     font-weight: 600;
 
-    margin-bottom: 12px;
+    margin-bottom: .75rem;
 }
 
 /* Title */
 
 .item-title {
-    font-size: 27px;
+    font-size: 1.6875rem;
     line-height: 1.4;
 
-    margin: 0 0 12px;
+    margin: 0 0 .75rem;
     color: var(--text-main);
 }
 
 /* Price */
 
 .item-price {
-    font-size: 30px;
+    font-size: 1.875rem;
     font-weight: 700;
 
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
     color: var(--ewha-green);
 }
 
@@ -169,11 +169,11 @@ Owner: Sara */
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 14px;
+    gap: .875rem;
 
-    margin-bottom: 22px;
+    margin-bottom: 1.375rem;
 
-    font-size: 13px;
+    font-size: .8125rem;
     color: var(--text-muted);
 }
 
@@ -185,30 +185,30 @@ Owner: Sara */
 /* Location Information */
 
 .item-location-info {
-    margin-bottom: 18px;
+    margin-bottom: 1.125rem;
 }
 
 .item-location-info p {
     display: flex;
     align-items: center;
-    gap: 9px;
+    gap: .5625rem;
 
-    margin: 8px 0;
+    margin: .5rem 0;
 
-    font-size: 14px;
+    font-size: .875rem;
     color: var(--text-muted);
 }
 
 /* Description */
 
 .item-description {
-    margin-bottom: 22px;
+    margin-bottom: 1.375rem;
 }
 
 .item-description p {
     margin: 0;
 
-    font-size: 15px;
+    font-size: .9375rem;
     line-height: 1.7;
     color: var(--text-main);
 }
@@ -218,15 +218,15 @@ Owner: Sara */
 .item-seller {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: .75rem;
 
-    margin: 10px 0 25px;
+    margin: .625rem 0 1.5625rem;
 }
 
 .seller-avatar {
-    width: 46px;
-    height: 46px;
-    min-width: 46px;
+    width: 2.875rem;
+    height: 2.875rem;
+    min-width: 2.875rem;
 
     display: flex;
     align-items: center;
@@ -235,17 +235,17 @@ Owner: Sara */
     background: #eef2ef;
     border-radius: 50%;
 
-    font-size: 22px;
+    font-size: 1.375rem;
 }
 
 .seller-details {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: .3125rem;
 }
 
 .seller-details strong {
-    font-size: 14px;
+    font-size: .875rem;
     color: var(--text-main);
 }
 
@@ -253,9 +253,9 @@ Owner: Sara */
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 12px;
+    gap: .75rem;
 
-    font-size: 12px;
+    font-size: .75rem;
     color: var(--text-muted);
 }
 
@@ -268,25 +268,25 @@ Owner: Sara */
 .item-action-buttons {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: .75rem;
 
     margin-top: auto;
 }
 
 .message-seller-btn,
 .favorite-item-btn {
-    min-height: 48px;
+    min-height: 3rem;
 
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: .5rem;
 
-    padding: 12px;
+    padding: 0.75rem 1.25rem;
 
-    border-radius: 10px;
+    border-radius: .625rem;
 
-    font-size: 14px;
+    font-size: .875rem;
     font-weight: 600;
 
     cursor: pointer;
@@ -313,7 +313,7 @@ Owner: Sara */
     background: #ffffff;
     color: var(--text-main);
 
-    border: 1px solid #dddddd;
+    border: .0625rem solid #dddddd;
 }
 
 .favorite-item-btn:hover {
@@ -323,44 +323,44 @@ Owner: Sara */
 
 /* Responsive Design */
 
-@media (max-width: 1000px) {
+@media (max-width: 62.5rem) {
 
     .item-detail-layout {
         grid-template-columns: 1fr;
-        gap: 28px;
+        gap: 1.75rem;
     }
 
     .item-main-image {
-        max-height: 600px;
+        max-height: 37.5rem;
     }
 
 }
 
-@media (max-width: 650px) {
+@media (max-width: 40.625rem) {
 
     .item-detail-page {
-        padding: 12px;
+        padding: 1.25rem;
     }
 
     .item-detail-card {
-        padding: 18px;
+        padding: 1.875rem;
     }
 
     .item-page-heading h1 {
-        font-size: 24px;
+        font-size: 1.5rem;
     }
 
     .item-title {
-        font-size: 22px;
+        font-size: 1.7rem;
     }
 
     .item-price {
-        font-size: 26px;
+        font-size: 1.625rem;
     }
 
     .item-thumbnail {
-        width: 65px;
-        height: 65px;
+        width: 4.0625rem;
+        height: 4.0625rem;
     }
 
     .item-action-buttons {
@@ -368,7 +368,7 @@ Owner: Sara */
     }
 
     .item-meta {
-        gap: 10px;
+        gap: 0.625rem;
     }
 
 }

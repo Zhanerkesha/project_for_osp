@@ -2,7 +2,7 @@
    Owner: Sara */
 
 .profile-page {
-    padding-bottom: 40px;
+    padding-bottom: 2.5rem;
 }
 
 /* Profile Card */
@@ -11,14 +11,14 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 25px;
+    gap: 1.5625rem;
 
     background: #ffffff;
-    border: 1px solid #e8e8e8;
-    border-radius: 18px;
+    border: .0625rem solid #e8e8e8;
+    border-radius: 1.125rem;
 
-    padding: 28px 32px;
-    margin-bottom: 30px;
+    padding: 1.75rem 2rem;
+    margin-bottom: 1.875rem;
 }
 
 .profile-user-info {
@@ -26,49 +26,49 @@
     flex-direction: row;
     align-items: center;
     text-align: left;
-    gap: 22px;
+    gap: 1.375rem;
     margin: 0;
 }
 
 .profile-avatar {
-    width: 86px;
-    height: 86px;
-    min-width: 86px;
+    width: 5.375rem;
+    height: 5.375rem;
+    min-width: 5.375rem;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
-    border: 2px solid #d6d6d6;
+    border: .125rem solid #d6d6d6;
     border-radius: 50%;
     background: #f8f9f8;
 
-    font-size: 32px;
+    font-size: 2rem;
     margin: 0;
 }
 
 .profile-user-details h2 {
-    font-size: 23px;
-    margin: 0 0 8px;
+    font-size: 1.5rem;
+    margin: 0 0 .5rem;
 }
 
 .profile-email {
-    font-size: 14px;
+    font-size: 1rem;
     color: var(--text-muted);
-    margin: 0 0 10px;
+    margin: 0 0 .625rem;
 }
 
 .verification-badge {
     display: inline-block;
     width: fit-content;
-
-    padding: 5px 10px;
-    border-radius: 20px;
+    font-size: 0.75rem;
+    padding: .3125rem .625rem;
+    border-radius: 1.25rem;
 
     background: #eeeeee;
     color: #666666;
 
-    font-size: 12px;
+    font-size: .75rem;
 }
 
 .verification-badge.verified {
@@ -82,16 +82,16 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: .5rem;
 
-    padding: 12px 20px;
-    border-radius: 30px;
+    padding: 0.75rem 1.25rem;
+    border-radius: 1.875rem;
 
     background: #263c30;
     color: white;
 
     text-decoration: none;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 600;
 
     white-space: nowrap;
@@ -100,7 +100,7 @@
 
 .post-listing-btn:hover {
     background: #3c5a48;
-    transform: translateY(-2px);
+    transform: translateY(-.125rem);
 }
 
 /* profile shortcuts */
@@ -108,25 +108,25 @@
 .profile-shortcuts {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 16px;
+    gap: 1rem;
 
-    margin: 0 0 35px;
+    margin: 0 0 2.1875rem;
 }
 
 .profile-shortcut {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 14px;
+    gap: .875rem;
 
     width: auto;
     min-width: 0;
 
-    padding: 20px 18px;
+    padding: 1.25rem 1.125rem;
 
     background: #ffffff;
-    border: 1px solid #e8e8e8;
-    border-radius: 15px;
+    border: .0625rem solid #e8e8e8;
+    border-radius: .9375rem;
 
     text-decoration: none;
     color: var(--text-main);
@@ -137,12 +137,12 @@
 .profile-shortcut:hover {
     background: #f8faf8;
     border-color: #b7c8bc;
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    transform: translateY(-.1875rem);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, 0.04);
 }
 
 .shortcut-icon {
-    font-size: 26px;
+    font-size: 1.625rem;
     color: var(--ewha-green);
 
     margin: 0;
@@ -155,26 +155,26 @@
 }
 
 .shortcut-text h3 {
-    font-size: 15px;
+    font-size: 1.25rem;
     font-weight: 600;
-    margin: 0 0 5px;
+    margin: 0 0 0.3125rem;
 }
 
 .shortcut-text p {
-    font-size: 12px;
+    font-size: 0.75rem;
     color: var(--text-muted);
     margin: 0;
 }
 
 .shortcut-arrow {
-    font-size: 22px;
+    font-size: 1.375rem;
     color: #999999;
 }
 
 /* active listings */
 
 .active-listings-section {
-    margin-top: 10px;
+    margin-top: .625rem;
 }
 
 .section-heading {
@@ -182,18 +182,18 @@
     align-items: center;
     justify-content: space-between;
 
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
 }
 
 .section-heading h2 {
-    font-size: 21px;
+    font-size: 1.3125rem;
     margin: 0;
 }
 
 .section-heading a {
     text-decoration: none;
     color: var(--text-muted);
-    font-size: 14px;
+    font-size: .875rem;
 }
 
 .section-heading a:hover {
@@ -203,42 +203,42 @@
 .active-listings-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
+    gap: 1.125rem;
 }
 
 .active-listing-card {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: .75rem;
 
     min-width: 0;
-    padding: 15px;
+    padding: .9375rem;
 
     background: #ffffff;
-    border: 1px solid #e8e8e8;
-    border-radius: 14px;
+    border: .0625rem solid #e8e8e8;
+    border-radius: .875rem;
 
     transition: 0.2s;
 }
 
 .active-listing-card:hover {
     border-color: #c8d4cb;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 .1875rem .625rem rgba(0, 0, 0, 0.04);
 }
 
 .listing-image {
-    width: 70px;
-    height: 75px;
-    min-width: 70px;
+    width: 4.375rem;
+    height: 4.6875rem;
+    min-width: 4.375rem;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
     background: #f3f5f3;
-    border-radius: 10px;
+    border-radius: .625rem;
 
-    font-size: 30px;
+    font-size: 1.875rem;
 }
 
 .listing-info {
@@ -247,10 +247,10 @@
 }
 
 .listing-info h3 {
-    font-size: 14px;
+    font-size: .875rem;
     font-weight: 600;
 
-    margin: 0 0 10px;
+    margin: 0 0 .625rem;
 
     overflow: hidden;
     text-overflow: ellipsis;
@@ -260,27 +260,27 @@
 .listing-meta {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: .625rem;
 }
 
 .listing-meta strong {
-    font-size: 14px;
+    font-size: .875rem;
     color: #527b63;
 }
 
 .listing-status {
-    font-size: 11px;
+    font-size: .6875rem;
     color: #548267;
 }
 
 .edit-listing-btn {
-    font-size: 12px;
+    font-size: .75rem;
     text-decoration: none;
     color: #555555;
 
-    padding: 6px 10px;
-    border: 1px solid #e5e5e5;
-    border-radius: 8px;
+    padding: .375rem .625rem;
+    border: .0625rem solid #e5e5e5;
+    border-radius: .5rem;
 
     transition: 0.2s;
 }
@@ -294,17 +294,17 @@
 .profile-footer {
     display: flex;
     justify-content: center;
-    margin-top: 35px;
+    margin-top: 2.1875rem;
 }
 
-.profile-logout-btn {
+.logout-btn {
     background: #d1d1d1;
     border: none;
-    border-radius: 999px;
+    border-radius: 62.4375rem;
 
-    padding: 12px 35px;
+    padding: .75rem 2.1875rem;
 
-    font-size: 14px;
+    font-size: .875rem;
     font-weight: 500;
     cursor: pointer;
 
@@ -318,7 +318,7 @@
 
 /* responsive design */
 
-@media (max-width: 1100px) {
+@media (max-width: 63.9375rem) {
 
     .profile-shortcuts {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -330,27 +330,27 @@
 
 }
 
-@media (max-width: 700px) {
+@media (max-width: 43.75rem) {
 
     .profile-card {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 22px;
+        gap: 1.5625rem;
+        padding: 1.75rem 2rem;
+        margin-bottom: 1.875rem;
     }
 
     .profile-user-info {
-        gap: 15px;
+        gap: 1.375rem;
     }
 
     .profile-avatar {
-        width: 68px;
-        height: 68px;
-        min-width: 68px;
-        font-size: 25px;
+        width: 5.375rem;
+        height: 5.375rem;
+        min-width: 5.375rem;
+        font-size: 2rem;
     }
 
     .profile-user-details h2 {
-        font-size: 19px;
+        font-size: 1.1875rem;
     }
 
     .post-listing-btn {
@@ -359,11 +359,11 @@
 
     .profile-shortcuts {
         grid-template-columns: 1fr;
-        gap: 10px;
+        gap: .625rem;
     }
 
     .profile-shortcut {
-        padding: 16px;
+        padding: 1rem;
     }
 
     .active-listings-grid {
