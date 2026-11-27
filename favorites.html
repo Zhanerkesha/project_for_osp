@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favorites - Ewha Market</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="favorites.css">
+    <link rel="stylesheet" href="auth-ui.css">
+</head>
+<!-- data-requires-auth: auth-ui.js sends logged-out visitors to login and back here afterwards -->
+<body class="fav-page" data-requires-auth>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <a href="index.html" class="brand-logo">
+                <svg class="brand-flower" viewBox="4 4 56 56" width="44" height="44" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z"/>
+                    <path d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z" transform="rotate(72 32 32)"/>
+                    <path d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z" transform="rotate(144 32 32)"/>
+                    <path d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z" transform="rotate(216 32 32)"/>
+                    <path d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z" transform="rotate(288 32 32)"/>
+
+                    <line x1="32" y1="32" x2="32" y2="21" stroke-width="1.8"/>
+                    <line x1="32" y1="32" x2="42.5" y2="28.5" stroke-width="1.8"/>
+                    <line x1="32" y1="32" x2="38.5" y2="41" stroke-width="1.8"/>
+                    <line x1="32" y1="32" x2="25.5" y2="41" stroke-width="1.8"/>
+                    <line x1="32" y1="32" x2="21.5" y2="28.5" stroke-width="1.8"/>
+
+                    <circle cx="32" cy="32" r="3.2" fill="#f1f5f9" stroke="currentColor" stroke-width="2.2"/>
+                </svg>
+                <span>Ewha<br>Market</span>
+            </a>
+
+            <nav class="side-nav" aria-label="Main navigation">
+                <a href="index.html" class="side-link">🏠 <span data-i18n="nav.home">Home</span></a>
+                <a href="categories.html" class="side-link">🗂️ <span data-i18n="nav.categories">Categories</span></a>
+                <a href="messages.html" class="side-link">💬 <span data-i18n="nav.chat">Chat</span></a>
+                <a href="profile.html" class="side-link active">👤 <span data-i18n="nav.profile">My Profile</span></a>
+            </nav>
+
+            <div class="sidebar-banner">
+                <div class="banner-emoji">🎓</div>
+                <p><strong data-i18n="sidebar.hub">Ewha Campus Hub</strong></p>
+                <small><span data-i18n="fav.sidebar.verified">Verified students only</span><br>(@ewha.ac.kr / @ewhain.net)</small>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="topbar">
+                <form action="search.html" method="GET" class="search-bar">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" name="q" data-i18n-placeholder="search.placeholder" placeholder="Enter item title, course code, or keyword..." aria-label="Enter item title">
+                    <a href="search.html" class="filter-btn" title="Filters">🎛️</a>
+                </form>
+                <div class="topbar-actions">
+                    <button id="langToggle" class="lang-btn" type="button">🌐 EN ▾</button>
+                    <a href="messages.html" class="icon-btn" title="Chat">💬</a>
+                    <a href="login.html" class="login-pill" title="Profile / Log In">👤 <span data-i18n="nav.login">Log In</span></a>
+                </div>
+            </header>
+
+            <main class="page-content">
+                <!-- Favorites page (Owner: Safiyya)
+                     Cards are drawn by favorites-page.js from Firestore: users/{uid}/favorites -->
+                <div class="page-header fav-header">
+                    <div>
+                        <h1 data-i18n="fav.title">❤️ My Favorites</h1>
+                        <p class="text-muted" data-i18n="fav.subtitle">Items you liked, saved in one place</p>
+                    </div>
+                    <span id="favoritesCount" class="fav-count" aria-live="polite"></span>
+                </div>
+
+                <p id="favoritesMessage" class="fav-message" role="alert" hidden></p>
+
+                <!-- Search, sort and category filter (hidden until there are favorites) -->
+                <div id="favoritesToolbar" class="fav-toolbar" hidden>
+                    <div class="fav-toolbar-row">
+                        <label class="fav-search">
+                            <span aria-hidden="true">🔍</span>
+                            <span class="visually-hidden" data-i18n="fav.search.label">Search favorites</span>
+                            <input id="favoritesSearch" type="search" data-i18n-placeholder="fav.search.placeholder" placeholder="Search your favorites..." autocomplete="off">
+                        </label>
+                        <label class="fav-sort">
+                            <span class="visually-hidden" data-i18n="fav.sort.label">Sort by</span>
+                            <select id="favoritesSort">
+                                <option value="recent" data-i18n="fav.sort.recent">Recently added</option>
+                                <option value="priceAsc" data-i18n="fav.sort.priceAsc">Price: low to high</option>
+                                <option value="priceDesc" data-i18n="fav.sort.priceDesc">Price: high to low</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div id="favoritesCategories" class="fav-chips" role="group" data-i18n-aria="fav.filter.label" aria-label="Filter by category" hidden></div>
+                </div>
+
+                <p id="favoritesLoading" class="text-muted" data-i18n="fav.loading">Loading your favorites…</p>
+
+                <div id="favoritesGrid" class="items-grid fav-grid" aria-live="polite" hidden></div>
+
+                <!-- No results for the current search / filter -->
+                <section id="favoritesNoResults" class="content-card fav-empty" hidden>
+                    <div class="fav-empty-emoji" aria-hidden="true">🔎</div>
+                    <h2 class="fav-empty-title" data-i18n="fav.noResults.title">No matching favorites</h2>
+                    <p class="text-muted" data-i18n="fav.noResults.text">Try another word or category.</p>
+                    <button id="favoritesClear" type="button" class="btn-outline-ewha" data-i18n="fav.noResults.clear">Clear filters</button>
+                </section>
+
+                <!-- No favorites at all -->
+                <section id="favoritesEmpty" class="content-card fav-empty" hidden>
+                    <div class="fav-empty-emoji" aria-hidden="true">🤍</div>
+                    <h2 class="fav-empty-title" data-i18n="fav.empty.title">No favorites yet</h2>
+                    <p class="text-muted" data-i18n="fav.empty.text">Tap the 🤍 on any item to save it here.</p>
+                    <a href="index.html" class="btn-ewha" data-i18n="fav.empty.cta">Browse Marketplace</a>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="listings-i18n.js"></script>
+    <script src="favorites-i18n.js"></script>
+    <script src="lang-toggle.js"></script>
+    <script type="module" src="favorites.js"></script>
+    <script type="module" src="favorites-page.js"></script>
+    <script type="module" src="auth-ui.js"></script>
+</body>
+</html>
