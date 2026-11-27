@@ -58,7 +58,9 @@
             "chat.role.buyer": "Buyer",
             "chat.free": "Free",
             "chat.yesterday": "Yesterday",
-            "chat.attach" : "Attach file",
+            "chat.attach": "Attach file",
+            "chat.attach.tooMany": "You can attach up to {max} files.",
+            "chat.attach.tooBig": "{name} is larger than {max} MB.",
 
             // sample messages ({name} = the other person's nickname)
             "chat.sampleNote": "Sample chat · messages are not saved",
@@ -109,8 +111,10 @@
             "chat.role.buyer": "구매자",
             "chat.free": "무료",
             "chat.yesterday": "어제",
-            "chat.attach" : "파일 첨부",
-
+            "chat.attach": "파일 첨부",
+            "chat.attach.tooMany": "파일은 최대 {max}개까지 첨부할 수 있어요.",
+            "chat.attach.tooBig": "{name} 파일이 {max}MB를 넘어요.",
+            
             "chat.sampleNote": "샘플 채팅 · 메시지는 저장되지 않아요",
 
             "chat.status.loadChats": "대화를 불러오지 못했어요. 자세한 내용은 콘솔(F12)을 확인하세요.",

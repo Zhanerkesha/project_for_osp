@@ -398,7 +398,16 @@ fileInput.addEventListener("change", () => {
 
     for (const file of fileInput.files) {
         if (pendingFiles.length >= MAX_FILES) {
-            error = "You can attach up to " + MAX_FILES + " files.";
+            if (pendingFiles.length >= MAX_FILES) {
+                error = EwhaI18n.t("chat.attach.tooMany").replace("{max}", MAX_FILES);
+                break;
+            }
+            if (file.size > MAX_SIZE_MB * 1024 * 1024) {
+                error = EwhaI18n.t("chat.attach.tooBig")
+                    .replace("{name}", file.name)
+                    .replace("{max}", MAX_SIZE_MB);
+                continue;
+            }
             break;
         }
         if (file.size > MAX_SIZE_MB * 1024 * 1024) {
