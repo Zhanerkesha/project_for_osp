@@ -169,15 +169,21 @@ async function saveProfile(
     if ((await tx.get(idRef)).exists()) throw new Error("student-id-taken");
 
     tx.set(idRef, { uid: user.uid, createdAt: serverTimestamp() });
+
     tx.set(doc(db, "users", user.uid), {
-      nickname, // read by listings-data.js (ownerNickname)
+      nickname,
       name,
       email: user.email,
       studentType,
       studentId,
       major,
-      studentIdVerified: false, // only an admin / Cloud Function may set this to true
+      studentIdVerified: false,
       createdAt: serverTimestamp(),
+    });
+    // So other students can find me by email in Messages
+    tx.set(doc(db, "emailLookup", user.email.toLowerCase()), {
+      uid: user.uid,
+      nickname,
     });
   });
 }
