@@ -20,6 +20,7 @@ import {
   submitLabel,
   afterLoginUrl,
   keepNextOnLinks,
+  keepNextOnBackLink,
 } from "./auth-common.js";
 
 const $ = (id) => document.getElementById(id);
@@ -32,10 +33,15 @@ const forgotLink = $("forgotLink");
 const resendBtn = $("resendBtn");
 
 const message = messenger($("loginMessage"));
-const setLoginBusy = submitLabel($("loginButton"), "login.submit", "login.loading");
+const setLoginBusy = submitLabel(
+  $("loginButton"),
+  "login.submit",
+  "login.loading",
+);
 
 setupPasswordToggle($("togglePassword"), [passwordInput]);
 keepNextOnLinks('a[href^="register.html"]');
+keepNextOnBackLink();
 
 let unverifiedUser = null;
 let isLoggingIn = false;
