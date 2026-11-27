@@ -45,6 +45,15 @@ export function keepNextOnLinks(selector) {
   });
 }
 
+// "Back" link returns to the page the user came from (e.g. the item they were viewing)
+export function keepNextOnBackLink(selector = ".auth-back-link") {
+  const next = getNext();
+  if (!next) return;
+  document.querySelectorAll(selector).forEach((link) => {
+    link.setAttribute("href", next);
+  });
+}
+
 /* ---------- messages that re-translate when the language changes ---------- */
 
 export function messenger(element) {
@@ -84,7 +93,8 @@ function errorElement(input) {
 
     const host = input.closest(".login-field");
     if (host) host.appendChild(el);
-    else (input.closest("label") || input).insertAdjacentElement("afterend", el);
+    else
+      (input.closest("label") || input).insertAdjacentElement("afterend", el);
   }
   return el;
 }

@@ -6,8 +6,9 @@
     <title>My Listings - Ewha Market</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="listings.css">
+    <link rel="stylesheet" href="auth-ui.css">
 </head>
-<body>
+<body data-requires-auth>
     <div class="app-layout">
         <aside class="sidebar">
             <a href="index.html" class="brand-logo">🌸 Ewha<br>Market</a>
@@ -116,5 +117,6 @@
     <!-- Modules: listings-data.js imports Firebase, so both files load as modules (they still run in this order). -->
     <script type="module" src="listings-data.js"></script>
     <script type="module" src="my-listings.js"></script>
+    <script type="module" src="auth-ui.js"></script>
 </body>
 </html>
