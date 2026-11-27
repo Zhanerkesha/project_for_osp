@@ -30,17 +30,17 @@
                 </a>
 
                 <nav class="side-nav" aria-label="Main navigation">
-                    <a href="index.html" class="side-link active">🏠 Home</a>
-                    <a href="categories.html" class="side-link">🗂️ Categories</a>
-                    <a href="messages.html" class="side-link">💬 Chat</a>
-                    <a href="profile.html" class="side-link">👤 My Profile</a>
+                    <a href="index.html" class="side-link active">🏠 <span data-i18n="nav.home">Home</span></a>
+                    <a href="categories.html" class="side-link">🗂️ <span data-i18n="nav.categories">Categories</span></a>
+                    <a href="messages.html" class="side-link">💬 <span data-i18n="nav.chat">Chat</span></a>
+                    <a href="profile.html" class="side-link">👤 <span data-i18n="nav.profile">My Profile</span></a>
                 </nav>
 
                 <!-- Bottom vertical block from the wireframe -->
                 <div class="sidebar-banner">
                     <div class="banner-emoji">🎓</div>
-                    <p><strong>Ewha Campus Hub</strong></p>
-                    <small>Verified students only<br>(@ewha.ac.kr / @ewhain.net)</small>
+                    <p><strong data-i18n="sidebar.hub">Ewha Campus Hub</strong></p>
+                    <small data-i18n="sidebar.verified">Verified students only<br>(@ewha.ac.kr / @ewhain.net)</small>
                 </div>
              </aside>
 
@@ -51,14 +51,14 @@
                  <header class="topbar">
                     <form action="search.html" method="GET" class="search-bar">
                         <span class="search-icon">🔍</span>
-                        <input type="text" name="q" placeholder="Enter item title, course code, or keyword..." aria-label="Enter item title">
+                        <input type="text" name="q" data-i18n-placeholder="search.placeholder" placeholder="Enter item title, course code, or keyword..." aria-label="Enter item title">
                         <a href="search.html" class="filter-btn" title="Filters">🎛️</a>
                     </form>
 
                     <div class="topbar-actions">
                         <button id="langToggle" class="lang-btn" type="button">🌐 EN ▾</button>
                         <a href="messages.html" class="icon-btn" title="Chat">💬</a>
-                        <a href="login.html" class="login-pill" title="Profile / Log In">👤 Log In</a>
+                        <a href="login.html" class="login-pill" title="Profile / Log In">👤 <span data-i18n="nav.login">Log In</span></a>
                     </div>
                  </header>
 
@@ -70,41 +70,41 @@
 
                         <!-- Main banner -->
                         <section class="hero-banner">
-                            <span class="hero-badge">✨ Exclusive for Ewha Students </span>
-                            <h1>Welcome to Ewha Market</h1>
-                            <p>Buy secondhand essentials, rent calculators, share lecture notes, and connect with Ewha students.</p>
+                            <span class="hero-badge" data-i18n="hero.badge">✨ Exclusive for Ewha Students</span>
+                            <h1 data-i18n="hero.title">Welcome to Ewha Market</h1>
+                            <p data-i18n="hero.subtitle">Buy secondhand essentials, rent calculators, share lecture notes, and connect with Ewha students.</p>
                         </section>
 
                         <!-- Categories section -->
                          <section class="section-block">
                             <div class="section-header">
-                                <h2>Categories</h2>
-                                <a href="categories.html" class="see-all">See all &gt;</a>
+                                <h2 data-i18n="section.categories">Categories</h2>
+                                <a href="categories.html" class="see-all" data-i18n="section.seeAll">See all &gt;</a>
                             </div>
                             <div class="categories-row">
                                 <a href="categories.html?cat=books" class="cat-box cat-books">
                                     <span class="cat-emoji">📚</span>
-                                    <span class="cat-name">Textbooks</span>
+                                    <span class="cat-name" data-i18n="cat.books">Textbooks</span>
                                 </a>
                                 <a href="categories.html?cat=electronics" class="cat-box cat-electronics">
                                     <span class="cat-emoji">💻</span>
-                                    <span class="cat-name">Electronics</span>
+                                    <span class="cat-name" data-i18n="cat.electronics">Electronics</span>
                                 </a>
                                 <a href="categories.html?cat=rent" class="cat-box cat-rent">
                                     <span class="cat-emoji">🧮</span>
-                                    <span class="cat-name">Rent</span>
+                                    <span class="cat-name" data-i18n="cat.rent">Rent</span>
                                 </a>
                                 <a href="categories.html?cat=notes" class="cat-box cat-notes">
                                     <span class="cat-emoji">📝</span>
-                                    <span class="cat-name">Notes</span>
+                                    <span class="cat-name" data-i18n="cat.notes">Notes</span>
                                 </a>
                                 <a href="categories.html?cat=services" class="cat-box cat-services">
                                     <span class="cat-emoji">🗣️</span>
-                                    <span class="cat-name">Services</span>
+                                    <span class="cat-name" data-i18n="cat.services">Services</span>
                                 </a>
                                 <a href="categories.html" class="cat-box cat-more">
                                     <span class="cat-emoji">✨</span>
-                                    <span class="cat-name">More</span>
+                                    <span class="cat-name" data-i18n="cat.more">More</span>
                                 </a>
                             </div>
                          </section>
@@ -112,16 +112,16 @@
                          <!-- Latest Items Section -->
                         <section class="section-block">
                             <div class="section-header">
-                                <h2>Latest Items</h2>
-                                <a href="search.html" class="see-all">See all &gt;</a>
+                                <h2 data-i18n="section.latest">Latest Items</h2>
+                                <a href="search.html" class="see-all" data-i18n="section.seeAll">See all &gt;</a>
                             </div>
                             <div id="LatestItemsGrid" class="items-grid">
                                 <!-- Example card 1 -->
-                                <article class="item-card">
+                                <a href="item-detail.html?id=1" class="item-card">
                                     <div class="item-img-wrap">
-                                        <span class="item-badge badge-buy">Buy</span>
+                                        <span class="item-badge badge-buy" data-i18n="badge.buy">Buy</span>
                                         <img src="images/Calculus_textbook.jpg" alt="Calculus Textbook">
-                                        <button class="fav-btn" type="button" aria-label="Save to favorites">❤️</button>
+                                        <button class="fav-btn" type="button" aria-label="Save to favorites" onclick="event.preventDefault();">❤️</button>
                                     </div>
                                     <div class="item-info">
                                         <p class="item-price">₩12,000</p>
@@ -131,14 +131,14 @@
                                             <span>2h ago</span>
                                         </div>
                                     </div>
-                                </article>
+                                </a>
 
                                  <!-- Example card 2 -->
-                                <article class="item-card">
+                                <a href="item-detail.html?id=2" class="item-card">
                                     <div class="item-img-wrap">
-                                        <span class="item-badge badge-rent">Rent</span>
+                                        <span class="item-badge badge-rent" data-i18n="badge.rent">Rent</span>
                                         <img src="https://images.unsplash.com/photo-1587145820266-a5951ee6f620?auto=format&fit=crop&w=500&q=80" alt="Casio Calculator">
-                                        <button class="fav-btn" type="button" aria-label="Save to favorites">❤️</button>
+                                        <button class="fav-btn" type="button" aria-label="Save to favorites" onclick="event.preventDefault();">❤️</button>
                                     </div>
                                     <div class="item-info">
                                         <p class="item-price">₩2,000 / day</p>
@@ -148,58 +148,189 @@
                                             <span>5h ago</span>
                                         </div>
                                     </div>
-                                </article>
+                                </a>
 
                                  <!-- Example card 3 -->
-                                <article class="item-card">
+                                <a href="item-detail.html?id=3" class="item-card">
                                     <div class="item-img-wrap">
-                                        <span class="item-badge badge-notes">Notes</span>
+                                        <span class="item-badge badge-notes" data-i18n="badge.notes">Notes</span>
                                         <img src="images/notes.jpg" alt="Python Study Notes">
-                                        <button class="fav-btn" type="button" aria-label="Save to favorites">❤️</button>
+                                        <button class="fav-btn" type="button" aria-label="Save to favorites" onclick="event.preventDefault();">❤️</button>
                                     </div>
                                     <div class="item-info">
-                                        <p class="item-price">Free</p>
+                                        <p class="item-price" data-i18n="price.free">Free</p>
                                         <p class="item-title">Midterm Summary Notes</p>
                                         <div class="item-meta">
                                             <span>📍 Ewha Library</span>
                                             <span>1d ago</span>
                                         </div>
                                     </div>
-                                </article>
+                                </a>
                             </div>
                         </section>
 
                           <!-- + Add item button -->
-                        <a href="add-item.html" class="add-item-bar">➕ Add item</a>
+                        <a href="add-item.html" class="add-item-bar" data-i18n="btn.addItem">➕ Add item</a>
                     </main>
 
                     <!-- Right panel -->
                     <aside class="right-panel">
                         <div class="widget-box promo-box">
                             <div class="promo-icon">🤝</div>
-                            <h3>Campus Exchange</h3>
-                            <p>Safe meetups inside Ewha campus territory.</p>
+                            <h3 data-i18n="widget.exchangeTitle">Campus Exchange</h3>
+                            <p data-i18n="widget.exchangeDesc">Safe meetups inside Ewha campus territory.</p>
                         </div>
 
                         <div class="widget-box">
-                            <p class="widget-title">🌐 Language</p>
+                            <p class="widget-title" data-i18n="widget.language">🌐 Language</p>
                             <div class="lang-pills">
-                                <button type="button" class="pill active">English</button>
-                                <button type="button" class="pill">한국어</button>
+                                <button type="button" class="pill active" data-lang="en">English</button>
+                                <button type="button" class="pill" data-lang="ko">한국어</button>
                             </div>
                         </div>
 
                         <div class="widget-box links-box">
-                            <p class="widget-title">📌 Quick Links</p>
+                            <p class="widget-title" data-i18n="widget.quickLinks">📌 Quick Links</p>
                             <ul>
-                                <li><a href="categories.html?cat=notes">📖 Course Study Notes</a></li>
-                                <li><a href="search.html?type=rent">🧮 Exam Calculator Rent</a></li>
-                                <li><a href="search.html?type=service">💬 Language Exchange</a></li>
+                                <li><a href="categories.html?cat=notes" data-i18n="link.notes">📖 Course Study Notes</a></li>
+                                <li><a href="search.html?type=rent" data-i18n="link.calc">🧮 Exam Calculator Rent</a></li>
+                                <li><a href="search.html?type=service" data-i18n="link.lang">💬 Language Exchange</a></li>
                             </ul>
                         </div>
                     </aside>
                 </div>
             </div>
         </div>
+        <script>
+            (function () {
+                const HOME_STRINGS = {
+                    en: {
+                        'nav.home': 'Home',
+                        'nav.categories': 'Categories',
+                        'nav.chat': 'Chat',
+                        'nav.profile': 'My Profile',
+                        'nav.login': 'Log In',
+                        'sidebar.hub': 'Ewha Campus Hub',
+                        'sidebar.verified': 'Verified students only<br>(@ewha.ac.kr / @ewhain.net)',
+                        'search.placeholder': 'Enter item title, course code, or keyword...',
+                        'hero.badge': '✨ Exclusive for Ewha Students',
+                        'hero.title': 'Welcome to Ewha Market',
+                        'hero.subtitle': 'Buy secondhand essentials, rent calculators, share lecture notes, and connect with Ewha students.',
+                        'section.categories': 'Categories',
+                        'section.latest': 'Latest Items',
+                        'section.seeAll': 'See all >',
+                        'cat.books': 'Textbooks',
+                        'cat.electronics': 'Electronics',
+                        'cat.rent': 'Rent',
+                        'cat.notes': 'Notes',
+                        'cat.services': 'Services',
+                        'cat.more': 'More',
+                        'badge.buy': 'Buy',
+                        'badge.rent': 'Rent',
+                        'badge.notes': 'Notes',
+                        'price.free': 'Free',
+                        'btn.addItem': '➕ Add item',
+                        'widget.exchangeTitle': 'Campus Exchange',
+                        'widget.exchangeDesc': 'Safe meetups inside Ewha campus territory.',
+                        'widget.language': '🌐 Language',
+                        'widget.quickLinks': '📌 Quick Links',
+                        'link.notes': '📖 Course Study Notes',
+                        'link.calc': '🧮 Exam Calculator Rent',
+                        'link.lang': '💬 Language Exchange'
+                    },
+                    ko: {
+                        'nav.home': '홈',
+                        'nav.categories': '카테고리',
+                        'nav.chat': '채팅',
+                        'nav.profile': '마이페이지',
+                        'nav.login': '로그인',
+                        'sidebar.hub': '이화 캠퍼스 허브',
+                        'sidebar.verified': '이화인 인증 학생 전용<br>(@ewha.ac.kr / @ewhain.net)',
+                        'search.placeholder': '물품명, 학수번호 또는 키워드를 입력하세요...',
+                        'hero.badge': '✨ 이화여자대학교 학생 전용',
+                        'hero.title': '이화마켓에 오신 것을 환영합니다',
+                        'hero.subtitle': '중고 물품 거래부터 계산기 대여, 필기 노트 공유, 언어 교환까지 이화인과 안전하게 연결되세요.',
+                        'section.categories': '카테고리',
+                        'section.latest': '최신 등록 물품',
+                        'section.seeAll': '전체보기 >',
+                        'cat.books': '전공책',
+                        'cat.electronics': '전자기기',
+                        'cat.rent': '대여',
+                        'cat.notes': '필기노트',
+                        'cat.services': '학생 서비스',
+                        'cat.more': '더보기',
+                        'badge.buy': '판매',
+                        'badge.rent': '대여',
+                        'badge.notes': '노트',
+                        'price.free': '무료',
+                        'btn.addItem': '➕ 물품 등록하기',
+                        'widget.exchangeTitle': '캠퍼스 직거래',
+                        'widget.exchangeDesc': '이화 캠퍼스 내에서 안전하게 만나 거래하세요.',
+                        'widget.language': '🌐 언어 설정',
+                        'widget.quickLinks': '📌 바로가기',
+                        'link.notes': '📖 과목별 필기 노트',
+                        'link.calc': '🧮 시험용 계산기 대여',
+                        'link.lang': '💬 언어 교환 찾기'
+                    }
+                };
+
+                function setLanguage(lang) {
+                    const normalized = lang === 'ko' ? 'ko' : 'en';
+                    const dict = HOME_STRINGS[normalized];
+
+                    document.documentElement.setAttribute('lang', normalized);
+                    try  {
+                        localStorage.setItem('lang', normalized);
+                    } catch (e) {}
+
+                    document.querySelectorAll('[data-i18n]').forEach(el => {
+                        const key = el.getAttribute('data-i18n');
+                        if (dict[key] !== undefined) {
+                            if (key === 'sidebar.verified') {
+                                el.innerHTML = dict[key];
+                            } else {
+                                el.textContent = dict[key];
+                            }
+                        }
+                    });
+
+                    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                        const key = el.getAttribute('data-i18n-placeholder');
+                        if (dict[key] !== undefined) {
+                            el.setAttribute('placeholder', dict[key]);
+                        }
+                    });
+
+                    const topToggle = document.getElementById('langToggle');
+                    if (topToggle) {
+                        topToggle.textContent = normalized === 'ko' ? '🌐 KO ▾' : '🌐 EN ▾';
+                    }
+
+                    document.querySelectorAll('.lang-pills .pill').forEach(pill => {
+                        pill.classList.toggle('active', pill.dataset.lang === normalized);
+                    });
+                }
+
+                document.addEventListener('DOMContentLoaded', () => {
+                    let saved = 'en';
+                    try { 
+                        saved = localStorage.getItem('lang') || 'en'; 
+                    } catch (e) {}
+                    setLanguage(saved);
+
+                    const topToggle = document.getElementById('langToggle');
+                    if (topToggle) {
+                        topToggle.addEventListener('click', () => {
+                            const current = document.documentElement.getAttribute('lang') || 'en';
+                            setLanguage(current === 'en' ? 'ko' : 'en');
+                        });
+                    }
+
+                    document.querySelectorAll('.lang-pills .pill').forEach(pill => {
+                        pill.addEventListener('click', () => setLanguage(pill.dataset.lang));
+                    });
+                });
+            }) ();
+        </script>
     </body>
 </html>

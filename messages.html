@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messages - Ewha Market</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="messages.css">
 </head>
+
 <body>
     <div class="app-layout">
         <aside class="sidebar">
@@ -27,7 +30,8 @@
             <header class="topbar">
                 <form action="search.html" method="GET" class="search-bar">
                     <span class="search-icon">🔍</span>
-                    <input type="text" name="q" placeholder="Enter item title, course code, or keyword..." aria-label="Enter item title">
+                    <input type="text" name="q" placeholder="Enter item title, course code, or keyword..."
+                        aria-label="Enter item title">
                     <a href="search.html" class="filter-btn" title="Filters">🎛️</a>
                 </form>
                 <div class="topbar-actions">
@@ -43,12 +47,71 @@
                     <p class="text-muted">Chat directly with Ewha buyers, sellers, and study partners</p>
                 </div>
 
-                <!-- Zhansaya: Add a list of dialogs and a real chat window here -->
-                <section class="content-card">
-                    <p>Chat interface goes here...</p>
-                </section>
+                <div class="chat-tabs">
+                    <button type="button" class="chat-tab is-active" data-role="buyer">Buying</button>
+                    <button type="button" class="chat-tab" data-role="seller">Selling</button>
+                </div>
+                <div id="chatStatus" class="chat-status" role="status" hidden></div>
+                <div id="chatLayout" class="chat-layout">
+                    <!-- LEFT: conversation list-->
+                    <aside class="chat-sidebar">
+                        <div class="chat-search">
+                            <span aria-hidden="true">🔍</span>
+                            <input id="chatSearch" type="search" placeholder="Search conversations..."
+                                aria-label="Search conversations">
+                        </div>
+
+                        <ul id="chatList" class="chat-list">
+
+                        </ul>
+
+                        <p id="chatListEmpty" class="chat-empty" hidden>No conversations yet</p>
+                    </aside>
+                    <!-- RIGHT: chat window-->
+                    <section class="chat-window">
+                        <!-- Shown when no chat is selected -->
+                        <div id="chatPlaceholder" class="chat-placeholder">
+                            <span class="chat-placeholder-icon">💬</span>
+                            <p>Select a conversation to start chatting</p>
+                        </div>
+
+                        <div id="chatActive" class="chat-active" hidden>
+                            <!-- Top: who I'm talkign to + which item -->
+                            <header class="chat-header">
+                                <div class="chat-user">
+                                    <div id="chatUserAvatar" class="chat-avatar"></div>
+                                    <div>
+                                        <p id="chatUserName" class="chat-user-name"></p>
+                                        <p id="chatUserRole" class="chat-user-role"></p>
+                                    </div>
+                                </div>
+                                <a id="chatItem" class="chat-item" href="#">
+                                    <img id="chatItemImg" class="chat-item-img" alt="">
+                                    <div>
+                                        <p id="chatItemTitle" class="chat-item-title"></p>
+                                        <p id="chatItemPrice" class="chat-item-price"></p>
+                                    </div>
+                                </a>
+                            </header>
+
+                            <!--Middle: messages -->
+                            <div id="chatMessages" class="chat-messages" aria-live="polite">
+
+                            </div>
+
+                            <!-- Bottom: input. A <form>, so Enter = send later -->
+                            <form id="chatForm" class="chat-form">
+                                <input id="chatInput" type="text" placeholder="Type a message..." maxlength="1000"
+                                    autocomplete="off" aria-label="Message">
+                                <button type="submit" class="chat-send">Send</button>
+                            </form>
+                        </div>
+                    </section>
+                </div>
             </main>
         </div>
     </div>
+    <script type="module" src="messages.js"></script>
 </body>
+
 </html>

@@ -1,54 +1,535 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search & Filters - Ewha Market</title>
+
+    <title>Search - Ewha Market</title>
+
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="discovery.css">
+
+    <script src="discovery.js" defer></script>
 </head>
-<body>
+
+<body class="discovery-page search-page">
+
     <div class="app-layout">
+
+        <!-- SIDEBAR -->
+
         <aside class="sidebar">
-            <a href="index.html" class="brand-logo">🌸 Ewha<br>Market</a>
+
+            <!-- SHARED EWHA FLOWER LOGO -->
+
+            <a href="index.html" class="brand-logo">
+
+                <svg class="brand-flower"
+                     viewBox="4 4 56 56"
+                     width="44"
+                     height="44"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2.5"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     aria-hidden="true">
+
+                    <path d="M32 32 C24 21, 22 9, 28.5 6 C30.8 5, 32 8, 32 8 C32 8, 33.2 5, 35.5 6 C42 9, 40 21, 32 32 Z"/>
+
+                    <path d="M32 32 C24 21, 22 9, 28.5 6 C30.8 5, 32 8, 32 8 C32 8, 33.2 5, 35.5 6 C42 9, 40 21, 32 32 Z"
+                          transform="rotate(72 32 32)"/>
+
+                    <path d="M32 32 C24 21, 22 9, 28.5 6 C30.8 5, 32 8, 32 8 C32 8, 33.2 5, 35.5 6 C42 9, 40 21, 32 32 Z"
+                          transform="rotate(144 32 32)"/>
+
+                    <path d="M32 32 C24 21, 22 9, 28.5 6 C30.8 5, 32 8, 32 8 C32 8, 33.2 5, 35.5 6 C42 9, 40 21, 32 32 Z"
+                          transform="rotate(216 32 32)"/>
+
+                    <path d="M32 32 C24 21, 22 9, 28.5 6 C30.8 5, 32 8, 32 8 C32 8, 33.2 5, 35.5 6 C42 9, 40 21, 32 32 Z"
+                          transform="rotate(288 32 32)"/>
+
+                    <line x1="32" y1="32" x2="32" y2="19.5"
+                          stroke-width="1.8"/>
+
+                    <line x1="32" y1="32" x2="43.5" y2="28"
+                          stroke-width="1.8"/>
+
+                    <line x1="32" y1="32" x2="39" y2="41.5"
+                          stroke-width="1.8"/>
+
+                    <line x1="32" y1="32" x2="25" y2="41.5"
+                          stroke-width="1.8"/>
+
+                    <line x1="32" y1="32" x2="20.5" y2="28"
+                          stroke-width="1.8"/>
+
+                    <circle cx="32"
+                            cy="32"
+                            r="3.4"
+                            fill="#f1f5f9"
+                            stroke="currentColor"
+                            stroke-width="2.2"/>
+
+                </svg>
+
+                <span>Ewha<br>Market</span>
+
+            </a>
+
+            <!-- NAVIGATION -->
+
             <nav class="side-nav" aria-label="Main navigation">
-                <a href="index.html" class="side-link">🏠 Home</a>
-                <a href="categories.html" class="side-link active">🗂️ Categories</a>
-                <a href="messages.html" class="side-link">💬 Chat</a>
-                <a href="profile.html" class="side-link">👤 My Profile</a>
+
+                <a href="index.html" class="side-link">
+                    <span class="nav-emoji">🏠</span>
+                    Home
+                </a>
+
+                <a href="categories.html" class="side-link">
+                    <span class="nav-emoji">🗂️</span>
+                    Categories
+                </a>
+
+                <a href="messages.html" class="side-link">
+                    <span class="nav-emoji">💬</span>
+                    Chat
+                </a>
+
+                <a href="profile.html" class="side-link">
+                    <span class="nav-emoji">👤</span>
+                    My Profile
+                </a>
+
             </nav>
+
+            <!-- CAMPUS BANNER -->
+
             <div class="sidebar-banner">
-                <div class="banner-emoji">🎓</div>
+
+                <div class="campus-icon">🎓</div>
+
                 <p><strong>Ewha Campus Hub</strong></p>
-                <small>Verified students only<br>(@ewha.ac.kr / @ewhain.net)</small>
+
+                <small>
+                    Verified students only<br>
+                    (@ewha.ac.kr / @ewhain.net)
+                </small>
+
             </div>
+
         </aside>
 
+        <!-- MAIN WRAPPER -->
+
         <div class="main-wrapper">
+
+            <!-- TOPBAR -->
+
             <header class="topbar">
-                <form action="search.html" method="GET" class="search-bar">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" name="q" placeholder="Enter item title, course code, or keyword..." aria-label="Enter item title">
-                    <a href="search.html" class="filter-btn" title="Filters">🎛️</a>
+
+                <form id="searchForm"
+                      class="search-bar"
+                      action="search.html"
+                      method="GET"
+                      role="search">
+
+                    <span class="search-icon"
+                          aria-hidden="true">
+                        🔍
+                    </span>
+
+                    <input type="search"
+                           id="searchInput"
+                           name="q"
+                           placeholder="Enter item title, course code, or keyword..."
+                           aria-label="Search listings"
+                           autocomplete="off">
+
+                    <a href="#filters"
+                       class="filter-btn"
+                       title="Search filters"
+                       aria-label="Go to search filters">
+                        🎛️
+                    </a>
+
                 </form>
+
                 <div class="topbar-actions">
-                    <button id="langToggle" class="lang-btn" type="button">🌐 EN ▾</button>
-                    <a href="messages.html" class="icon-btn" title="Chat">💬</a>
-                    <a href="login.html" class="login-pill" title="Profile / Log In">👤 Log In</a>
+
+                    <button id="langToggle"
+                            class="lang-btn"
+                            type="button"
+                            title="Language support coming soon"
+                            disabled>
+                        🌐 EN ▾
+                    </button>
+
+                    <a href="messages.html"
+                       class="icon-btn"
+                       title="Chat"
+                       aria-label="Chat">
+                        💬
+                    </a>
+
+                    <a href="login.html"
+                       class="login-pill"
+                       title="Log In">
+                        👤 Log In
+                    </a>
+
                 </div>
+
             </header>
 
+            <!-- PAGE CONTENT -->
+
             <main class="page-content">
+
                 <div class="page-header">
-                    <h1>🔍 Search & Filter Results</h1>
-                    <p class="text-muted">Filter by Buy / Rent / Services, price range, condition, or course code</p>
+
+                    <h1>Search Listings</h1>
+
+                    <p class="text-muted">
+                        Find secondhand items, rentals,
+                        study materials, and student services
+                        within the Ewha community.
+                    </p>
+
                 </div>
 
-                <!-- Adriana: Add a filter bar and search results here -->
-                <section class="content-card">
-                    <p>Search results and filters go here...</p>
+                <!-- SEARCH FILTERS -->
+
+                <section id="filters"
+                         class="content-card"
+                         aria-label="Search filters">
+
+                    <div class="filter-grid">
+
+                        <!-- LISTING TYPE -->
+
+                        <div class="form-group">
+
+                            <label for="listingType"
+                                   class="form-label">
+                                Listing Type
+                            </label>
+
+                            <select id="listingType"
+                                    class="form-control">
+
+                                <option value="all">All Types</option>
+                                <option value="buy">Buy &amp; Sell</option>
+                                <option value="rent">Rent &amp; Lend</option>
+                                <option value="services">Student Services</option>
+                                <option value="notes">Study Materials</option>
+
+                            </select>
+
+                        </div>
+
+                        <!-- CATEGORY FILTER -->
+
+                        <div class="form-group">
+
+                            <label for="categoryFilter"
+                                   class="form-label">
+                                Category
+                            </label>
+
+                            <select id="categoryFilter"
+                                    class="form-control">
+
+                                <option value="all">
+                                    All Categories
+                                </option>
+
+                                <optgroup label="Buy &amp; Sell">
+
+                                    <option value="fashion">Clothes</option>
+                                    <option value="shoes">Shoes</option>
+                                    <option value="accessories">Bags &amp; Accessories</option>
+                                    <option value="beauty">Beauty &amp; Makeup</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="furniture">Home &amp; Living</option>
+                                    <option value="books">Books &amp; Textbooks</option>
+                                    <option value="hobbies">Toys &amp; Hobbies</option>
+                                    <option value="sports">Sports &amp; Fitness</option>
+                                    <option value="stationery">Stationery</option>
+                                    <option value="free-items">Free Items</option>
+                                    <option value="other">Other</option>
+
+                                </optgroup>
+
+                                <optgroup label="Rent &amp; Lend">
+
+                                    <option value="calculators">Calculators</option>
+                                    <option value="cameras">Cameras &amp; Electronics</option>
+                                    <option value="event-equipment">Event Equipment</option>
+
+                                </optgroup>
+
+                                <optgroup label="Student Services">
+
+                                    <option value="tutoring">Tutoring</option>
+                                    <option value="language">Language Exchange</option>
+                                    <option value="translation">Translation</option>
+                                    <option value="career">Career &amp; Portfolio Help</option>
+                                    <option value="study-groups">Study Groups</option>
+
+                                </optgroup>
+
+                                <optgroup label="Study Materials">
+
+                                    <option value="study">Lecture Notes</option>
+                                    <option value="past-papers">Past Papers / Jokbo</option>
+                                    <option value="study-guides">Study Guides</option>
+                                    <option value="lab-supplies">Lab &amp; Engineering Supplies</option>
+
+                                </optgroup>
+
+                            </select>
+
+                        </div>
+
+                        <!-- PRICE RANGE -->
+
+                        <div class="form-group">
+
+                            <label for="minPrice"
+                                   class="form-label">
+                                Price Range (&#8361;)
+                            </label>
+
+                            <div class="price-range">
+
+                                <input type="number"
+                                       id="minPrice"
+                                       class="form-control"
+                                       placeholder="Min"
+                                       aria-label="Minimum price"
+                                       min="0"
+                                       step="1">
+
+                                <span aria-hidden="true">-</span>
+
+                                <input type="number"
+                                       id="maxPrice"
+                                       class="form-control"
+                                       placeholder="Max"
+                                       aria-label="Maximum price"
+                                       min="0"
+                                       step="1">
+
+                            </div>
+
+                        </div>
+
+                        <!-- SORTING -->
+
+                        <div class="form-group">
+
+                            <label for="sortFilter"
+                                   class="form-label">
+                                Sort By
+                            </label>
+
+                            <select id="sortFilter"
+                                    class="form-control">
+
+                                <option value="newest">Newest First</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                                <option value="name">Name: A to Z</option>
+
+                            </select>
+
+                        </div>
+
+                        <!-- FILTER BUTTONS -->
+
+                        <div class="filter-actions">
+
+                            <button id="applyFilters"
+                                    type="button"
+                                    class="btn-ewha">
+                                Apply
+                            </button>
+
+                            <button id="resetFilters"
+                                    type="button"
+                                    class="btn-outline-ewha">
+                                Reset
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <!-- ADVANCED FILTERS -->
+
+                    <details class="more-filters">
+
+                        <summary>More Filters</summary>
+
+                        <div class="extra-grid">
+
+                            <!-- CONDITION -->
+
+                            <div id="conditionGroup"
+                                 class="form-group">
+
+                                <label for="conditionFilter"
+                                       class="form-label">
+                                    Condition
+                                </label>
+
+                                <select id="conditionFilter"
+                                        class="form-control">
+
+                                    <option value="all">All Conditions</option>
+                                    <option value="new">New</option>
+                                    <option value="like-new">Like New</option>
+                                    <option value="good">Good</option>
+                                    <option value="used">Used</option>
+
+                                </select>
+
+                            </div>
+
+                            <!-- COURSE SEARCH -->
+
+                            <div class="form-group">
+
+                                <label for="courseSearch"
+                                       class="form-label">
+                                    Course Name / Code
+                                </label>
+
+                                <input type="search"
+                                       id="courseSearch"
+                                       class="form-control"
+                                       placeholder="e.g. Python, 38403"
+                                       autocomplete="off">
+
+                            </div>
+
+                            <!-- FREE OR PAID SERVICES -->
+
+                            <div id="paymentGroup"
+                                 class="form-group">
+
+                                <label for="paymentFilter"
+                                       class="form-label">
+                                    Service Payment
+                                </label>
+
+                                <select id="paymentFilter"
+                                        class="form-control">
+
+                                    <option value="all">All Services</option>
+                                    <option value="free">Free</option>
+                                    <option value="paid">Paid</option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </details>
+
+                    <!-- VALIDATION ERROR -->
+
+                    <p id="filterError"
+                       class="filter-error hidden"
+                       role="alert">
+                    </p>
+
                 </section>
+
+                <!-- SEARCH RESULTS -->
+
+                <section class="results-panel"
+                         aria-label="Search results">
+
+                    <div class="results-heading">
+
+                        <h2>Search Results</h2>
+
+                        <span id="resultCount"
+                              role="status"
+                              aria-live="polite">
+                            Loading listings...
+                        </span>
+
+                    </div>
+
+                    <!-- Listings generated by discovery.js -->
+
+                    <div id="searchResults"
+                         class="items-grid">
+                    </div>
+
+                    <!-- EMPTY STATE -->
+
+                    <div id="emptyState"
+                         class="empty-state hidden">
+
+                        <svg width="48"
+                             height="48"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="#64748b"
+                             stroke-width="1.5"
+                             stroke-linecap="round"
+                             aria-hidden="true">
+
+                            <circle cx="10.5"
+                                    cy="10.5"
+                                    r="6.5"/>
+
+                            <path d="M16 16L21 21"/>
+
+                            <path d="M8 10.5H13"/>
+
+                        </svg>
+
+                        <h3>No results found</h3>
+
+                        <p>
+                            Try a different keyword,
+                            change your filters, or
+                            broaden your search.
+                        </p>
+
+                    </div>
+
+                    <noscript>
+
+                        <p>
+                            Please enable JavaScript to use
+                            the search and filtering features.
+                        </p>
+
+                    </noscript>
+
+                    <p class="demo-note">
+                        Note: These are sample listings for
+                        the Ewha Market prototype.
+                        Real listings will be connected
+                        through Firebase later.
+                    </p>
+
+                </section>
+
             </main>
+
         </div>
+
     </div>
+
 </body>
+
 </html>
