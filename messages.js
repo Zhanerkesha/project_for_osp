@@ -304,6 +304,7 @@ backButton.addEventListener("click", closeChat);
 
 // ---------- 9. Right side: open / close ----------
 function openChat(id) {
+    clearPending();
     const conversation = findConversation(id);
     if (!conversation) return;
 
@@ -353,14 +354,154 @@ function renderMessages() {
 
     allMessages(conversation).forEach((msg) => {
         const bubble = el("div", "chat-bubble " + (msg.mine ? "is-mine" : "is-theirs"));
-        bubble.append(
-            el("p", "chat-bubble-text", msg.text),
-            el("span", "chat-bubble-time", formatBubbleTime(msg.time))
-        );
+
+        (msg.attachments || []).forEach((att) => bubble.appendChild(renderAttachment(att)));
+        if (msg.text) bubble.appendChild(el("p", "chat-bubble-text", msg.text));
+        bubble.appendChild(el("span", "chat-bubble-time", formatBubbleTime(msg.time)));
+
         messagesEl.appendChild(bubble);
     });
 
     messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+// ---------- 10b. Attachments (sample: only in this browser tab) ----------
+const fileInput = document.getElementById("chatFile");
+const attachBtn = document.getElementById("chatAttach");
+const attachPreview = document.getElementById("chatAttachPreview");
+
+const MAX_FILES = 5;
+const MAX_SIZE_MB = 20;
+let pendingFiles = [];          // [{ kind, name, size, url }] picked but not sent yet
+
+function fileKind(file) {
+    if (file.type.startsWith("image/")) return "image";
+    if (file.type.startsWith("video/")) return "video";
+    return "file";
+}
+
+function formatSize(bytes) {
+    if (bytes < 1024) return bytes + " B";
+    if (bytes < 1024 * 1024) return Math.round(bytes / 1024) + " KB";
+    return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+}
+
+function scrollToBottom() {
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+// Open the hidden file picker
+attachBtn.addEventListener("click", () => fileInput.click());
+
+fileInput.addEventListener("change", () => {
+    let error = "";
+
+    for (const file of fileInput.files) {
+        if (pendingFiles.length >= MAX_FILES) {
+            error = "You can attach up to " + MAX_FILES + " files.";
+            break;
+        }
+        if (file.size > MAX_SIZE_MB * 1024 * 1024) {
+            error = file.name + " is larger than " + MAX_SIZE_MB + " MB.";
+            continue;
+        }
+        pendingFiles.push({
+            kind: fileKind(file),
+            name: file.name,
+            size: file.size,
+            url: URL.createObjectURL(file)   // temporary local link to the file
+        });
+    }
+
+    fileInput.value = "";        // so picking the same file again still fires "change"
+    renderPending(error);
+    input.focus();
+});
+
+// Small preview chips above the input
+function renderPending(errorText = "") {
+    attachPreview.replaceChildren();
+
+    pendingFiles.forEach((att, index) => {
+        const chip = el("div", "attach-chip");
+
+        if (att.kind === "image") {
+            const thumb = el("img", "attach-chip-thumb");
+            thumb.src = att.url;
+            thumb.alt = "";
+            chip.appendChild(thumb);
+        } else {
+            chip.appendChild(el("span", "attach-chip-icon", att.kind === "video" ? "🎬" : "📄"));
+        }
+
+        chip.appendChild(el("span", "attach-chip-name", att.name));
+
+        const remove = el("button", "attach-chip-remove", "✕");
+        remove.type = "button";
+        remove.setAttribute("aria-label", "Remove " + att.name);
+        remove.addEventListener("click", () => {
+            URL.revokeObjectURL(att.url);    // free the memory
+            pendingFiles.splice(index, 1);
+            renderPending();
+        });
+        chip.appendChild(remove);
+
+        attachPreview.appendChild(chip);
+    });
+
+    if (errorText) attachPreview.appendChild(el("p", "attach-error", errorText));
+    attachPreview.hidden = attachPreview.children.length === 0;
+}
+
+// Throw away picked files (e.g. when switching to another chat)
+function clearPending() {
+    pendingFiles.forEach((att) => URL.revokeObjectURL(att.url));
+    pendingFiles = [];
+    renderPending();
+}
+
+// One attachment inside a bubble
+function renderAttachment(att) {
+    if (att.kind === "image") {
+        const link = el("a", "chat-bubble-media");
+        link.href = att.url;
+        link.target = "_blank";
+        link.rel = "noopener";
+        const img = el("img", "chat-bubble-img");
+        img.src = att.url;
+        img.alt = att.name;
+        img.addEventListener("load", scrollToBottom);   // images load late -> re-scroll
+        link.appendChild(img);
+        return link;
+    }
+
+    if (att.kind === "video") {
+        const video = el("video", "chat-bubble-video");
+        video.src = att.url;
+        video.controls = true;
+        video.preload = "metadata";
+        video.playsInline = true;
+        video.addEventListener("loadedmetadata", scrollToBottom);
+        return video;
+    }
+
+    const link = el("a", "chat-bubble-file");
+    link.href = att.url;
+    link.download = att.name;          // clicking downloads it with its real name
+    link.append(
+        el("span", "chat-bubble-file-icon", "📄"),
+        el("span", "chat-bubble-file-name", att.name),
+        el("span", "chat-bubble-file-size", formatSize(att.size))
+    );
+    return link;
+}
+
+// Text for the chat list preview when a message has no text
+function previewText(msg) {
+    if (msg.text) return msg.text;
+    const att = (msg.attachments || [])[0];
+    if (!att) return "";
+    return att.kind === "image" ? "📷 Photo" : att.kind === "video" ? "🎬 Video" : "📄 " + att.name;
 }
 
 // ---------- 11. Sending (sample: only on this page) ----------
@@ -368,14 +509,21 @@ form.addEventListener("submit", (event) => {
     event.preventDefault();
 
     const text = input.value.trim();
-    if (!text || !openId) return;
+    if ((!text && pendingFiles.length === 0) || !openId) return;
 
     if (!typedMessages[openId]) typedMessages[openId] = [];
-    typedMessages[openId].push({ mine: true, text: text, time: new Date() });
+    typedMessages[openId].push({
+        mine: true,
+        text: text,
+        time: new Date(),
+        attachments: pendingFiles        // links move into the message, so don't revoke them
+    });
 
+    pendingFiles = [];
+    renderPending();
     input.value = "";
     renderMessages();
-    renderChatList();          // update the preview text in the list
+    renderChatList();
 });
 
 // ---------- 12. Add a person by email ----------

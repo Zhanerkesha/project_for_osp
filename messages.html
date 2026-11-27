@@ -146,10 +146,27 @@
                             <div id="chatMessages" class="chat-messages" aria-live="polite"></div>
 
                             <!-- Bottom: input. A <form>, so Enter = send -->
+                            <!-- Picked files appear here before sending -->
+                            <div id="chatAttachPreview" class="chat-attach-preview" hidden></div>
+
+                            <!-- Bottom: input. A <form>, so Enter = send -->
                             <form id="chatForm" class="chat-form">
                                 <input id="chatInput" type="text" placeholder="Type a message..." maxlength="1000"
                                     autocomplete="off" aria-label="Message"
                                     data-i18n-placeholder="chat.input.placeholder" data-i18n-aria="chat.input.aria">
+
+                                <!-- Hidden real file picker; the 📎 button opens it -->
+                                <input id="chatFile" type="file" multiple hidden>
+                                <button id="chatAttach" type="button" class="chat-attach" aria-label="Attach file"
+                                    data-i18n-aria="chat.attach">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        aria-hidden="true">
+                                        <path
+                                            d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+                                    </svg>
+                                </button>
+
                                 <button type="submit" class="chat-send" data-i18n="chat.send">Send</button>
                             </form>
                         </div>

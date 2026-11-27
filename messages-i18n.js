@@ -58,6 +58,7 @@
             "chat.role.buyer": "Buyer",
             "chat.free": "Free",
             "chat.yesterday": "Yesterday",
+            "chat.attach" : "Attach file",
 
             // sample messages ({name} = the other person's nickname)
             "chat.sampleNote": "Sample chat · messages are not saved",
@@ -108,6 +109,7 @@
             "chat.role.buyer": "구매자",
             "chat.free": "무료",
             "chat.yesterday": "어제",
+            "chat.attach" : "파일 첨부",
 
             "chat.sampleNote": "샘플 채팅 · 메시지는 저장되지 않아요",
 
