@@ -1,9 +1,11 @@
-/* Ewha Market - top bar login state (works on top of the original style.css) */
+/* Ewha Market - top bar login state (works on top of the original style.css)
+   Mobile-first: phones show only "Log out" (the sidebar already links to the profile).
+   The name chip appears from 768px. */
 
 .user-chip,
 .logout-btn {
   display: inline-block;
-  padding: 8px 16px;
+  padding: 0.5rem 0.75rem;
   border-radius: 999px;
   font-family: inherit;
   font-size: 0.9rem;
@@ -13,8 +15,10 @@
   text-decoration: none;
 }
 
+/* Phone: hide the name chip */
 .user-chip {
-  max-width: 170px;
+  display: none;
+  max-width: 10.625rem;
   overflow: hidden;
   text-overflow: ellipsis;
   background-color: var(--ewha-green);
@@ -44,13 +48,14 @@
   outline-offset: 2px;
 }
 
-@media (max-width: 480px) {
+/* Tablet and up: show the name chip, roomier buttons */
+@media (min-width: 768px) {
   .user-chip {
-    max-width: 100px;
-    padding: 8px 12px;
+    display: inline-block;
   }
 
+  .user-chip,
   .logout-btn {
-    padding: 8px 12px;
+    padding: 0.5rem 1rem;
   }
 }
