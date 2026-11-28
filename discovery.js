@@ -470,8 +470,18 @@
             ["past-papers", "Past Papers / Jokbo"],
             ["study-guides", "Study Guides"],
             ["lab-supplies", "Lab & Engineering Supplies"]
+        ],
+
+        free: [
+            ["free-items", "Free Items"]
         ]
 
+    };
+    const badgeClasses = {
+        buy: "badge-buy",
+        rent: "badge-rent",
+        services: "badge-service",
+        notes: "badge-notes"
     };
 
     const typeLabels = {
@@ -481,18 +491,11 @@
         notes: "STUDY MATERIALS"
     };
 
-    const badgeClasses = {
-        buy: "badge-buy",
-        rent: "badge-rent",
-        services: "badge-service",
-        notes: "badge-notes"
-    };
-
     const conditionLabels = {
-        new: "New",
+        "new": "New",
         "like-new": "Like New",
-        good: "Good",
-        used: "Used"
+        "good": "Good",
+        "used": "Used"
     };
 
     // =====================================
@@ -776,7 +779,9 @@
         const badge = createElement(
             "span",
             "item-badge " + badgeClasses[listing.type],
-            typeLabels[listing.type]
+            listing.type === "buy" && listing.price === 0
+                ? "FREE"
+                : typeLabels[listing.type]
         );
 
         imageWrapper.append(image, badge);
@@ -874,7 +879,7 @@
 
     function renderResults(results) {
 
-        searchResults.replaceChildren();
+        searchResults.innerHTML = "";
 
         resultCount.textContent =
             results.length +
@@ -882,32 +887,27 @@
                 ? " listing found"
                 : " listings found");
 
-        const hasResults = results.length > 0;
+        if (results.length === 0) {
 
-        emptyState.classList.toggle(
-            "hidden",
-            hasResults
-        );
+            emptyState.classList.remove("hidden");
+            searchResults.classList.add("hidden");
 
-        searchResults.classList.toggle(
-            "hidden",
-            !hasResults
-        );
+            return;
+        }
 
-        if (!hasResults) return;
+        emptyState.classList.add("hidden");
 
-        const fragment =
-            document.createDocumentFragment();
+        searchResults.classList.remove("hidden");
+
+        searchResults.style.display = "grid";
 
         results.forEach(listing => {
 
-            fragment.appendChild(
-                createListingCard(listing)
-            );
+            const card = createListingCard(listing);
+
+            searchResults.appendChild(card);
 
         });
-
-        searchResults.appendChild(fragment);
     }
 
     // =====================================
@@ -1137,7 +1137,16 @@
 
             // LISTING TYPE
 
-            if (
+            if (type === "free") {
+
+                if (
+                    listing.type !== "buy" ||
+                    listing.price !== 0
+                ) {
+                    return false;
+                }
+
+            } else if (
                 type !== "all" &&
                 listing.type !== type
             ) {
@@ -1464,6 +1473,8 @@
     // EVENT LISTENERS
     // =====================================
 
+    // Search when submitting the search form
+
     searchForm.addEventListener(
         "submit",
         function (event) {
@@ -1475,10 +1486,8 @@
         }
     );
 
-    searchInput.addEventListener(
-        "input",
-        applyFilters
-    );
+
+    // Update category options without applying filters
 
     listingType.addEventListener(
         "change",
@@ -1488,49 +1497,54 @@
 
             updateFilterVisibility();
 
+        }
+    );
+
+
+    // Apply filters when clicking Apply
+
+    applyButton.addEventListener(
+        "click",
+        function (event) {
+
+            event.preventDefault();
+
             applyFilters();
 
         }
     );
 
-    categoryFilter.addEventListener(
-        "change",
-        applyFilters
-    );
 
-    conditionFilter.addEventListener(
-        "change",
-        applyFilters
-    );
-
-    paymentFilter.addEventListener(
-        "change",
-        applyFilters
-    );
-
-    sortFilter.addEventListener(
-        "change",
-        applyFilters
-    );
-
-    courseSearch.addEventListener(
-        "input",
-        applyFilters
-    );
-
-    applyButton.addEventListener(
-        "click",
-        applyFilters
-    );
+    // Reset all filters and display all listings
 
     resetButton.addEventListener(
         "click",
-        resetFilters
+        function (event) {
+
+            event.preventDefault();
+
+            resetFilters();
+
+        }
     );
 
-    [minPrice, maxPrice].forEach(input => {
 
-        input.addEventListener(
+    // Apply filters when pressing Enter
+
+    [
+        searchInput,
+        listingType,
+        categoryFilter,
+        conditionFilter,
+        paymentFilter,
+        sortFilter,
+        courseSearch,
+        minPrice,
+        maxPrice
+
+    ].forEach(element => {
+
+        element.addEventListener(
             "keydown",
             function (event) {
 
@@ -1546,7 +1560,7 @@
         );
 
     });
-
+    
     // =====================================
     // INITIALIZE SEARCH PAGE
     // =====================================
@@ -1559,4 +1573,4 @@
 
 // =========================================
 // END OF DISCOVERY JAVASCRIPT
-// =========================================
+// ===================
