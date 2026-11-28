@@ -3,27 +3,26 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Search & Discovery - Ewha Market</title>
+    <title>Search - Ewha Market</title>
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="discovery.css">
+
+    <script src="discovery.js" defer></script>
+    <script src="language.js" defer></script>
 </head>
 
-<body class="discovery-page">
+<body class="discovery-page search-page">
 
     <div class="app-layout">
 
-        <!-- =====================================
-                     SIDEBAR
-        ====================================== -->
+        <!-- SIDEBAR -->
 
         <aside class="sidebar">
 
-            <!-- ORIGINAL EWHA FLOWER LOGO -->
+            <!-- SHARED EWHA FLOWER LOGO -->
 
             <a href="index.html" class="brand-logo">
 
@@ -52,24 +51,19 @@
                     <path d="M32 32 C24 21, 22 9, 28.5 6 C30.8 5, 32 8, 32 8 C32 8, 33.2 5, 35.5 6 C42 9, 40 21, 32 32 Z"
                           transform="rotate(288 32 32)"/>
 
-                    <line x1="32" y1="32"
-                          x2="32" y2="19.5"
+                    <line x1="32" y1="32" x2="32" y2="19.5"
                           stroke-width="1.8"/>
 
-                    <line x1="32" y1="32"
-                          x2="43.5" y2="28"
+                    <line x1="32" y1="32" x2="43.5" y2="28"
                           stroke-width="1.8"/>
 
-                    <line x1="32" y1="32"
-                          x2="39" y2="41.5"
+                    <line x1="32" y1="32" x2="39" y2="41.5"
                           stroke-width="1.8"/>
 
-                    <line x1="32" y1="32"
-                          x2="25" y2="41.5"
+                    <line x1="32" y1="32" x2="25" y2="41.5"
                           stroke-width="1.8"/>
 
-                    <line x1="32" y1="32"
-                          x2="20.5" y2="28"
+                    <line x1="32" y1="32" x2="20.5" y2="28"
                           stroke-width="1.8"/>
 
                     <circle cx="32"
@@ -85,655 +79,360 @@
 
             </a>
 
-
             <!-- NAVIGATION -->
 
-            <nav class="side-nav"
-                 aria-label="Main navigation">
+            <nav class="side-nav" aria-label="Main navigation">
 
-                <a href="index.html"
-                   class="side-link">
-
-                    🏠 <span data-i18n="home">Home</span>
-
+                <a href="index.html" class="side-link">
+                    <span class="nav-emoji">🏠</span>
+                    Home
                 </a>
 
-                <a href="categories.html"
-                   class="side-link active">
-
-                    🗂️ <span data-i18n="categories">Categories</span>
-
+                <a href="categories.html" class="side-link">
+                    <span class="nav-emoji">🗂️</span>
+                    Categories
                 </a>
 
-                <a href="messages.html"
-                   class="side-link">
-
-                    💬 <span data-i18n="chat">Chat</span>
-
+                <a href="messages.html" class="side-link">
+                    <span class="nav-emoji">💬</span>
+                    Chat
                 </a>
 
-                <a href="profile.html"
-                   class="side-link">
-
-                    👤 <span data-i18n="profile">My Profile</span>
-
+                <a href="profile.html" class="side-link">
+                    <span class="nav-emoji">👤</span>
+                    My Profile
                 </a>
 
             </nav>
-
 
             <!-- CAMPUS BANNER -->
 
             <div class="sidebar-banner">
 
-                <div class="banner-emoji">🎓</div>
+                <div class="campus-icon">🎓</div>
 
-                <p>
-                    <strong data-i18n="campusHub">
-                        Ewha Campus Hub
-                    </strong>
-                </p>
+                <p><strong>Ewha Campus Hub</strong></p>
 
                 <small>
-
-                    <span data-i18n="verifiedStudents">
-                        Verified students only
-                    </span>
-
-                    <br>
-
+                    Verified students only<br>
                     (@ewha.ac.kr / @ewhain.net)
-
                 </small>
 
             </div>
 
         </aside>
 
-
-        <!-- =====================================
-                    MAIN WRAPPER
-        ====================================== -->
+        <!-- MAIN WRAPPER -->
 
         <div class="main-wrapper">
-
 
             <!-- TOPBAR -->
 
             <header class="topbar">
 
                 <form id="searchForm"
+                      class="search-bar"
                       action="search.html"
                       method="GET"
-                      class="search-bar">
+                      role="search">
 
-                    <span aria-hidden="true">🔍</span>
+                    <span class="search-icon"
+                          aria-hidden="true">
+                        🔍
+                    </span>
 
-                    <input
-                        type="text"
-                        id="searchInput"
-                        name="q"
-                        placeholder="Enter item title, course code, or keyword..."
-                        data-i18n-placeholder="searchPlaceholder"
-                        aria-label="Search listings"
-                    >
+                    <input type="search"
+                           id="searchInput"
+                           name="q"
+                           placeholder="Enter item title, course code, or keyword..."
+                           aria-label="Search listings"
+                           autocomplete="off">
 
                     <a href="#filters"
                        class="filter-btn"
-                       title="Filters"
+                       title="Search filters"
                        aria-label="Go to search filters">
-
-                        <span aria-hidden="true">🎛️</span>
-
+                        🎛️
                     </a>
 
                 </form>
 
-
                 <div class="topbar-actions">
 
-
-                    <!-- LANGUAGE TOGGLE -->
-
-                    <button
-                        id="langToggle"
-                        class="lang-btn"
-                        type="button"
-                        title="Switch language">
-
-                        🌐 EN
-
+                    <button id="langToggle"
+                            class="lang-btn"
+                            type="button"
+                            title="Switch language"
+                            aria-label="Switch language">
+                        🌐 EN ▾
                     </button>
-
-
-                    <!-- CHAT -->
 
                     <a href="messages.html"
                        class="icon-btn"
                        title="Chat"
                        aria-label="Chat">
-
-                        <span aria-hidden="true">💬</span>
-
+                        💬
                     </a>
-
-
-                    <!-- LOGIN -->
 
                     <a href="login.html"
                        class="login-pill"
                        title="Log In">
-
-                        👤 <span data-i18n="login">Log In</span>
-
+                        👤 Log In
                     </a>
 
                 </div>
 
             </header>
 
-
-            <!-- =====================================
-                        PAGE CONTENT
-            ====================================== -->
+            <!-- PAGE CONTENT -->
 
             <main class="page-content">
 
-
-                <!-- PAGE HEADER -->
-
                 <div class="page-header">
 
-                    <h1 data-i18n="searchDiscovery">
-                        Search &amp; Discovery
-                    </h1>
+                    <h1>Search Listings</h1>
 
-                    <p class="text-muted"
-                       data-i18n="searchIntro">
-
+                    <p class="text-muted">
                         Find secondhand items, rentals,
                         study materials, and student services
                         within the Ewha community.
-
                     </p>
 
                 </div>
 
+                <!-- SEARCH FILTERS -->
 
-                <!-- =================================
-                        COMPACT FILTERS
-                ================================== -->
-
-                <section
-                    class="content-card"
-                    id="filters"
-                    aria-label="Listing filters">
+                <section id="filters"
+                         class="content-card"
+                         aria-label="Search filters">
 
                     <div class="filter-grid">
-
 
                         <!-- LISTING TYPE -->
 
                         <div class="form-group">
 
-                            <label
-                                for="listingType"
-                                class="form-label"
-                                data-i18n="listingType">
-
+                            <label for="listingType"
+                                   class="form-label">
                                 Listing Type
-
                             </label>
 
-                            <select
-                                id="listingType"
-                                class="form-control">
+                            <select id="listingType"
+                                    class="form-control">
 
-                                <option value="all"
-                                        data-i18n="allTypes">
-                                    All Types
-                                </option>
-
-                                <option value="buy"
-                                        data-i18n="buySell">
-                                    Buy &amp; Sell
-                                </option>
-
-                                <option value="rent"
-                                        data-i18n="rentLend">
-                                    Rent &amp; Lend
-                                </option>
-
-                                <option value="services"
-                                        data-i18n="studentServices">
-                                    Student Services
-                                </option>
-
-                                <option value="notes"
-                                        data-i18n="studyMaterials">
-                                    Study Materials
-                                </option>
+                                <option value="all">All Types</option>
+                                <option value="buy">Buy &amp; Sell</option>
+                                <option value="rent">Rent &amp; Lend</option>
+                                <option value="services">Student Services</option>
+                                <option value="notes">Study Materials</option>
+                                <option value="free">Free Items</option>
 
                             </select>
 
                         </div>
 
-
-                        <!-- CATEGORY -->
+                        <!-- CATEGORY FILTER -->
 
                         <div class="form-group">
 
-                            <label
-                                for="categoryFilter"
-                                class="form-label"
-                                data-i18n="category">
-
+                            <label for="categoryFilter"
+                                   class="form-label">
                                 Category
-
                             </label>
 
-                            <select
-                                id="categoryFilter"
-                                class="form-control">
+                            <select id="categoryFilter"
+                                    class="form-control">
 
-                                <option value="all"
-                                        data-i18n="allCategories">
-
+                                <option value="all">
                                     All Categories
-
                                 </option>
 
+                                <optgroup label="Buy &amp; Sell">
 
-                                <!-- BUY AND SELL -->
-
-                                <optgroup
-                                    label="Buy & Sell"
-                                    data-i18n-label="buySell">
-
-                                    <option value="fashion"
-                                            data-i18n="clothes">
-                                        Clothes
-                                    </option>
-
-                                    <option value="shoes"
-                                            data-i18n="shoes">
-                                        Shoes
-                                    </option>
-
-                                    <option value="accessories"
-                                            data-i18n="accessories">
-                                        Bags &amp; Accessories
-                                    </option>
-
-                                    <option value="beauty"
-                                            data-i18n="beauty">
-                                        Beauty &amp; Makeup
-                                    </option>
-
-                                    <option value="electronics"
-                                            data-i18n="electronics">
-                                        Electronics
-                                    </option>
-
-                                    <option value="furniture"
-                                            data-i18n="homeLiving">
-                                        Home &amp; Living
-                                    </option>
-
-                                    <option value="books"
-                                            data-i18n="books">
-                                        Books
-                                    </option>
-
-                                    <option value="hobbies"
-                                            data-i18n="hobbies">
-                                        Toys &amp; Hobbies
-                                    </option>
-
-                                    <option value="sports"
-                                            data-i18n="sports">
-                                        Sports &amp; Fitness
-                                    </option>
-
-                                    <option value="stationery"
-                                            data-i18n="stationery">
-                                        Stationery
-                                    </option>
-
-                                    <option value="free-items"
-                                            data-i18n="freeItems">
-                                        Free Items
-                                    </option>
-
-                                    <option value="other"
-                                            data-i18n="other">
-                                        Other
-                                    </option>
+                                    <option value="fashion">Clothes</option>
+                                    <option value="shoes">Shoes</option>
+                                    <option value="accessories">Bags &amp; Accessories</option>
+                                    <option value="beauty">Beauty &amp; Makeup</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="furniture">Home &amp; Living</option>
+                                    <option value="books">Books &amp; Textbooks</option>
+                                    <option value="hobbies">Toys &amp; Hobbies</option>
+                                    <option value="sports">Sports &amp; Fitness</option>
+                                    <option value="stationery">Stationery</option>
+                                    <option value="free-items">Free Items</option>
+                                    <option value="other">Other</option>
 
                                 </optgroup>
 
+                                <optgroup label="Rent &amp; Lend">
 
-                                <!-- RENT AND LEND -->
-
-                                <optgroup
-                                    label="Rent & Lend"
-                                    data-i18n-label="rentLend">
-
-                                    <option value="calculators"
-                                            data-i18n="calculators">
-                                        Calculators
-                                    </option>
-
-                                    <option value="cameras"
-                                            data-i18n="cameras">
-                                        Cameras &amp; Electronics
-                                    </option>
-
-                                    <option value="event-equipment"
-                                            data-i18n="eventEquipment">
-                                        Event Equipment
-                                    </option>
+                                    <option value="calculators">Calculators</option>
+                                    <option value="cameras">Cameras &amp; Electronics</option>
+                                    <option value="event-equipment">Event Equipment</option>
 
                                 </optgroup>
 
+                                <optgroup label="Student Services">
 
-                                <!-- STUDENT SERVICES -->
-
-                                <optgroup
-                                    label="Student Services"
-                                    data-i18n-label="studentServices">
-
-                                    <option value="tutoring"
-                                            data-i18n="tutoring">
-                                        Tutoring
-                                    </option>
-
-                                    <option value="language"
-                                            data-i18n="languageExchange">
-                                        Language Exchange
-                                    </option>
-
-                                    <option value="translation"
-                                            data-i18n="translation">
-                                        Translation
-                                    </option>
-
-                                    <option value="career"
-                                            data-i18n="career">
-                                        Career &amp; Portfolio Help
-                                    </option>
-
-                                    <option value="study-groups"
-                                            data-i18n="studyGroups">
-                                        Study Groups
-                                    </option>
+                                    <option value="tutoring">Tutoring</option>
+                                    <option value="language">Language Exchange</option>
+                                    <option value="translation">Translation</option>
+                                    <option value="career">Career &amp; Portfolio Help</option>
+                                    <option value="study-groups">Study Groups</option>
 
                                 </optgroup>
 
+                                <optgroup label="Study Materials">
 
-                                <!-- STUDY MATERIALS -->
-
-                                <optgroup
-                                    label="Study Materials"
-                                    data-i18n-label="studyMaterials">
-
-                                    <option value="study"
-                                            data-i18n="lectureNotes">
-                                        Lecture Notes
-                                    </option>
-
-                                    <option value="past-papers"
-                                            data-i18n="pastPapers">
-                                        Past Papers / Jokbo
-                                    </option>
-
-                                    <option value="study-guides"
-                                            data-i18n="studyGuides">
-                                        Study Guides
-                                    </option>
-
-                                    <option value="lab-supplies"
-                                            data-i18n="labSupplies">
-                                        Lab &amp; Engineering Supplies
-                                    </option>
+                                    <option value="study">Lecture Notes</option>
+                                    <option value="past-papers">Past Papers / Jokbo</option>
+                                    <option value="study-guides">Study Guides</option>
+                                    <option value="lab-supplies">Lab &amp; Engineering Supplies</option>
 
                                 </optgroup>
 
                             </select>
 
                         </div>
-
 
                         <!-- PRICE RANGE -->
 
                         <div class="form-group">
 
-                            <label
-                                for="minPrice"
-                                class="form-label"
-                                data-i18n="price">
-
-                                Price (₩)
-
+                            <label for="minPrice"
+                                   class="form-label">
+                                Price Range (&#8361;)
                             </label>
 
                             <div class="price-range">
 
-                                <input
-                                    type="number"
-                                    id="minPrice"
-                                    class="form-control"
-                                    min="0"
-                                    placeholder="Min"
-                                    data-i18n-placeholder="min"
-                                    aria-label="Minimum price"
-                                >
+                                <input type="number"
+                                       id="minPrice"
+                                       class="form-control"
+                                       placeholder="Min"
+                                       aria-label="Minimum price"
+                                       min="0"
+                                       step="1">
 
-                                <span>–</span>
+                                <span aria-hidden="true">-</span>
 
-                                <input
-                                    type="number"
-                                    id="maxPrice"
-                                    class="form-control"
-                                    min="0"
-                                    placeholder="Max"
-                                    data-i18n-placeholder="max"
-                                    aria-label="Maximum price"
-                                >
+                                <input type="number"
+                                       id="maxPrice"
+                                       class="form-control"
+                                       placeholder="Max"
+                                       aria-label="Maximum price"
+                                       min="0"
+                                       step="1">
 
                             </div>
 
                         </div>
 
-
-                        <!-- COURSE SEARCH -->
+                        <!-- SORTING -->
 
                         <div class="form-group">
 
-                            <label
-                                for="courseSearch"
-                                class="form-label"
-                                data-i18n="courseCode">
-
-                                Course Code / Name
-
+                            <label for="sortFilter"
+                                   class="form-label">
+                                Sort By
                             </label>
 
-                            <input
-                                type="text"
-                                id="courseSearch"
-                                class="form-control"
-                                placeholder="e.g. 38403, Python"
-                                data-i18n-placeholder="coursePlaceholder"
-                            >
+                            <select id="sortFilter"
+                                    class="form-control">
+
+                                <option value="newest">Newest First</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                                <option value="name">Name: A to Z</option>
+
+                            </select>
 
                         </div>
 
-
-                        <!-- APPLY AND RESET -->
+                        <!-- FILTER BUTTONS -->
 
                         <div class="filter-actions">
 
-                            <button
-                                type="button"
-                                id="applyFilters"
-                                class="btn-ewha"
-                                data-i18n="applyFilters">
-
-                                Apply Filters
-
+                            <button id="applyFilters"
+                                    type="button"
+                                    class="btn-ewha">
+                                Apply
                             </button>
 
-                            <button
-                                type="button"
-                                id="resetFilters"
-                                class="btn-outline-ewha"
-                                data-i18n="reset">
-
+                            <button id="resetFilters"
+                                    type="button"
+                                    class="btn-outline-ewha">
                                 Reset
-
                             </button>
 
                         </div>
 
                     </div>
 
-
-                    <!-- =================================
-                           ADDITIONAL FILTERS
-                    ================================== -->
+                    <!-- ADVANCED FILTERS -->
 
                     <details class="more-filters">
 
-                        <summary data-i18n="moreFilters">
-                            More filters
-                        </summary>
+                        <summary>More Filters</summary>
 
                         <div class="extra-grid">
 
-
                             <!-- CONDITION -->
 
-                            <div class="form-group"
-                                 id="conditionGroup">
+                            <div id="conditionGroup"
+                                 class="form-group">
 
-                                <label
-                                    for="conditionFilter"
-                                    class="form-label"
-                                    data-i18n="condition">
-
+                                <label for="conditionFilter"
+                                       class="form-label">
                                     Condition
-
                                 </label>
 
-                                <select
-                                    id="conditionFilter"
-                                    class="form-control">
+                                <select id="conditionFilter"
+                                        class="form-control">
 
-                                    <option value="all"
-                                            data-i18n="anyCondition">
-                                        Any Condition
-                                    </option>
-
-                                    <option value="new"
-                                            data-i18n="new">
-                                        New
-                                    </option>
-
-                                    <option value="like-new"
-                                            data-i18n="likeNew">
-                                        Like New
-                                    </option>
-
-                                    <option value="good"
-                                            data-i18n="good">
-                                        Good
-                                    </option>
-
-                                    <option value="used"
-                                            data-i18n="used">
-                                        Used
-                                    </option>
+                                    <option value="all">All Conditions</option>
+                                    <option value="new">New</option>
+                                    <option value="like-new">Like New</option>
+                                    <option value="good">Good</option>
+                                    <option value="used">Used</option>
 
                                 </select>
 
                             </div>
 
-
-                            <!-- SERVICE PAYMENT -->
-
-                            <div class="form-group"
-                                 id="paymentGroup">
-
-                                <label
-                                    for="paymentFilter"
-                                    class="form-label"
-                                    data-i18n="servicePayment">
-
-                                    Service Payment
-
-                                </label>
-
-                                <select
-                                    id="paymentFilter"
-                                    class="form-control">
-
-                                    <option value="all"
-                                            data-i18n="allServices">
-                                        All Services
-                                    </option>
-
-                                    <option value="free"
-                                            data-i18n="freeServices">
-                                        Free Services
-                                    </option>
-
-                                    <option value="paid"
-                                            data-i18n="paidServices">
-                                        Paid Services
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-
-                            <!-- SORT -->
+                            <!-- COURSE SEARCH -->
 
                             <div class="form-group">
 
-                                <label
-                                    for="sortFilter"
-                                    class="form-label"
-                                    data-i18n="sortBy">
-
-                                    Sort By
-
+                                <label for="courseSearch"
+                                       class="form-label">
+                                    Course Name / Code
                                 </label>
 
-                                <select
-                                    id="sortFilter"
-                                    class="form-control">
+                                <input type="search"
+                                       id="courseSearch"
+                                       class="form-control"
+                                       placeholder="e.g. Python, 38403"
+                                       autocomplete="off">
 
-                                    <option value="newest"
-                                            data-i18n="newest">
-                                        Newest First
-                                    </option>
+                            </div>
 
-                                    <option value="price-low"
-                                            data-i18n="priceLow">
-                                        Price: Low to High
-                                    </option>
+                            <!-- FREE OR PAID SERVICES -->
 
-                                    <option value="price-high"
-                                            data-i18n="priceHigh">
-                                        Price: High to Low
-                                    </option>
+                            <div id="paymentGroup"
+                                 class="form-group">
 
-                                    <option value="name"
-                                            data-i18n="nameAZ">
-                                        Name: A to Z
-                                    </option>
+                                <label for="paymentFilter"
+                                       class="form-label">
+                                    Service Payment
+                                </label>
+
+                                <select id="paymentFilter"
+                                        class="form-control">
+
+                                    <option value="all">All Services</option>
+                                    <option value="free">Free</option>
+                                    <option value="paid">Paid</option>
 
                                 </select>
 
@@ -743,75 +442,86 @@
 
                     </details>
 
+                    <!-- VALIDATION ERROR -->
 
-                    <!-- FILTER ERROR -->
-
-                    <p
-                        id="filterError"
-                        class="filter-error hidden"
-                        role="alert">
+                    <p id="filterError"
+                       class="filter-error hidden"
+                       role="alert">
                     </p>
 
                 </section>
 
+                <!-- SEARCH RESULTS -->
 
-                <!-- =================================
-                        SEARCH RESULTS
-                ================================== -->
-
-                <section class="results-panel">
+                <section class="results-panel"
+                         aria-label="Search results">
 
                     <div class="results-heading">
 
-                        <h2 data-i18n="availableListings">
-                            Available Listings
-                        </h2>
+                        <h2>Search Results</h2>
 
-                        <span
-                            id="resultCount"
-                            aria-live="polite">
-
-                            0 listings found
-
+                        <span id="resultCount"
+                              role="status"
+                              aria-live="polite">
+                            Loading listings...
                         </span>
 
                     </div>
 
+                    <!-- Listings generated by discovery.js -->
 
-                    <!-- DYNAMIC LISTING CARDS -->
-
-                    <div
-                        id="searchResults"
-                        class="items-grid">
+                    <div id="searchResults"
+                         class="items-grid">
                     </div>
-
 
                     <!-- EMPTY STATE -->
 
-                    <div
-                        id="emptyState"
-                        class="empty-state hidden">
+                    <div id="emptyState"
+                         class="empty-state hidden">
 
-                        <h3 data-i18n="noResults">
-                            No results found
-                        </h3>
+                        <svg width="48"
+                             height="48"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="#64748b"
+                             stroke-width="1.5"
+                             stroke-linecap="round"
+                             aria-hidden="true">
 
-                        <p data-i18n="noResultsDescription">
-                            Try another keyword or change your filters.
+                            <circle cx="10.5"
+                                    cy="10.5"
+                                    r="6.5"/>
+
+                            <path d="M16 16L21 21"/>
+
+                            <path d="M8 10.5H13"/>
+
+                        </svg>
+
+                        <h3>No results found</h3>
+
+                        <p>
+                            Try a different keyword,
+                            change your filters, or
+                            broaden your search.
                         </p>
 
                     </div>
 
+                    <noscript>
 
-                    <!-- DEMO NOTE -->
+                        <p>
+                            Please enable JavaScript to use
+                            the search and filtering features.
+                        </p>
 
-                    <p class="demo-note"
-                       data-i18n="demoNote">
+                    </noscript>
 
-                        Note: These are sample listings for the
-                        Ewha Market prototype. Real listings will
-                        be connected through Firebase later.
-
+                    <p class="demo-note">
+                        Note: These are sample listings for
+                        the Ewha Market prototype.
+                        Real listings will be connected
+                        through Firebase later.
                     </p>
 
                 </section>
@@ -821,19 +531,6 @@
         </div>
 
     </div>
-
-
-    <!-- =====================================
-                  JAVASCRIPT
-    ====================================== -->
-
-    <!-- English and Korean language toggle -->
-
-    <script src="language.js" defer></script>
-
-    <!-- Search and filter functionality -->
-
-    <script src="discovery.js" defer></script>
 
 </body>
 
