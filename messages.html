@@ -7,6 +7,7 @@
     <title>Messages - Ewha Market</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="messages.css">
+    <link rel="stylesheet" href="auth-ui.css">
 </head>
 
 <body>
@@ -42,36 +43,40 @@
             </a>
             <!-- <a href="index.html" class="brand-logo">🌸 Ewha<br>Market</a> -->
             <nav class="side-nav" aria-label="Main navigation">
-                <a href="index.html" class="side-link">🏠 Home</a>
-                <a href="categories.html" class="side-link">🗂️ Categories</a>
-                <a href="messages.html" class="side-link active">💬 Chat</a>
-                <a href="profile.html" class="side-link">👤 My Profile</a>
+                <a href="index.html" class="side-link">🏠 <span data-i18n="nav.home">Home</span></a>
+                <a href="categories.html" class="side-link">🗂️ <span data-i18n="nav.categories">Categories</span></a>
+                <a href="messages.html" class="side-link active">💬 <span data-i18n="nav.chat">Chat</span></a>
+                <a href="profile.html" class="side-link">👤 <span data-i18n="nav.profile">My Profile</span></a>
             </nav>
             <div class="sidebar-banner">
                 <div class="banner-emoji">🎓</div>
-                <p><strong>Ewha Campus Hub</strong></p>
-                <small>Verified students only<br>(@ewha.ac.kr / @ewhain.net)</small>
+                <p><strong data-i18n="sidebar.hub">Ewha Campus Hub</strong></p>
+                <small><span data-i18n="chat.sidebar.verified">Verified students only</span><br>(@ewha.ac.kr /
+                    @ewhain.net)</small>
             </div>
         </aside>
 
         <div class="main-wrapper">
             <header class="topbar">
 
-                <div class="messages-topbar-actions">
+                <div class="topbar-actions messages-topbar-actions">
                     <button id="langToggle" class="lang-btn" type="button">🌐 EN ▾</button>
-                    <a href="login.html" class="login-pill" title="Profile / Log In">👤 Log In</a>
+                    <a href="login.html" class="login-pill" title="Profile / Log In" data-i18n="nav.login">👤 Log In</a>
                 </div>
             </header>
 
             <main class="page-content">
                 <div class="page-header">
-                    <h1>💬 Campus Messages</h1>
-                    <p class="text-muted">Chat directly with Ewha buyers, sellers, and study partners</p>
+                    <h1 data-i18n="chat.title">💬 Campus Messages</h1>
+                    <p class="text-muted" data-i18n="chat.subtitle">Chat directly with Ewha buyers, sellers, and study
+                        partners</p>
                 </div>
 
                 <div class="chat-tabs">
-                    <button type="button" class="chat-tab is-active" data-role="buyer">Buying</button>
-                    <button type="button" class="chat-tab" data-role="seller">Selling</button>
+                    <button type="button" class="chat-tab is-active" data-role="buyer"
+                        data-i18n="chat.tab.buying">Buying</button>
+                    <button type="button" class="chat-tab" data-role="seller"
+                        data-i18n="chat.tab.selling">Selling</button>
                 </div>
                 <div id="chatStatus" class="chat-status" role="status" hidden></div>
                 <div id="chatLayout" class="chat-layout">
@@ -81,42 +86,48 @@
                             <div class="chat-search">
                                 <span aria-hidden="true">🔍</span>
                                 <input id="chatSearch" type="search" placeholder="Search conversations..."
-                                    aria-label="Search conversations">
+                                    aria-label="Search conversations" data-i18n-placeholder="chat.search.placeholder"
+                                    data-i18n-aria="chat.search.aria">
                             </div>
                             <button id="chatAddToggle" type="button" class="chat-add-toggle" aria-expanded="false"
-                                aria-controls="chatAddForm" title="Add a person by email">+ Add</button>
+                                aria-controls="chatAddForm" aria-label="Add a person by email"
+                                data-i18n="chat.add.toggle" data-i18n-aria="chat.add.aria">+ Add</button>
                         </div>
 
                         <!-- Add a person by email (hidden until "+ Add" is clicked) -->
                         <form id="chatAddForm" class="chat-add-form" hidden>
-                            <label for="chatAddEmail" class="chat-add-label">Start a chat by email</label>
+                            <label for="chatAddEmail" class="chat-add-label" data-i18n="chat.add.label">Start a chat by
+                                email</label>
                             <div class="chat-add-row">
                                 <input id="chatAddEmail" type="email" placeholder="name@ewhain.net" autocomplete="off"
                                     required>
-                                <button id="chatAddSubmit" type="submit" class="chat-add-submit">Add</button>
-                                <button id="chatAddCancel" type="button" class="chat-add-cancel"
-                                    aria-label="Cancel">✕</button>
+                                <button id="chatAddSubmit" type="submit" class="chat-add-submit"
+                                    data-i18n="chat.add.submit">Add</button>
+                                <button id="chatAddCancel" type="button" class="chat-add-cancel" aria-label="Cancel"
+                                    data-i18n-aria="chat.add.cancel">✕</button>
                             </div>
                             <p id="chatAddMessage" class="chat-add-message" role="status" hidden></p>
                         </form>
 
                         <ul id="chatList" class="chat-list"></ul>
 
-                        <p id="chatListEmpty" class="chat-empty" hidden>No conversations yet</p>
+                        <p id="chatListEmpty" class="chat-empty" hidden data-i18n="chat.list.empty">No conversations yet
+                        </p>
                     </aside>
-                    <!-- RIGHT: chat window-->
+                    <!-- RIGHT: chat window -->
                     <section class="chat-window">
                         <!-- Shown when no chat is selected -->
                         <div id="chatPlaceholder" class="chat-placeholder">
                             <span class="chat-placeholder-icon">💬</span>
-                            <p>Select a conversation to start chatting</p>
+                            <p data-i18n="chat.placeholder">Select a conversation to start chatting</p>
                         </div>
 
                         <div id="chatActive" class="chat-active" hidden>
-                            <!-- Top: who I'm talkign to + which item -->
+                            <!-- Top: who I'm talking to + which item -->
                             <header class="chat-header">
                                 <div class="chat-user">
-                                    <button id="chatBack" type="button" class="chat-back" aria-label="Back to conversations">←</button>
+                                    <button id="chatBack" type="button" class="chat-back"
+                                        aria-label="Back to conversations" data-i18n-aria="chat.back">←</button>
                                     <div id="chatUserAvatar" class="chat-avatar"></div>
                                     <div>
                                         <p id="chatUserName" class="chat-user-name"></p>
@@ -132,16 +143,32 @@
                                 </a>
                             </header>
 
-                            <!--Middle: messages -->
-                            <div id="chatMessages" class="chat-messages" aria-live="polite">
+                            <!-- Middle: messages -->
+                            <div id="chatMessages" class="chat-messages" aria-live="polite"></div>
 
-                            </div>
+                            <!-- Bottom: input. A <form>, so Enter = send -->
+                            <!-- Picked files appear here before sending -->
+                            <div id="chatAttachPreview" class="chat-attach-preview" hidden></div>
 
-                            <!-- Bottom: input. A <form>, so Enter = send later -->
+                            <!-- Bottom: input. A <form>, so Enter = send -->
                             <form id="chatForm" class="chat-form">
                                 <input id="chatInput" type="text" placeholder="Type a message..." maxlength="1000"
-                                    autocomplete="off" aria-label="Message">
-                                <button type="submit" class="chat-send">Send</button>
+                                    autocomplete="off" aria-label="Message"
+                                    data-i18n-placeholder="chat.input.placeholder" data-i18n-aria="chat.input.aria">
+
+                                <!-- Hidden real file picker; the 📎 button opens it -->
+                                <input id="chatFile" type="file" multiple hidden>
+                                <button id="chatAttach" type="button" class="chat-attach" aria-label="Attach file"
+                                    data-i18n-aria="chat.attach">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        aria-hidden="true">
+                                        <path
+                                            d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+                                    </svg>
+                                </button>
+
+                                <button type="submit" class="chat-send" data-i18n="chat.send">Send</button>
                             </form>
                         </div>
                     </section>
@@ -149,7 +176,11 @@
             </main>
         </div>
     </div>
+    <script src="listings-i18n.js"></script>
+    <script src="lang-toggle.js"></script>
+    <script src="messages-i18n.js"></script>
     <script type="module" src="messages.js"></script>
+    <script type="module" src="auth-ui.js"></script>
 </body>
 
 </html>

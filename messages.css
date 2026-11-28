@@ -546,6 +546,128 @@
     background-color: var(--ewha-green-light);
 }
 
+/* ---------- Attach button (right of the input) ---------- */
+.chat-attach {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background-color: var(--bg-sidebar);
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.chat-attach:hover {
+    color: var(--ewha-green);
+    border-color: var(--ewha-green);
+}
+
+/* ---------- Picked files, above the input ---------- */
+.chat-attach-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 16px 0;
+    border-top: 1px solid var(--border);
+}
+
+.chat-attach-preview[hidden] {
+    display: none;
+}
+
+.attach-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    max-width: 220px;
+    padding: 4px 6px 4px 4px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background-color: var(--bg-sidebar);
+    font-size: 0.8rem;
+}
+
+.attach-chip-thumb {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.attach-chip-icon {
+    font-size: 1.3rem;
+    padding: 0 4px;
+}
+
+.attach-chip-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.attach-chip-remove {
+    border: none;
+    background: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.attach-chip-remove:hover {
+    color: #d33;
+}
+
+.attach-error {
+    width: 100%;
+    font-size: 0.8rem;
+    color: #d33;
+}
+
+/* ---------- Attachments inside bubbles ---------- */
+.chat-bubble-media,
+.chat-bubble-video {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.chat-bubble-img,
+.chat-bubble-video {
+    max-width: 240px;
+    max-height: 280px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.chat-bubble-file {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 240px;
+    margin-bottom: 4px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.06);
+    color: inherit;                      /* white in green bubbles, dark in grey */
+    text-decoration: none;
+}
+
+.chat-bubble-file-name {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.85rem;
+}
+
+.chat-bubble-file-size {
+    font-size: 0.72rem;
+    opacity: 0.75;
+}
+
 /* =====================================================
    Responsive: tablet and up
    ===================================================== */
