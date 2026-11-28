@@ -1,0 +1,417 @@
+/* Profile Page
+   Owner: Sara */
+
+.profile-page {
+    padding-bottom: 2.5rem;
+}
+
+/* Profile Card */
+
+.profile-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5625rem;
+
+    background: #ffffff;
+    border: .0625rem solid #e8e8e8;
+    border-radius: 1.125rem;
+
+    padding: 1.75rem 2rem;
+    margin-bottom: 1.875rem;
+}
+
+.profile-user-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    gap: 1.375rem;
+    margin: 0;
+}
+
+.profile-avatar {
+    width: 5.375rem;
+    height: 5.375rem;
+    min-width: 5.375rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: .125rem solid #d6d6d6;
+    border-radius: 50%;
+    background: #f8f9f8;
+
+    font-size: 2rem;
+    margin: 0;
+}
+
+.profile-user-details h2 {
+    font-size: 1.5rem;
+    margin: 0 0 .5rem;
+}
+
+.profile-email {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin: 0 0 .625rem;
+}
+
+.verification-badge {
+    display: inline-block;
+    width: fit-content;
+    font-size: 0.75rem;
+    padding: .3125rem .625rem;
+    border-radius: 1.25rem;
+
+    background: #eeeeee;
+    color: #666666;
+
+    font-size: .75rem;
+}
+
+.verification-badge.verified {
+    background: #e6f4ea;
+    color: #398052;
+}
+
+/* post listing button */
+
+.post-listing-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+
+    padding: 0.75rem 1.25rem;
+    border-radius: 1.875rem;
+
+    background: #263c30;
+    color: white;
+
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+
+    white-space: nowrap;
+    transition: 0.2s;
+}
+
+.post-listing-btn:hover {
+    background: #3c5a48;
+    transform: translateY(-.125rem);
+}
+
+/* profile shortcuts */
+
+.profile-shortcuts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin: 0 0 2.1875rem;
+}
+
+.profile-shortcut {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .875rem;
+
+    width: auto;
+    min-width: 0;
+
+    padding: 1.25rem 1.125rem;
+
+    background: #ffffff;
+    border: .0625rem solid #e8e8e8;
+    border-radius: .9375rem;
+
+    text-decoration: none;
+    color: var(--text-main);
+
+    transition: 0.2s;
+}
+
+.profile-shortcut:hover {
+    background: #f8faf8;
+    border-color: #b7c8bc;
+    transform: translateY(-.1875rem);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, 0.04);
+}
+
+.shortcut-icon {
+    font-size: 1.625rem;
+    color: var(--ewha-green);
+
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.shortcut-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.shortcut-text h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 0.3125rem;
+}
+
+.shortcut-text p {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.shortcut-arrow {
+    font-size: 1.375rem;
+    color: #999999;
+}
+
+/* active listings */
+
+.active-listings-section {
+    margin-top: .625rem;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 1.25rem;
+}
+
+.section-heading h2 {
+    font-size: 1.3125rem;
+    margin: 0;
+}
+
+.section-heading a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: .875rem;
+}
+
+.section-heading a:hover {
+    color: var(--ewha-green);
+}
+
+.active-listings-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.125rem;
+}
+
+.active-listing-card {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+
+    min-width: 0;
+    padding: .9375rem;
+
+    background: #ffffff;
+    border: .0625rem solid #e8e8e8;
+    border-radius: .875rem;
+
+    transition: 0.2s;
+}
+
+.active-listing-card:hover {
+    border-color: #c8d4cb;
+    box-shadow: 0 .1875rem .625rem rgba(0, 0, 0, 0.04);
+}
+
+.listing-image {
+    width: 4.375rem;
+    height: 4.6875rem;
+    min-width: 4.375rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f3f5f3;
+    border-radius: .625rem;
+
+    object-fit: cover;
+    font-size: 1.875rem;
+}
+
+.listing-placeholder {
+    font-size: 1.875rem;
+}
+
+.listing-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.listing-info h3 {
+    font-size: .875rem;
+    font-weight: 600;
+
+    margin: 0 0 .625rem;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.listing-info h3 a {
+    color: var(--text-main);
+    text-decoration: none;
+}
+
+.listing-info h3 a:hover {
+    color: var(--ewha-green);
+    text-decoration: underline;
+}
+
+.listing-meta {
+    display: flex;
+    align-items: center;
+    gap: .625rem;
+}
+
+.listing-meta strong {
+    font-size: .875rem;
+    color: #527b63;
+}
+
+.listing-status {
+    font-size: .6875rem;
+    color: #548267;
+}
+
+.edit-listing-btn {
+    font-size: .75rem;
+    text-decoration: none;
+    color: #555555;
+
+    padding: .375rem .625rem;
+    border: .0625rem solid #e5e5e5;
+    border-radius: .5rem;
+
+    transition: 0.2s;
+}
+
+.edit-listing-btn:hover {
+    background: #f3f5f3;
+}
+
+/* responsive design */
+
+@media (max-width: 63.9375rem) {
+
+    .profile-shortcuts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .active-listings-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width: 43.75rem) {
+
+    .profile-card {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1.5625rem;
+        padding: 1.75rem 2rem;
+        margin-bottom: 1.875rem;
+    }
+
+    .profile-user-info {
+        gap: 1.375rem;
+    }
+
+    .profile-avatar {
+        width: 5.375rem;
+        height: 5.375rem;
+        min-width: 5.375rem;
+        font-size: 2rem;
+    }
+
+    .profile-user-details h2 {
+        font-size: 1.1875rem;
+    }
+
+    .post-listing-btn {
+        width: 100%;
+    }
+
+    .profile-shortcuts {
+        grid-template-columns: 1fr;
+        gap: .625rem;
+    }
+
+    .profile-shortcut {
+        padding: 1rem;
+    }
+
+    .active-listings-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* empty listings message */
+
+.empty-listings-message {
+    color: var(--text-muted);
+    font-size: .875rem;
+    padding: 1rem 0;
+}
+
+/* responsive profile layout */
+
+@media (max-width: 900px) {
+
+    .profile-shortcuts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .active-listings-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .profile-card {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1.25rem;
+    }
+
+    .profile-user-info {
+        gap: 1rem;
+    }
+
+    .profile-avatar {
+        width: 4.5rem;
+        height: 4.5rem;
+        min-width: 4.5rem;
+        font-size: 1.75rem;
+    }
+
+    .post-listing-btn {
+        width: 100%;
+    }
+
+    .profile-shortcuts {
+        grid-template-columns: 1fr;
+    }
+
+    .active-listings-grid {
+        grid-template-columns: 1fr;
+    }
+
+}

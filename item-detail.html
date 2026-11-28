@@ -1,54 +1,242 @@
+<!-- Item Detail Page
+   Owner: Sara -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Item Details - Ewha Market</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="item-detail.css">
 </head>
+
 <body>
     <div class="app-layout">
+
+        <!-- SIDEBAR -->
         <aside class="sidebar">
-            <a href="index.html" class="brand-logo">🌸 Ewha<br>Market</a>
+            <a href="index.html" class="brand-logo">
+                <svg class="brand-flower" viewBox="4 4 56 56" width="44" height="44" fill="none" stroke="currentColor"
+                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path
+                        d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z" />
+                    <path
+                        d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z"
+                        transform="rotate(72 32 32)" />
+                    <path
+                        d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z"
+                        transform="rotate(144 32 32)" />
+                    <path
+                        d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z"
+                        transform="rotate(216 32 32)" />
+                    <path
+                        d="M32 32 C25 22, 23 11, 29 8 C31 7, 32 9.5, 32 9.5 C32 9.5, 33 7, 35 8 C41 11, 39 22, 32 32 Z"
+                        transform="rotate(288 32 32)" />
+
+                    <line x1="32" y1="32" x2="32" y2="21" stroke-width="1.8" />
+                    <line x1="32" y1="32" x2="42.5" y2="28.5" stroke-width="1.8" />
+                    <line x1="32" y1="32" x2="38.5" y2="41" stroke-width="1.8" />
+                    <line x1="32" y1="32" x2="25.5" y2="41" stroke-width="1.8" />
+                    <line x1="32" y1="32" x2="21.5" y2="28.5" stroke-width="1.8" />
+
+                    <circle cx="32" cy="32" r="3.2" fill="#f1f5f9" stroke="currentColor" stroke-width="2.2" />
+                </svg>
+                <span>Ewha<br>Market</span>
+            </a>
+
             <nav class="side-nav" aria-label="Main navigation">
-                <a href="index.html" class="side-link">🏠 Home</a>
-                <a href="categories.html" class="side-link">🗂️ Categories</a>
-                <a href="messages.html" class="side-link">💬 Chat</a>
-                <a href="profile.html" class="side-link">👤 My Profile</a>
+                <a data-i18n="sidebar.home" href="index.html" class="side-link">🏠 Home</a>
+                <a data-i18n="sidebar.categories" href="categories.html" class="side-link">🗂️ Categories</a>
+                <a data-i18n="sidebar.chat" href="messages.html" class="side-link">💬 Chat</a>
+                <a data-i18n="sidebar.profile" href="profile.html" class="side-link">👤 My Profile</a>
             </nav>
+
             <div class="sidebar-banner">
                 <div class="banner-emoji">🎓</div>
-                <p><strong>Ewha Campus Hub</strong></p>
-                <small>Verified students only<br>(@ewha.ac.kr / @ewhain.net)</small>
+                <p><strong data-i18n="sidebar.campusHub">Ewha Campus Hub</strong></p>
+                <small data-i18n="sidebar.verifiedOnly">Verified students only<br>(@ewha.ac.kr / @ewhain.net)</small>
             </div>
         </aside>
 
+        <!-- MAIN CONTENT -->
         <div class="main-wrapper">
+
+            <!-- TOPBAR -->
             <header class="topbar">
                 <form action="search.html" method="GET" class="search-bar">
                     <span class="search-icon">🔍</span>
-                    <input type="text" name="q" placeholder="Enter item title, course code, or keyword..." aria-label="Enter item title">
-                    <a href="search.html" class="filter-btn" title="Filters">🎛️</a>
+
+                    <input type="text" name="q" placeholder="Enter item title, course code, or keyword..."
+                        aria-label="Enter item title">
+
+                    <a href="search.html" class="filter-btn" title="Filters">
+                        🎛️
+                    </a>
                 </form>
+
                 <div class="topbar-actions">
-                    <button id="langToggle" class="lang-btn" type="button">🌐 EN ▾</button>
-                    <a href="messages.html" class="icon-btn" title="Chat">💬</a>
-                    <a href="login.html" class="login-pill" title="Profile / Log In">👤 Log In</a>
+                    <button id="langToggle" class="lang-btn" type="button">
+                        🌐 EN ▾
+                    </button>
+
+                    <a href="messages.html" class="icon-btn" title="Chat">
+                        💬
+                    </a>
+
                 </div>
             </header>
 
-            <main class="page-content">
-                <div class="page-header">
-                    <h1>Item Details</h1>
-                    <p class="text-muted">View listing info, seller profile, and start a chat</p>
+            <!-- ITEM DETAIL -->
+
+            <!-- ITEM DETAIL PAGE -->
+            <main class="page-content item-detail-page">
+                <!-- loading message -->
+                <div id="itemLoading" data-i18n="itemDetail.loading">
+                    Loading item details...
                 </div>
 
-                <!-- Sara: Add a photo of the product, price, description, and a Contact Seller button here -->
-                <section class="content-card">
-                    <p>Item details go here...</p>
-                </section>
+                <!-- error message -->
+                <div id="itemError" hidden></div>
+
+                <!-- item details (hidden until loaded) -->
+                <div id="itemDetails" hidden>
+                    <!-- Page heading -->
+                    <div class="item-page-heading">
+                        <h1 data-i18n="itemDetail.heading">Item Details</h1>
+
+                        <div class="item-breadcrumbs">
+                            <a href="index.html">Home</a>
+                            <span>›</span>
+                            <a href="categories.html">Textbooks</a>
+                            <span>›</span>
+                            <span>Calculus 9th Edition Textbook</span>
+                        </div>
+                    </div>
+
+
+                    <!-- ITEM DETAIL CARD -->
+                    <section class="item-detail-card">
+
+                        <div class="item-detail-layout">
+
+                            <!-- LEFT: IMAGE GALLERY -->
+                            <div class="item-gallery">
+
+                                <!-- Main image -->
+                                <div class="item-main-image" id="mainItemImage">
+                                    <img id="itemImage" src="" alt="Listing image">
+                                </div>
+
+                            </div>
+
+
+                            <!-- RIGHT: ITEM INFORMATION -->
+                            <div class="item-information">
+
+                                <!-- Item type -->
+                                <span class="item-type-badge" id="itemTypeBadge">
+                                    ◇ Buy
+                                </span>
+
+                                <!-- Title -->
+                                <h2 class="item-title" id="itemTitle">
+                                    Calculus 9th Edition Textbook
+                                </h2>
+
+                                <!-- Price -->
+                                <div class="item-price" id="itemPrice">
+                                    ₩12,000
+                                </div>
+
+                                <!-- Item metadata -->
+                                <div class="item-meta" id="itemMeta">
+
+                                    <span id="itemType" class="item-type"></span>
+                                    <span id="itemCondition">✦ Like New</span>
+                                    <span id="itemCategory">▤ Textbooks</span>
+                                    <span id="itemCourse">Math 101 / Calculus I</span>
+
+                                </div>
+
+                                <!-- Location -->
+                                <div class="item-location-info">
+
+                                    <p>
+                                        <span aria-hidden="true">⌖</span>
+                                        <span id="itemLocation">Meetup Spot ECC Gate 4</span>
+                                    </p>
+
+                                    <p>
+                                        <span aria-hidden="true">◷</span>
+                                        <span id="itemPosted">Posted 2 hours ago</span>
+                                    </p>
+
+                                </div>
+
+
+                                <!-- Description -->
+                                <div class="item-description" id="itemFullDescription">
+                                    <p>
+                                        Metric version, barely used for one semester.
+                                        No missing pages, very minimal pencil markings
+                                        in chapters 2 and 3. Perfect for calculus I classes.
+                                    </p>
+                                </div>
+
+
+                                <!-- SELLER INFORMATION -->
+                                <div class="item-seller">
+
+                                    <div class="seller-avatar" id="sellerAvatar">
+                                        👤
+                                    </div>
+
+                                    <div class="seller-details" id="sellerDetails">
+
+                                        <strong id="itemSeller">Unknown seller</strong>
+
+                                        <div class="seller-verification" id="sellerVerification">
+                                            <span>✦ Verified Ewha Student</span>
+                                            <span class="seller-rating">★ 4.9 (18 reviews)</span>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- ACTION BUTTONS -->
+                                <div class="item-action-buttons" id="itemActionButtons">
+
+                                    <a data-i18n="itemDetail.contact" href="messages.html" class="message-seller-btn" id="contactSellerBtn">
+                                        <span>▢</span>
+                                        Contact Seller/Provider
+                                    </a>
+
+                                    <button data-i18n="itemDetail.save" class="favorite-item-btn" type="button" id="favoriteItemBtn">
+                                        ♡ Save to Favorites
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+                </div>
             </main>
+
+
         </div>
     </div>
+    <script src="listings-i18n.js"></script>
+    <script src="favorites-i18n.js"></script>
+    <script src="item-detail-i18n.js"></script>
+    <script src="lang-toggle.js"></script>
+    <script type="module" src="item-detail.js"></script>
+    <script type="module" src="favorites.js"></script>
 </body>
+
 </html>
