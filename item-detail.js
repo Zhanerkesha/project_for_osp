@@ -3,6 +3,7 @@
 // Owner: Sara
 
 import './listings-data.js';
+import { paintButton } from './favorites.js';
 
 (function () {
     'use strict';
@@ -57,6 +58,7 @@ import './listings-data.js';
     // Display listing information
     function renderListing(listing) {
         const title = listing.title || 'Untitled listing';
+        const listingId = listing.listingId || params.get('id');
 
         // Listing title
         document.getElementById('itemTitle').textContent = title;
@@ -103,7 +105,26 @@ import './listings-data.js';
 
         if (locationElement) {
             locationElement.textContent =
-                '⌖ ' + (listing.location || 'Location not specified');
+                listing.location || 'Location not specified';
+        }
+
+        const postedElement = document.getElementById('itemPosted');
+        if (postedElement) {
+            const createdAt = Number(listing.createdAt || 0);
+            if (createdAt) {
+                const diff = Math.max(0, Date.now() - createdAt);
+                const minutes = Math.floor(diff / 60000);
+                let posted = 'Posted just now';
+                if (minutes >= 60) {
+                    const hours = Math.floor(minutes / 60);
+                    posted = hours < 24
+                        ? 'Posted ' + hours + (hours === 1 ? ' hour ago' : ' hours ago')
+                        : 'Posted ' + Math.floor(hours / 24) + (Math.floor(hours / 24) === 1 ? ' day ago' : ' days ago');
+                } else if (minutes > 0) {
+                    posted = 'Posted ' + minutes + (minutes === 1 ? ' minute ago' : ' minutes ago');
+                }
+                postedElement.textContent = posted;
+            }
         }
 
         // Description
@@ -123,13 +144,44 @@ import './listings-data.js';
                 listing.ownerNickname || 'Unknown seller';
         }
 
+        const sellerAvatar = document.getElementById('sellerAvatar');
+        if (sellerAvatar) {
+            const sellerName = listing.ownerNickname || 'Unknown seller';
+            sellerAvatar.textContent = sellerName.trim().charAt(0).toUpperCase() || '👤';
+        }
+
+        const breadcrumbs = document.querySelector('.item-breadcrumbs');
+        if (breadcrumbs) {
+            const category = breadcrumbs.querySelectorAll('a')[1];
+            const titleCrumb = breadcrumbs.lastElementChild;
+            if (category) {
+                category.textContent = formatText(listing.category);
+                category.href = 'categories.html';
+            }
+            if (titleCrumb) titleCrumb.textContent = title;
+        }
+
         // Contact Seller/Provider button
         const contactButton = document.getElementById('contactSellerBtn');
 
         if (contactButton) {
             contactButton.href =
-                'messages.html?userId=' +
-                encodeURIComponent(listing.ownerId) + '&listingId=' + encodeURIComponent(listing.listingId);
+                'messages.html?listingId=' +
+                encodeURIComponent(listingId);
+        }
+
+        const favoriteButton = document.getElementById('favoriteItemBtn');
+        if (favoriteButton) {
+            favoriteButton.dataset.favId = listingId;
+            favoriteButton.dataset.favTitle = title;
+            favoriteButton.dataset.favPrice = formatPrice(listing);
+            favoriteButton.dataset.favImage = listing.imageUrl || 'images/ewha.jpg';
+            favoriteButton.dataset.favLink = 'item-detail.html?id=' + encodeURIComponent(listingId);
+            favoriteButton.dataset.favLocation = listing.location || '';
+            favoriteButton.dataset.favCategory = formatText(listing.category);
+            favoriteButton.dataset.favCondition = listing.condition || '';
+            favoriteButton.dataset.favType = listing.listingType || '';
+            paintButton(favoriteButton);
         }
 
         // Main image
@@ -138,6 +190,10 @@ import './listings-data.js';
         if (image) {
             image.src = listing.imageUrl || 'images/ewha.jpg';
             image.alt = title;
+            image.addEventListener('error', function () {
+                if (image.src.endsWith('/images/ewha.jpg')) return;
+                image.src = 'images/ewha.jpg';
+            }, { once: true });
         }
 
         // Update page title

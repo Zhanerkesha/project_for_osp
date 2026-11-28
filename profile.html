@@ -60,7 +60,6 @@
 
             <main class="page-content profile-page">
 
-                <!-- Page heading -->
                 <header class="topbar">
                     <div class="page-header">
                         <h1 data-i18n="profile.title">My Profile</h1>
@@ -70,9 +69,11 @@
                     </div>
 
                     <div class="topbar-actions">
-                        <button id="languageToggle" class="lang-btn" type="button">🌐 EN ▾</button>
+                        <button id="langToggle" class="lang-btn" type="button">🌐 EN ▾</button>
                         <a href="messages.html" class="icon-btn" title="Chat">💬</a>
-                        <a href="login.html" class="login-pill" title="Profile / Log In">👤 Log In</a>
+                        <a href="login.html" class="login-pill" title="Profile / Log In">
+                            <span data-i18n="nav.login">Log In</span>
+                        </a>
                     </div>
                 </header>
 
@@ -126,15 +127,6 @@
                         <span class="shortcut-arrow">›</span>
                     </a>
 
-                    <a href="orders.html" class="profile-shortcut">
-                        <div class="shortcut-icon">◇</div>
-                        <div class="shortcut-text">
-                            <h3 data-i18n="profile.orders">Orders</h3>
-                            <p data-i18n="profile.currentOrders">Your current orders</p>
-                        </div>
-                        <span class="shortcut-arrow">›</span>
-                    </a>
-
                     <a href="history.html" class="profile-shortcut">
                         <div class="shortcut-icon">◷</div>
                         <div class="shortcut-text">
@@ -157,72 +149,11 @@
                         </a>
                     </div>
 
-                    <div class="active-listings-grid">
-
-                        <!-- Listing 1 -->
-                        <article class="active-listing-card">
-                            <div class="listing-image">
-                                <span>📚</span>
-                            </div>
-
-                            <div class="listing-info">
-                                <h3>Calculus Textbook</h3>
-                                <div class="listing-meta">
-                                    <strong>$100</strong>
-                                    <span class="listing-status">Active</span>
-                                </div>
-                            </div>
-
-                            <a href="my-listings.html" class="edit-listing-btn" data-i18n="profile.edit">Edit</a>
-                        </article>
-
-
-                        <!-- Listing 2 -->
-                        <article class="active-listing-card">
-                            <div class="listing-image">
-                                <span>🧮</span>
-                            </div>
-
-                            <div class="listing-info">
-                                <h3>Casio Calculator</h3>
-                                <div class="listing-meta">
-                                    <strong>$80</strong>
-                                    <span class="listing-status">Active</span>
-                                </div>
-                            </div>
-
-                            <a href="my-listings.html" class="edit-listing-btn">Edit</a>
-                        </article>
-
-
-                        <!-- Listing 3 -->
-                        <article class="active-listing-card">
-                            <div class="listing-image">
-                                <span>🧥</span>
-                            </div>
-
-                            <div class="listing-info">
-                                <h3>Ewha Hoodie</h3>
-                                <div class="listing-meta">
-                                    <strong>$50</strong>
-                                    <span class="listing-status">Active</span>
-                                </div>
-                            </div>
-
-                            <a href="my-listings.html" class="edit-listing-btn">Edit</a>
-                        </article>
-
+                    <div data-i18n="profile.loadingListings" class="text-muted" id="loadingListings">
+                        <p>Loading your listings...</p>
                     </div>
 
                 </section>
-
-
-                <!-- Logout -->
-                <div class="profile-footer">
-                    <button id="logoutBtn" class="logout-btn" type="button">
-                        ↪ <span data-i18n="profile.logout">Log Out</span>
-                    </button>
-                </div>
 
                 <!-- Error message -->
                 <p id="profileError" class="text-muted" hidden></p>
@@ -232,8 +163,11 @@
         </div>
     </div>
     <script src="listings-i18n.js"></script>
-    <script type="module" src="profile.js"></script>
+    <script src="profile-i18n.js"></script>
     <script src="lang-toggle.js"></script>
+
+    <script type="module" src="profile-data.js"></script>
     <script type="module" src="auth-ui.js"></script>
 </body>
+
 </html>

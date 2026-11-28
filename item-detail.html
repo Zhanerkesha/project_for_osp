@@ -9,7 +9,6 @@
     <title>Item Details - Ewha Market</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="item-detail.css">
-    <link rel="stylesheet" href="auth-ui.css">
 </head>
 
 <body>
@@ -56,10 +55,7 @@
             <div class="sidebar-banner">
                 <div class="banner-emoji">🎓</div>
                 <p><strong data-i18n="sidebar.campusHub">Ewha Campus Hub</strong></p>
-                <small>
-                    Verified students only<br>
-                    (@ewha.ac.kr / @ewhain.net)
-                </small>
+                <small data-i18n="sidebar.verifiedOnly">Verified students only<br>(@ewha.ac.kr / @ewhain.net)</small>
             </div>
         </aside>
 
@@ -80,7 +76,7 @@
                 </form>
 
                 <div class="topbar-actions">
-                    <button id="languageToggle" class="lang-btn" type="button">
+                    <button id="langToggle" class="lang-btn" type="button">
                         🌐 EN ▾
                     </button>
 
@@ -88,9 +84,6 @@
                         💬
                     </a>
 
-                    <a href="login.html" class="login-pill" title="Profile / Log In">
-                        👤 Log In
-                    </a>
                 </div>
             </header>
 
@@ -99,7 +92,7 @@
             <!-- ITEM DETAIL PAGE -->
             <main class="page-content item-detail-page">
                 <!-- loading message -->
-                <div id="itemLoading">
+                <div id="itemLoading" data-i18n="itemDetail.loading">
                     Loading item details...
                 </div>
 
@@ -110,7 +103,7 @@
                 <div id="itemDetails" hidden>
                     <!-- Page heading -->
                     <div class="item-page-heading">
-                        <h1>Item Details</h1>
+                        <h1 data-i18n="itemDetail.heading">Item Details</h1>
 
                         <div class="item-breadcrumbs">
                             <a href="index.html">Home</a>
@@ -133,23 +126,6 @@
                                 <!-- Main image -->
                                 <div class="item-main-image" id="mainItemImage">
                                     <img id="itemImage" src="" alt="Listing image">
-                                </div>
-
-                                <!-- Thumbnails -->
-                                <div class="item-image-thumbnails">
-
-                                    <button class="item-thumbnail active" type="button">
-                                        <img src="" alt="Textbook front">
-                                    </button>
-
-                                    <button class="item-thumbnail" type="button">
-                                        <img src="" alt="Textbook inside pages">
-                                    </button>
-
-                                    <button class="item-thumbnail" type="button">
-                                        <img src="" alt="Textbook condition">
-                                    </button>
-
                                 </div>
 
                             </div>
@@ -187,13 +163,13 @@
                                 <div class="item-location-info">
 
                                     <p>
-                                        <span id="itemLocation">⌖</span>
-                                        Meetup Spot ECC Gate 4
+                                        <span aria-hidden="true">⌖</span>
+                                        <span id="itemLocation">Meetup Spot ECC Gate 4</span>
                                     </p>
 
                                     <p>
-                                        <span>◷</span>
-                                        Posted 2 hours ago
+                                        <span aria-hidden="true">◷</span>
+                                        <span id="itemPosted">Posted 2 hours ago</span>
                                     </p>
 
                                 </div>
@@ -233,12 +209,12 @@
                                 <!-- ACTION BUTTONS -->
                                 <div class="item-action-buttons" id="itemActionButtons">
 
-                                    <a href="messages.html" class="message-seller-btn" id="contactSellerBtn">
+                                    <a data-i18n="itemDetail.contact" href="messages.html" class="message-seller-btn" id="contactSellerBtn">
                                         <span>▢</span>
                                         Contact Seller/Provider
                                     </a>
 
-                                    <button class="favorite-item-btn" type="button" id="favoriteItemBtn">
+                                    <button data-i18n="itemDetail.save" class="favorite-item-btn" type="button" id="favoriteItemBtn">
                                         ♡ Save to Favorites
                                     </button>
 
@@ -256,9 +232,11 @@
         </div>
     </div>
     <script src="listings-i18n.js"></script>
-    <script type="module" src="profile.js"></script>
+    <script src="favorites-i18n.js"></script>
+    <script src="item-detail-i18n.js"></script>
     <script src="lang-toggle.js"></script>
-    <script type="module" src="auth-ui.js"></script>
+    <script type="module" src="item-detail.js"></script>
+    <script type="module" src="favorites.js"></script>
 </body>
 
 </html>

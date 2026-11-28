@@ -107,9 +107,8 @@
 
 .profile-shortcuts {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
-
     margin: 0 0 2.1875rem;
 }
 
@@ -238,6 +237,11 @@
     background: #f3f5f3;
     border-radius: .625rem;
 
+    object-fit: cover;
+    font-size: 1.875rem;
+}
+
+.listing-placeholder {
     font-size: 1.875rem;
 }
 
@@ -255,6 +259,16 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.listing-info h3 a {
+    color: var(--text-main);
+    text-decoration: none;
+}
+
+.listing-info h3 a:hover {
+    color: var(--ewha-green);
+    text-decoration: underline;
 }
 
 .listing-meta {
@@ -289,33 +303,6 @@
     background: #f3f5f3;
 }
 
-/* log out */
-
-.profile-footer {
-    display: flex;
-    justify-content: center;
-    margin-top: 2.1875rem;
-}
-
-.logout-btn {
-    background: #d1d1d1;
-    border: none;
-    border-radius: 62.4375rem;
-
-    padding: .75rem 2.1875rem;
-
-    font-size: .875rem;
-    font-weight: 500;
-    cursor: pointer;
-
-    transition: background-color 0.2s;
-}
-
-.logout-btn:hover {
-    background: #e03b3b;
-    color: white;
-}
-
 /* responsive design */
 
 @media (max-width: 63.9375rem) {
@@ -333,6 +320,8 @@
 @media (max-width: 43.75rem) {
 
     .profile-card {
+        flex-direction: column;
+        align-items: stretch;
         gap: 1.5625rem;
         padding: 1.75rem 2rem;
         margin-bottom: 1.875rem;
@@ -364,6 +353,61 @@
 
     .profile-shortcut {
         padding: 1rem;
+    }
+
+    .active-listings-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* empty listings message */
+
+.empty-listings-message {
+    color: var(--text-muted);
+    font-size: .875rem;
+    padding: 1rem 0;
+}
+
+/* responsive profile layout */
+
+@media (max-width: 900px) {
+
+    .profile-shortcuts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .active-listings-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .profile-card {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1.25rem;
+    }
+
+    .profile-user-info {
+        gap: 1rem;
+    }
+
+    .profile-avatar {
+        width: 4.5rem;
+        height: 4.5rem;
+        min-width: 4.5rem;
+        font-size: 1.75rem;
+    }
+
+    .post-listing-btn {
+        width: 100%;
+    }
+
+    .profile-shortcuts {
+        grid-template-columns: 1fr;
     }
 
     .active-listings-grid {
