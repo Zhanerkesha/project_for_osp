@@ -267,10 +267,17 @@
     margin-bottom: 1.125rem;
 }
 
+.mylist-header .btn-ewha {
+    width: 100%; /* phones: full-width New Listing button */
+    text-align: center;
+}
+
+/* phones: 4 tabs as an even 2 x 2 grid */
 .mylist-tabs {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 0.5rem;
-    flex-wrap: wrap;
+    width: 100%;
 }
 
 .mylist-tab {
@@ -414,5 +421,15 @@
     .mylist-status-select {
         width: auto;
         min-width: 10rem;
+    }
+
+    .mylist-header .btn-ewha {
+        width: auto;
+    }
+
+    .mylist-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        width: auto;
     }
 }
