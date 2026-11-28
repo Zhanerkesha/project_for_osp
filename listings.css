@@ -14,14 +14,14 @@
     font-size: 1rem;
     font-weight: 700;
     color: var(--text-main);
-    margin-bottom: 14px;
+    margin-bottom: 0.875rem;
 }
 
 /* Listing type selector (Buy / Rent / Service) */
 .additem-type-group {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    gap: 0.75rem;
 }
 
 .additem-type-option input {
@@ -34,8 +34,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-    padding: 14px 10px;
+    gap: 0.25rem;
+    padding: 0.875rem 0.625rem;
     border: 1px solid var(--border);
     border-radius: 12px;
     background-color: var(--card-bg);
@@ -68,26 +68,22 @@
 }
 
 .additem-type-hint {
+    display: none; /* mobile-first: hidden on phones, shown from 768px */
     font-size: 0.78rem;
     color: var(--text-muted);
 }
 
-/* Two fields side by side */
-.additem-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-}
-
+/* Form rows: 1 column on phones (base), 2 / 3 columns from 768px */
+.additem-row,
 .additem-row-3 {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
+    grid-template-columns: 1fr;
+    gap: 0.875rem;
 }
 
 .additem-help {
     display: block;
-    margin-top: 5px;
+    margin-top: 0.3125rem;
     font-size: 0.8rem;
     color: var(--text-muted);
 }
@@ -117,20 +113,20 @@
 }
 
 .additem-price-wrap .form-control {
-    padding-left: 32px;
+    padding-left: 2rem;
 }
 
 .additem-checkbox {
     display: flex;
     align-items: flex-start;
-    gap: 8px;
+    gap: 0.5rem;
     font-size: 0.9rem;
     color: var(--text-main);
     cursor: pointer;
 }
 
 .additem-checkbox input {
-    margin-top: 3px;
+    margin-top: 0.1875rem;
     accent-color: var(--ewha-green);
 }
 
@@ -140,8 +136,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    padding: 26px;
+    gap: 0.375rem;
+    padding: 1.625rem;
     border: 2px dashed var(--border);
     border-radius: 12px;
     background-color: var(--bg-page);
@@ -165,8 +161,8 @@
 .additem-preview {
     display: flex;
     align-items: center;
-    gap: 14px;
-    margin-top: 12px;
+    gap: 0.875rem;
+    margin-top: 0.75rem;
 }
 
 .additem-preview[hidden] {
@@ -182,17 +178,17 @@
 }
 
 .additem-photo-remove {
-    padding: 6px 14px;
+    padding: 0.375rem 0.875rem;
     font-size: 0.85rem;
 }
 
 /* Inline success / error messages (no browser popups) */
 .additem-message {
-    padding: 12px 16px;
+    padding: 0.75rem 1rem;
     border-radius: 12px;
     font-size: 0.9rem;
     font-weight: 600;
-    margin-bottom: 16px;
+    margin-bottom: 1rem;
 }
 
 .additem-message[hidden] {
@@ -231,20 +227,25 @@
 .additem-policy {
     background-color: var(--ewha-green-light);
     border-radius: 12px;
-    padding: 14px 16px;
+    padding: 0.875rem 1rem;
     font-size: 0.85rem;
     color: var(--text-main);
-    margin-bottom: 14px;
+    margin-bottom: 0.875rem;
 }
 
 .additem-policy ul {
-    margin: 6px 0 0 18px;
+    margin: 0.375rem 0 0 1.125rem;
 }
 
 .additem-actions {
     display: flex;
-    justify-content: flex-end;
-    gap: 10px;
+    flex-direction: column-reverse; /* phones: full-width buttons, main action on top */
+    gap: 0.625rem;
+}
+
+.additem-actions .btn-ewha,
+.additem-actions .btn-outline-ewha {
+    width: 100%;
 }
 
 /* ---------- my-listings.html ---------- */
@@ -253,7 +254,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    gap: 16px;
+    gap: 1rem;
     flex-wrap: wrap;
 }
 
@@ -261,19 +262,19 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 12px;
+    gap: 0.75rem;
     flex-wrap: wrap;
-    margin-bottom: 18px;
+    margin-bottom: 1.125rem;
 }
 
 .mylist-tabs {
     display: flex;
-    gap: 8px;
+    gap: 0.5rem;
     flex-wrap: wrap;
 }
 
 .mylist-tab {
-    padding: 7px 16px;
+    padding: 0.4375rem 1rem;
     border-radius: 999px;
     border: 1px solid var(--border);
     background-color: var(--card-bg);
@@ -300,8 +301,7 @@
 }
 
 .mylist-status-select {
-    width: auto;
-    min-width: 160px;
+    width: 100%; /* phones: full width; auto width from 768px */
 }
 
 .mylist-card .item-img-wrap img {
@@ -310,7 +310,7 @@
 
 .mylist-status {
     display: inline-block;
-    padding: 2px 10px;
+    padding: 0.125rem 0.625rem;
     border-radius: 999px;
     font-size: 0.72rem;
     font-weight: 700;
@@ -330,14 +330,14 @@
 
 .mylist-card-actions {
     display: flex;
-    gap: 6px;
-    margin-top: 12px;
+    gap: 0.375rem;
+    margin-top: 0.75rem;
 }
 
 .mylist-card-actions .btn-outline-ewha,
 .mylist-card-actions .btn-ewha {
     flex: 1;
-    padding: 6px 8px;
+    padding: 0.375rem 0.5rem;
     font-size: 0.8rem;
 }
 
@@ -354,7 +354,7 @@
 .mylist-dialog {
     border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 24px;
+    padding: 1.5rem;
     max-width: 420px;
     width: calc(100% - 32px);
     box-shadow: var(--shadow-md);
@@ -366,12 +366,12 @@
 }
 
 .mylist-dialog p {
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
 }
 
 .mylist-empty {
     text-align: center;
-    padding: 48px 20px;
+    padding: 3rem 1.25rem;
 }
 
 .mylist-empty[hidden] {
@@ -380,34 +380,39 @@
 
 .mylist-empty-emoji {
     font-size: 2.4rem;
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
 }
 
 .mylist-empty p {
-    margin-bottom: 16px;
+    margin-bottom: 1rem;
 }
 
-/* ---------- Mobile (full polish on Dec 3) ---------- */
-@media (max-width: 768px) {
-    .additem-row,
+/* ---------- Tablet and up (>= 768px): mobile-first enhancement ---------- */
+@media (min-width: 768px) {
+    .additem-row {
+        grid-template-columns: 1fr 1fr;
+    }
+
     .additem-row-3 {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(3, 1fr);
     }
 
     .additem-type-hint {
-        display: none;
+        display: block;
     }
 
     .additem-actions {
-        flex-direction: column-reverse;
+        flex-direction: row;
+        justify-content: flex-end;
     }
 
     .additem-actions .btn-ewha,
     .additem-actions .btn-outline-ewha {
-        width: 100%;
+        width: auto;
     }
 
     .mylist-status-select {
-        width: 100%;
+        width: auto;
+        min-width: 10rem;
     }
 }
